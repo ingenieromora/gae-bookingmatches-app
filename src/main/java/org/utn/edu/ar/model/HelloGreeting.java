@@ -1,4 +1,4 @@
-package org.utn.edu.ar;
+package org.utn.edu.ar.model;
 
 public class HelloGreeting {
 
