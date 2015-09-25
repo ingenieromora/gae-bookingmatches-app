@@ -15,6 +15,10 @@ public class Sport {
 
     public Sport(){}
 
+    public Sport(int id) {
+        this.id = id;
+    }
+
     public String getName() {
         return name;
     }
@@ -32,18 +36,22 @@ public class Sport {
     }
 
     @Override
+    /**
+     * Two sports are equals if its id is the same.
+     */
     public boolean equals(Object o) {
         if (this == o) return true;
-        if (o == null || getClass() != o.getClass()) return false;
+        if (!(o instanceof Sport)) return false;
 
         Sport sport = (Sport) o;
 
-        return !(name != null ? !name.equals(sport.name) : sport.name != null);
+        if (id != sport.id) return false;
 
+        return true;
     }
 
     @Override
     public int hashCode() {
-        return name != null ? name.hashCode() : 0;
+        return id;
     }
 }
