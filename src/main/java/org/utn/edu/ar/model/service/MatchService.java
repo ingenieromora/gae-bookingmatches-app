@@ -1,9 +1,12 @@
 package org.utn.edu.ar.model.service;
 
 import org.utn.edu.ar.model.domain.Match;
+import org.utn.edu.ar.model.domain.Player;
+import org.utn.edu.ar.model.domain.Sport;
 import org.utn.edu.ar.model.exceptions.match.MatchNotFoundException;
 import org.utn.edu.ar.model.persistence.IMatchStorage;
 
+import java.time.LocalDate;
 import java.util.List;
 
 /**
@@ -29,7 +32,7 @@ public class MatchService {
         return output;
     }
 
-    public Match getMatchById(Integer id) throws MatchNotFoundException {
+    public Match getMatchById(int id) throws MatchNotFoundException {
         Match match = storage.getMatchById(id);
         if (match == null) {
             throw new MatchNotFoundException(id);
@@ -37,22 +40,24 @@ public class MatchService {
         return match;
     }
 
-    public void createMatch(String sportName, int playersNeeded) {
-        storage.createMatch(sportName, playersNeeded);
+    public void createMatch(Sport sport, int playersNeeded, Player creator, double latitude, double longitude) {
+        storage.createMatch(sport, playersNeeded, LocalDate.now(), creator, latitude, longitude);
     }
 
-    public boolean exists(Integer id) {
+    public boolean exists(int id) {
         return storage.exists(id);
     }
 
-    public void updateMatch(Integer id, String sportName, int playersNeeded) throws MatchNotFoundException {
+    public void updateMatch(int id, Sport sport, int playersNeeded, Player creator, double latitude, double longitude)
+            throws MatchNotFoundException {
+
         if (!exists(id)) {
             throw new MatchNotFoundException(id);
         }
-        storage.updateMatch(id, sportName, playersNeeded);
+        storage.updateMatch(id, sport, playersNeeded, LocalDate.now(), creator, latitude, longitude);
     }
 
-    public void deleteMatch(Integer id) throws MatchNotFoundException {
+    public void deleteMatch(int id) throws MatchNotFoundException {
         if (!exists(id)) {
             throw new MatchNotFoundException(id);
         }
