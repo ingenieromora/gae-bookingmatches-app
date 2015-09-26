@@ -8,12 +8,14 @@
 - id
 - date
 - sport
-- address
+- addressLongitude
+- addressLatitude
 - playersNeeded
 - createdBy
 - starterPlayers[]
 - reservePlayers[]
 
 **player**
-- match
 - facebookUserId
+- matches[]
+- recommendedMatches[]
