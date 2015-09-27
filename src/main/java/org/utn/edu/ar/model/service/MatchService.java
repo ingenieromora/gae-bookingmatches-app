@@ -20,23 +20,13 @@ public class MatchService {
         this.storage = storage;
     }
 
-    public void setStorage(IMatchStorage storage) {
-        this.storage = storage;
-    }
-
-    public List<Match> getAllMatches() throws MatchNotFoundException {
-        List<Match> output = storage.getAllMatches();
-        if (output == null) {
-            throw new MatchNotFoundException("There are no matches stored");
-        }
-        return output;
+    public List<Match> getAllMatches() {
+        return storage.getAllMatches();
     }
 
     public Match getMatchById(int id) throws MatchNotFoundException {
         Match match = storage.getMatchById(id);
-        if (match == null) {
-            throw new MatchNotFoundException(id);
-        }
+        if (match == null) throw new MatchNotFoundException(id);
         return match;
     }
 
@@ -48,19 +38,17 @@ public class MatchService {
         return storage.exists(id);
     }
 
-    public void updateMatch(int id, Sport sport, int playersNeeded, Player creator, double latitude, double longitude)
+    public void updateMatch(int id, Sport sport, int playersNeeded, LocalDate date, Player creator, double latitude, double longitude)
             throws MatchNotFoundException {
 
         if (!exists(id)) {
             throw new MatchNotFoundException(id);
         }
-        storage.updateMatch(id, sport, playersNeeded, LocalDate.now(), creator, latitude, longitude);
+        storage.updateMatch(id, sport, playersNeeded, date, creator, latitude, longitude);
     }
 
     public void deleteMatch(int id) throws MatchNotFoundException {
-        if (!exists(id)) {
-            throw new MatchNotFoundException(id);
-        }
+        if (!exists(id)) throw new MatchNotFoundException(id);
         storage.deleteMatch(id);
     }
 }

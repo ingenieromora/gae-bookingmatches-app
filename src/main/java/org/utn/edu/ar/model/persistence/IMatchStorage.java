@@ -14,13 +14,13 @@ public interface IMatchStorage {
 
     public List<Match> getAllMatches();
 
-    public Match getMatchById(Integer id);
+    public Match getMatchById(int id);
 
     public void createMatch(Sport sport, int playersNeeded, LocalDate date, Player creator, double latitude, double longitude);
 
-    public boolean exists(Integer id);
+    public boolean exists(int id);
 
-    public void updateMatch(Integer id, Sport sport, int playersNeeded, LocalDate date, Player creator, double latitude, double longitude);
+    public void updateMatch(int id, Sport sport, int playersNeeded, LocalDate date, Player creator, double latitude, double longitude);
 
-    public void deleteMatch(Integer id);
+    public void deleteMatch(int id);
 }
