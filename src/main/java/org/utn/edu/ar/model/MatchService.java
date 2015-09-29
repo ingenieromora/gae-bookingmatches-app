@@ -1,10 +1,11 @@
-package org.utn.edu.ar.model.service;
+package org.utn.edu.ar.model;
 
 import org.joda.time.DateTime;
 import org.utn.edu.ar.model.domain.Match;
 import org.utn.edu.ar.model.domain.Player;
 import org.utn.edu.ar.model.domain.Sport;
 import org.utn.edu.ar.model.exceptions.match.MatchNotFoundException;
+import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
 import org.utn.edu.ar.model.persistence.IMatchStorage;
 
 import java.util.List;
@@ -50,5 +51,10 @@ public class MatchService {
     public void deleteMatch(int id) throws MatchNotFoundException {
         if (!exists(id)) throw new MatchNotFoundException(id);
         storage.deleteMatch(id);
+    }
+
+    public void removePlayer(Integer matchId, String fbId)
+            throws MatchNotFoundException, PlayerNotFoundException {
+        storage.removePlayer(matchId, fbId);
     }
 }

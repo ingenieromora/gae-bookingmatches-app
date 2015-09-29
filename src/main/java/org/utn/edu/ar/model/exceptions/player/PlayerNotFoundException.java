@@ -8,4 +8,7 @@ public class PlayerNotFoundException extends Exception {
     public PlayerNotFoundException(Integer id){
         super("Player with id: " + id + " not found.");
     }
+    public PlayerNotFoundException(String fbId){
+        super("Player with fbId: " + fbId + " not found either on starters nor alternates.");
+    }
 }

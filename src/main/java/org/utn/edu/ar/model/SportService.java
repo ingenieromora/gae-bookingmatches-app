@@ -1,4 +1,4 @@
-package org.utn.edu.ar.model.service;
+package org.utn.edu.ar.model;
 
 import com.google.api.server.spi.response.NotFoundException;
 import org.utn.edu.ar.model.domain.Sport;

@@ -1,4 +1,4 @@
-package org.utn.edu.ar.model.service;
+package org.utn.edu.ar.model;
 
 import org.utn.edu.ar.model.domain.Player;
 import org.utn.edu.ar.model.exceptions.player.PlayerAlreadyExistsException;
@@ -20,9 +20,11 @@ public class PlayerService {
 
     public List<Player> getAll(){ return storage.getAll(); }
 
-    public Player getById(Integer id){ return storage.getById(id); }
+    public Player getById(Integer id) throws PlayerNotFoundException {
+        return storage.getById(id);
+    }
 
-    public void create(Integer id, String fbId) throws PlayerAlreadyExistsException {
+    public void create(String fbId) throws PlayerAlreadyExistsException {
         storage.create(fbId);
     }
 
@@ -30,7 +32,7 @@ public class PlayerService {
         storage.update(id, fbId);
     }
 
-    public void remove(Integer id){
+    public void remove(Integer id) throws PlayerNotFoundException {
         storage.remove(id);
     }
 }

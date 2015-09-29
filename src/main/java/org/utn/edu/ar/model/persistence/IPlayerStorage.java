@@ -14,7 +14,7 @@ public interface IPlayerStorage {
 
     public List<Player> getAll();
 
-    public Player getById(Integer id);
+    public Player getById(Integer id) throws PlayerNotFoundException;
 
     public boolean exists(Integer id);
     public boolean exists(String fbId);
@@ -23,5 +23,5 @@ public interface IPlayerStorage {
 
     public void update(Integer id, String fbId) throws PlayerNotFoundException;
 
-    public void remove(Integer id);
+    public void remove(Integer id) throws PlayerNotFoundException;
 }

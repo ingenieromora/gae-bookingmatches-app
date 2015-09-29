@@ -5,6 +5,8 @@ import org.utn.edu.ar.model.domain.Match;
 import org.utn.edu.ar.model.domain.Match;
 import org.utn.edu.ar.model.domain.Player;
 import org.utn.edu.ar.model.domain.Sport;
+import org.utn.edu.ar.model.exceptions.match.MatchNotFoundException;
+import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
 import org.utn.edu.ar.model.persistence.IMatchStorage;
 import java.util.List;
 
@@ -65,5 +67,21 @@ public class MatchesStorage implements IMatchStorage {
     public void deleteMatch(int id) {
         Match match = getMatchById(id);
         if (match != null) matches.remove(match);
+    }
+
+    @Override
+    public void removePlayer(Integer matchId, String fbId)
+            throws MatchNotFoundException, PlayerNotFoundException {
+        Match match = null;
+        for (Match m : matches){
+            if(m.getId() == matchId){
+                match = m;
+                break;
+            }
+        }
+
+        if(match == null) throw new MatchNotFoundException(matchId);
+
+        match.removePlayer(fbId);
     }
 }

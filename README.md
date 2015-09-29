@@ -47,6 +47,10 @@ A "hello world" application for Google Cloud Endpoints in Java.
 1. Deploy your application to Google App Engine with
 
    $ mvn appengine:update
+   
+Finally, go to
+
+   `localhost:8080/_ah/api/explorer` to test the API
 
 [1]: https://developers.google.com/appengine
 [2]: http://java.com/en/

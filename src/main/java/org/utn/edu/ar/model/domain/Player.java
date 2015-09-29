@@ -1,7 +1,5 @@
 package org.utn.edu.ar.model.domain;
-/**
- * Created by juan pablo.
- */
+
 public class Player {
 
     private int id;
@@ -26,5 +24,24 @@ public class Player {
 
     public void setFacebookId(String facebookId) {
         this.facebookId = facebookId;
+    }
+
+    @Override
+    public boolean equals(Object o) {
+        if (this == o) return true;
+        if (o == null || getClass() != o.getClass()) return false;
+
+        Player player = (Player) o;
+
+        if (id != player.id) return false;
+        return !(facebookId != null ? !facebookId.equals(player.facebookId) : player.facebookId != null);
+
+    }
+
+    @Override
+    public int hashCode() {
+        int result = id;
+        result = 31 * result + (facebookId != null ? facebookId.hashCode() : 0);
+        return result;
     }
 }

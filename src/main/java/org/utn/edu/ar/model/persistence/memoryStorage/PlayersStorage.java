@@ -20,12 +20,12 @@ public class PlayersStorage implements IPlayerStorage {
 
     public List<Player> getAll(){ return players; }
 
-    public Player getById(Integer id){
+    public Player getById(Integer id) throws PlayerNotFoundException {
         for(Player p : players){
             if(p.getId() == id)
                 return p;
         }
-        return null;
+        throw new PlayerNotFoundException(id);
     }
 
     public void create(String fbId) throws PlayerAlreadyExistsException {
@@ -45,13 +45,14 @@ public class PlayersStorage implements IPlayerStorage {
         throw new PlayerNotFoundException(id);
     }
 
-    public void remove(Integer id){
+    public void remove(Integer id) throws PlayerNotFoundException {
         for(Player p : players){
             if(p.getId() == id){
                 players.remove(p);
                 break;
             }
         }
+        throw new PlayerNotFoundException(id);
     }
 
     public Integer nextId(){

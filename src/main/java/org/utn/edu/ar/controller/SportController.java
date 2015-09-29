@@ -10,16 +10,13 @@ import org.utn.edu.ar.model.domain.Sport;
 import org.utn.edu.ar.model.exceptions.sport.SportNameAlreadyExistException;
 import org.utn.edu.ar.model.exceptions.sport.SportNotFoundException;
 import org.utn.edu.ar.model.persistence.memoryStorage.SportStorage;
-import org.utn.edu.ar.model.service.SportService;
+import org.utn.edu.ar.model.SportService;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by leandro.mora 20/09/15.
- */
 @Api(
-        name = "helloworld",
+        name = "sports",
         version = "v1",
         scopes = {Constants.EMAIL_SCOPE},
         clientIds = {Constants.WEB_CLIENT_ID, Constants.ANDROID_CLIENT_ID, Constants.IOS_CLIENT_ID, Constants.API_EXPLORER_CLIENT_ID},
