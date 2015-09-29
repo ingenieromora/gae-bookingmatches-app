@@ -8,7 +8,6 @@ import com.google.api.server.spi.response.NotFoundException;
 import org.utn.edu.ar.Constants;
 import org.utn.edu.ar.model.domain.Sport;
 import org.utn.edu.ar.model.exceptions.sport.SportNameAlreadyExistException;
-import org.utn.edu.ar.model.exceptions.sport.SportAlreadyExistException;
 import org.utn.edu.ar.model.exceptions.sport.SportNotFoundException;
 import org.utn.edu.ar.model.persistence.memoryStorage.SportStorage;
 import org.utn.edu.ar.model.service.SportService;
