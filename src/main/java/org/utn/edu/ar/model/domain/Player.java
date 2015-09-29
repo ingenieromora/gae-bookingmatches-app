@@ -1,7 +1,4 @@
 package org.utn.edu.ar.model.domain;
-
-import java.time.LocalDate;
-
 /**
  * Created by juan pablo.
  */

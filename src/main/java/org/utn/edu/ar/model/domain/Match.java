@@ -1,6 +1,6 @@
 package org.utn.edu.ar.model.domain;
 
-import java.time.LocalDate;
+import org.joda.time.DateTime;
 
 /**
  * Created by juan pablo.
@@ -10,12 +10,12 @@ public class Match {
     private int id;
     private Sport sport;
     private int playersNeeded;
-    private LocalDate date;
+    private DateTime date;
     private Player creator;
     private double latitude;
     private double longitude;
 
-    public Match(int id, Sport sport, int playersNeeded, LocalDate date, Player creator, double latitude, double longitude) {
+    public Match(int id, Sport sport, int playersNeeded, DateTime date, Player creator, double latitude, double longitude) {
         this.id = id;
         this.sport = sport;
         this.playersNeeded = playersNeeded;
@@ -49,11 +49,11 @@ public class Match {
         this.playersNeeded = playersNeeded;
     }
 
-    public LocalDate getDate() {
+    public DateTime getDate() {
         return date;
     }
 
-    public void setDate(LocalDate date) {
+    public void setDate(DateTime date) {
         this.date = date;
     }
 
