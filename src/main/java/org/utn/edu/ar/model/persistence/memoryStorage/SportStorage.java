@@ -3,30 +3,33 @@ package org.utn.edu.ar.model.persistence.memoryStorage;
 import org.utn.edu.ar.model.domain.Sport;
 import org.utn.edu.ar.model.persistence.ISportStorage;
 
-import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 /**
  * Created by leandro.mora on 20/09/15.
  */
-public class SportStorage implements ISportStorage{
+public class SportStorage implements ISportStorage {
+
     private List<Sport> sportList;
 
-    public SportStorage() {}
+    public SportStorage() {
+    }
 
-    public SportStorage(List<Sport> sportList) { this.sportList = sportList; }
+    public SportStorage(List<Sport> sportList) {
+        this.sportList = sportList;
+    }
 
     @Override
-    public List<Sport> getAllSports() { return sportList; }
+    public List<Sport> getAllSports() {
+        return sportList;
+    }
 
     @Override
     public Sport getSportById(Integer id) {
         Sport outputSport = null;
-        Iterator<Sport> itSport = sportList.iterator();
-        while(itSport.hasNext()){
-           Sport currentSport = itSport.next();
-            if(id.equals(currentSport.getId())){
+        for (Sport currentSport : sportList) {
+            if (id.equals(currentSport.getId())) {
                 outputSport = currentSport;
             }
         }
@@ -37,9 +40,9 @@ public class SportStorage implements ISportStorage{
     public boolean exists(String sportName) {
         boolean found = false;
         Iterator<Sport> itSport = sportList.iterator();
-        while(itSport.hasNext() && !found){
+        while (itSport.hasNext() && !found) {
             Sport currentSport = itSport.next();
-            if(sportName.toLowerCase().equals(currentSport.getName().toLowerCase())){
+            if (sportName.toLowerCase().equals(currentSport.getName().toLowerCase())) {
                 found = true;
             }
         }
@@ -63,9 +66,9 @@ public class SportStorage implements ISportStorage{
     public boolean exists(Integer sportId) {
         boolean found = false;
         Iterator<Sport> itSport = sportList.iterator();
-        while(itSport.hasNext() && !found){
+        while (itSport.hasNext() && !found) {
             Sport currentSport = itSport.next();
-            if(sportId.equals(currentSport.getId())){
+            if (sportId.equals(currentSport.getId())) {
                 found = true;
             }
         }
@@ -76,13 +79,12 @@ public class SportStorage implements ISportStorage{
         Sport sportToRemove = new Sport(sportId);
         sportList.remove(sportToRemove);
     }
+
     private int getLastId() {
         int lastInt = 0;
 
-        Iterator<Sport> itSport = sportList.iterator();
-        while(itSport.hasNext()){
-            Sport currentSport = itSport.next();
-            if(currentSport.getId() > lastInt){
+        for (Sport currentSport : sportList) {
+            if (currentSport.getId() > lastInt) {
                 lastInt = currentSport.getId();
             }
         }
