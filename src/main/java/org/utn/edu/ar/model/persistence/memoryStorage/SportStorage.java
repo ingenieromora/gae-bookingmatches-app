@@ -38,15 +38,12 @@ public class SportStorage implements ISportStorage {
 
     @Override
     public boolean exists(String sportName) {
-        boolean found = false;
-        Iterator<Sport> itSport = sportList.iterator();
-        while (itSport.hasNext() && !found) {
-            Sport currentSport = itSport.next();
-            if (sportName.toLowerCase().equals(currentSport.getName().toLowerCase())) {
-                found = true;
+        for(Sport s : sportList){
+            if(s.getName().equals(sportName)) {
+                return true;
             }
         }
-        return found;
+        return false;
     }
 
     @Override

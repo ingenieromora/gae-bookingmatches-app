@@ -19,8 +19,7 @@ import java.util.List;
         name = "players",
         version = "v1",
         scopes = {Constants.EMAIL_SCOPE},
-        clientIds = {Constants.WEB_CLIENT_ID, Constants.ANDROID_CLIENT_ID, Constants.IOS_CLIENT_ID, Constants.API_EXPLORER_CLIENT_ID},
-        audiences = {Constants.ANDROID_AUDIENCE}
+        clientIds = Constants.WEB_CLIENT_ID
 )
 public class PlayersController {
 

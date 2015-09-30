@@ -1,12 +1,9 @@
 package org.utn.edu.ar.model.domain;
 
-/**
- * Created by leomora on 20/09/15.
- */
 public class Sport {
 
-    private String name;
     private int id;
+    private String name;
 
     public Sport(int id, String name) {
         this.id = id;
