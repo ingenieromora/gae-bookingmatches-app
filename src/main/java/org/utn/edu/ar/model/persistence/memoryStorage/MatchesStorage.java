@@ -1,13 +1,13 @@
 package org.utn.edu.ar.model.persistence.memoryStorage;
 
+import org.joda.time.DateTime;
 import org.utn.edu.ar.model.domain.Match;
 import org.utn.edu.ar.model.domain.Match;
 import org.utn.edu.ar.model.domain.Player;
 import org.utn.edu.ar.model.domain.Sport;
+import org.utn.edu.ar.model.exceptions.match.MatchNotFoundException;
+import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
 import org.utn.edu.ar.model.persistence.IMatchStorage;
-
-import java.time.LocalDate;
-import java.util.Iterator;
 import java.util.List;
 
 /**
@@ -37,7 +37,7 @@ public class MatchesStorage implements IMatchStorage {
     }
 
     @Override
-    public void createMatch(Sport sport, int playersNeeded, LocalDate date, Player creator, double latitude, double longitude) {
+    public void createMatch(Sport sport, int playersNeeded, DateTime date, Player creator, double latitude, double longitude) {
         int id = matches.size() + 1;
         Match match = new Match(id, sport, playersNeeded, date, creator, latitude, longitude);
         matches.add(match);
@@ -53,7 +53,7 @@ public class MatchesStorage implements IMatchStorage {
     }
 
     @Override
-    public void updateMatch(int id, Sport sport, int playersNeeded, LocalDate date, Player creator, double latitude, double longitude) {
+    public void updateMatch(int id, Sport sport, int playersNeeded, DateTime date, Player creator, double latitude, double longitude) {
         Match match = getMatchById(id);
         match.setSport(sport);
         match.setPlayersNeeded(playersNeeded);
@@ -67,5 +67,21 @@ public class MatchesStorage implements IMatchStorage {
     public void deleteMatch(int id) {
         Match match = getMatchById(id);
         if (match != null) matches.remove(match);
+    }
+
+    @Override
+    public void removePlayer(Integer matchId, String fbId)
+            throws MatchNotFoundException, PlayerNotFoundException {
+        Match match = null;
+        for (Match m : matches){
+            if(m.getId() == matchId){
+                match = m;
+                break;
+            }
+        }
+
+        if(match == null) throw new MatchNotFoundException(matchId);
+
+        match.removePlayer(fbId);
     }
 }

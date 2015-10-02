@@ -1,17 +1,12 @@
-package org.utn.edu.ar.model.service;
+package org.utn.edu.ar.model;
 
-import com.google.api.server.spi.response.NotFoundException;
 import org.utn.edu.ar.model.domain.Sport;
 import org.utn.edu.ar.model.exceptions.sport.SportNameAlreadyExistException;
-import org.utn.edu.ar.model.exceptions.sport.SportAlreadyExistException;
 import org.utn.edu.ar.model.exceptions.sport.SportNotFoundException;
 import org.utn.edu.ar.model.persistence.ISportStorage;
 
 import java.util.List;
 
-/**
- * Created by leandro.mora on 20/09/15.
- */
 public class SportService {
 
     private ISportStorage storage;
