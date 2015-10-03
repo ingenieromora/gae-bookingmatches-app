@@ -3,7 +3,8 @@ package org.utn.edu.ar.model.domain;
 import org.joda.time.DateTime;
 import org.utn.edu.ar.model.exceptions.match.PlayerAlreadyConfirmedException;
 import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
-import org.utn.edu.ar.util.Pair;
+import org.utn.edu.ar.model.request.MatchRequest;
+import org.utn.edu.ar.util.Coordinates;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -11,25 +12,34 @@ import java.util.List;
 public class Match {
 
     private int id;
-    private Sport sport;
+    private int sportId;
     private int playersNeeded;
     private DateTime date;
-    private Player creator;
-    private Pair<Double, Double> location;
+    private Integer createdBy;
+    private Coordinates location;
     private List<Player> starters;
     private List<Player> alternates;
 
-    public Match(int id, Sport sport, int playersNeeded, DateTime date, Player creator, Pair<Double, Double> location) {
+    public Match(int id, int sportId, int playersNeeded, DateTime date, Integer createdBy, Coordinates location) {
         this.id = id;
-        this.sport = sport;
+        this.sportId = sportId;
         this.playersNeeded = playersNeeded;
         this.date = date;
-        this.creator = creator;
+        this.createdBy = createdBy;
         this.location = location;
         this.starters = new ArrayList<Player>();
         this.alternates = new ArrayList<Player>();
     }
 
+    public Match(MatchRequest rq) {
+        this.sportId = rq.getSportId();
+        this.playersNeeded = rq.getPlayersNeeded();
+        this.date = rq.getDate();
+        this.createdBy = rq.getCreatedBy();
+        this.location = rq.getLocation();
+        this.starters = new ArrayList<Player>();
+        this.alternates = new ArrayList<Player>();
+    }
 
     public void addPlayer(Player player) throws PlayerAlreadyConfirmedException {
         if(starters.size() < playersNeeded && !starters.contains(player))
@@ -67,14 +77,6 @@ public class Match {
         this.id = id;
     }
 
-    public Sport getSport() {
-        return sport;
-    }
-
-    public void setSport(Sport sport) {
-        this.sport = sport;
-    }
-
     public int getPlayersNeeded() {
         return playersNeeded;
     }
@@ -91,12 +93,12 @@ public class Match {
         this.date = date;
     }
 
-    public Player getCreator() {
-        return creator;
+    public Integer getCreatedBy() {
+        return createdBy;
     }
 
-    public void setCreator(Player creator) {
-        this.creator = creator;
+    public void setCreatedBy(Integer createdBy) {
+        this.createdBy = createdBy;
     }
 
     public List<Player> getStarters() {
@@ -115,11 +117,19 @@ public class Match {
         this.alternates = alternates;
     }
 
-    public Pair<Double, Double> getLocation() {
+    public Coordinates getLocation() {
         return location;
     }
 
-    public void setLocation(Pair<Double, Double> location) {
+    public void setLocation(Coordinates location) {
         this.location = location;
+    }
+
+    public int getSportId() {
+        return sportId;
+    }
+
+    public void setSportId(int sportId) {
+        this.sportId = sportId;
     }
 }

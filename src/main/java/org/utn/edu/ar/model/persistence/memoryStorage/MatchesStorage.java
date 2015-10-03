@@ -2,19 +2,16 @@ package org.utn.edu.ar.model.persistence.memoryStorage;
 
 import org.joda.time.DateTime;
 import org.utn.edu.ar.model.domain.Match;
-import org.utn.edu.ar.model.domain.Match;
 import org.utn.edu.ar.model.domain.Player;
 import org.utn.edu.ar.model.domain.Sport;
 import org.utn.edu.ar.model.exceptions.match.MatchNotFoundException;
 import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
 import org.utn.edu.ar.model.persistence.IMatchStorage;
-import org.utn.edu.ar.util.Pair;
+import org.utn.edu.ar.model.request.MatchRequest;
+import org.utn.edu.ar.util.Coordinates;
 
 import java.util.List;
 
-/**
- * Created by juan pablo.
- */
 public class MatchesStorage implements IMatchStorage {
 
     private List<Match> matches;
@@ -39,9 +36,9 @@ public class MatchesStorage implements IMatchStorage {
     }
 
     @Override
-    public void createMatch(Sport sport, int playersNeeded, DateTime date, Player creator, Pair<Double, Double> location) {
-        int id = matches.size() + 1;
-        Match match = new Match(id, sport, playersNeeded, date, creator, location);
+    public void createMatch(MatchRequest rq) {
+        Match match = new Match(rq);
+        match.setId(nextId());
         matches.add(match);
     }
 
@@ -55,12 +52,12 @@ public class MatchesStorage implements IMatchStorage {
     }
 
     @Override
-    public void updateMatch(int id, Sport sport, int playersNeeded, DateTime date, Player creator, Pair<Double, Double> location) {
+    public void updateMatch(int id, Integer sportId, int playersNeeded, DateTime date, Integer createdBy, Coordinates location) {
         Match match = getMatchById(id);
-        match.setSport(sport);
+        match.setSportId(sportId);
         match.setPlayersNeeded(playersNeeded);
         match.setDate(date);
-        match.setCreator(creator);
+        match.setCreatedBy(createdBy);
         match.setLocation(location);
     }
 
@@ -84,5 +81,17 @@ public class MatchesStorage implements IMatchStorage {
         if(match == null) throw new MatchNotFoundException(matchId);
 
         match.removePlayer(fbId);
+    }
+
+    private Integer nextId(){
+        int lastInt = 0;
+
+        for (Match match : matches) {
+            if (match.getId() > lastInt) {
+                lastInt = match.getId();
+            }
+        }
+
+        return lastInt + 1;
     }
 }

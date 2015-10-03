@@ -49,7 +49,7 @@ public class PlayersStorage implements IPlayerStorage {
         for(Player p : players){
             if(p.getId() == id){
                 players.remove(p);
-                break;
+                return;
             }
         }
         throw new PlayerNotFoundException(id);

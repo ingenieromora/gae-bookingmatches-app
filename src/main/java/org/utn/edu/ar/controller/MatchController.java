@@ -30,7 +30,7 @@ public class MatchController {
             httpMethod = HttpMethod.POST
     )
     public void create(MatchRequest rq) {
-
+            service.createMatch(rq);
     }
 
     @ApiMethod(name = "matches.removePlayer", httpMethod = "delete")
