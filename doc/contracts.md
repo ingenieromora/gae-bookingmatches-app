@@ -16,6 +16,17 @@ Las historias que estan tachadas, son las que creo que están relacionadas y res
 
 ### Contracts
 
+Applications send their requests to `/_ah/api/{theApi}/{theVersion}/path`, 
+so the idea is that if we have `/sports` on the following contracts, that really means
+`localhost:8080/_ah/api/sports/v1/sports`.
+
+Another thing to bear in mind is that Google Cloud Endpoints return lists as a JSON object of the shape
+```
+{
+  "items" : []
+}
+```
+
 #### sports
 * `GET sports` returns sports
 * `GET sports/{id}` returns a sport

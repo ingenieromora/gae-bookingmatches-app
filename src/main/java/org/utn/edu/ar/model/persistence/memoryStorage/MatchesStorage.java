@@ -8,6 +8,8 @@ import org.utn.edu.ar.model.domain.Sport;
 import org.utn.edu.ar.model.exceptions.match.MatchNotFoundException;
 import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
 import org.utn.edu.ar.model.persistence.IMatchStorage;
+import org.utn.edu.ar.util.Pair;
+
 import java.util.List;
 
 /**
@@ -37,9 +39,9 @@ public class MatchesStorage implements IMatchStorage {
     }
 
     @Override
-    public void createMatch(Sport sport, int playersNeeded, DateTime date, Player creator, double latitude, double longitude) {
+    public void createMatch(Sport sport, int playersNeeded, DateTime date, Player creator, Pair<Double, Double> location) {
         int id = matches.size() + 1;
-        Match match = new Match(id, sport, playersNeeded, date, creator, latitude, longitude);
+        Match match = new Match(id, sport, playersNeeded, date, creator, location);
         matches.add(match);
     }
 
@@ -53,14 +55,13 @@ public class MatchesStorage implements IMatchStorage {
     }
 
     @Override
-    public void updateMatch(int id, Sport sport, int playersNeeded, DateTime date, Player creator, double latitude, double longitude) {
+    public void updateMatch(int id, Sport sport, int playersNeeded, DateTime date, Player creator, Pair<Double, Double> location) {
         Match match = getMatchById(id);
         match.setSport(sport);
         match.setPlayersNeeded(playersNeeded);
         match.setDate(date);
         match.setCreator(creator);
-        match.setLatitude(latitude);
-        match.setLongitude(longitude);
+        match.setLocation(location);
     }
 
     @Override

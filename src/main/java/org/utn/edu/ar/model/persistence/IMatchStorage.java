@@ -6,6 +6,7 @@ import org.utn.edu.ar.model.domain.Player;
 import org.utn.edu.ar.model.domain.Sport;
 import org.utn.edu.ar.model.exceptions.match.MatchNotFoundException;
 import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
+import org.utn.edu.ar.util.Pair;
 
 import java.util.List;
 
@@ -18,11 +19,11 @@ public interface IMatchStorage {
 
     public Match getMatchById(int id);
 
-    public void createMatch(Sport sport, int playersNeeded, DateTime date, Player creator, double latitude, double longitude);
+    public void createMatch(Sport sport, int playersNeeded, DateTime date, Player creator, Pair<Double, Double> location);
 
     public boolean exists(int id);
 
-    public void updateMatch(int id, Sport sport, int playersNeeded, DateTime date, Player creator, double latitude, double longitude);
+    public void updateMatch(int id, Sport sport, int playersNeeded, DateTime date, Player creator, Pair<Double, Double> location);
 
     public void deleteMatch(int id);
 

@@ -38,7 +38,7 @@ public class PlayersStorage implements IPlayerStorage {
     public void update(Integer id, String fbId) throws PlayerNotFoundException {
         for(Player p: players){
             if(p.getId() == id){
-                p.setFacebookId(fbId);
+                p.setFbId(fbId);
                 return;
             }
         }
@@ -69,7 +69,7 @@ public class PlayersStorage implements IPlayerStorage {
 
     public boolean exists(String fbId){
         for(Player p : players){
-            if(p.getFacebookId().equals(fbId))
+            if(p.getFbId().equals(fbId))
                 return true;
         }
         return false;

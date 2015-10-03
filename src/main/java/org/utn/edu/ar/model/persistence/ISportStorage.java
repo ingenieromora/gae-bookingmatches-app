@@ -10,11 +10,10 @@ public interface ISportStorage {
 
     public Sport getSportById(Integer id);
 
+    public boolean exists(Integer sportId);
     public boolean exists(String sportName);
 
     public void createSport(String sportName);
-
-    public boolean exists(Integer sportId);
 
     public void updateSport(Integer sportId, String sportName);
 

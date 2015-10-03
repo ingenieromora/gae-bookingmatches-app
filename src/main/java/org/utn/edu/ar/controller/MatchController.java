@@ -2,6 +2,7 @@ package org.utn.edu.ar.controller;
 
 import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
+import com.google.api.server.spi.config.ApiMethod.HttpMethod;
 import com.google.api.server.spi.config.Named;
 import com.google.api.server.spi.response.NotFoundException;
 import org.utn.edu.ar.Constants;
@@ -10,18 +11,27 @@ import org.utn.edu.ar.model.domain.Match;
 import org.utn.edu.ar.model.exceptions.match.MatchNotFoundException;
 import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
 import org.utn.edu.ar.model.persistence.memoryStorage.MatchesStorage;
+import org.utn.edu.ar.model.request.MatchRequest;
 
 import java.util.ArrayList;
 
 @Api(
         name = "matches",
-        version = "v1",
-        scopes = {Constants.EMAIL_SCOPE},
+        scopes = Constants.EMAIL_SCOPE,
         clientIds = Constants.WEB_CLIENT_ID
 )
 public class MatchController {
 
     private MatchService service = new MatchService(new MatchesStorage(new ArrayList<Match>()));
+
+    @ApiMethod(
+            name = "add",
+            path = "matches",
+            httpMethod = HttpMethod.POST
+    )
+    public void create(MatchRequest rq) {
+
+    }
 
     @ApiMethod(name = "matches.removePlayer", httpMethod = "delete")
     public void deletePlayer(@Named("id") Integer matchId, @Named("fbId") String fbId) throws NotFoundException {

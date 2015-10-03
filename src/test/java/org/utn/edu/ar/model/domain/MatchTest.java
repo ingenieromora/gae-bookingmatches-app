@@ -4,10 +4,11 @@ import org.joda.time.DateTime;
 import org.junit.Assert;
 import org.junit.Test;
 import org.utn.edu.ar.model.exceptions.match.PlayerAlreadyConfirmedException;
+import org.utn.edu.ar.util.Pair;
 
 public class MatchTest {
 
-    private Match testMatch = new Match(1, null, 2, DateTime.now(), null, 1.0, 1.0);
+    private Match testMatch = new Match(1, null, 2, DateTime.now(), null, new Pair(1.0, 1.0));
 
     private Player p1 = new Player(1, "Leo");
     private Player p2 = new Player(2, "Tom");

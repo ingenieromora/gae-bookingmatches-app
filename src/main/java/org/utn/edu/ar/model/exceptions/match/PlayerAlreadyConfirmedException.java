@@ -8,7 +8,7 @@ import org.utn.edu.ar.model.domain.Player;
 public class PlayerAlreadyConfirmedException extends Exception {
 
     public PlayerAlreadyConfirmedException(Player player){
-        super("Player with facebookId " + player.getFacebookId() +
+        super("Player with facebookId " + player.getFbId() +
                 " has already been confirmed for the match.");
     }
 }

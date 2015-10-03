@@ -19,12 +19,12 @@ import java.util.List;
 
 @Api(
         name = "sports",
-        scopes = {Constants.EMAIL_SCOPE},
-        clientIds = {Constants.API_EXPLORER_CLIENT_ID}
+        scopes = Constants.EMAIL_SCOPE,
+        clientIds = Constants.API_EXPLORER_CLIENT_ID
 )
 public class SportController {
 
-    private SportService service = new SportService(new SportStorage(new ArrayList<Sport>()));
+    private SportService service = new SportService(new SportStorage(buildMockedSports()));
 
     @ApiMethod(
             name = "getAll",
@@ -62,22 +62,39 @@ public class SportController {
         }
     }
 
-    @ApiMethod(name = "update", httpMethod = "put")
-    public void updateSport(@Named("id") Integer id, @Named("name") String name) throws ConflictException {
+    @ApiMethod(
+            name = "update",
+            path = "sports/{id}",
+            httpMethod = HttpMethod.PUT
+    )
+    public void updateSport(@Named("id") Integer id, NameRequest rq) throws ConflictException {
         try {
-            service.updateSport(id, name);
-        } catch (SportNotFoundException e){
+            service.updateSport(id, rq.getName());
+        } catch (SportNotFoundException | SportNameAlreadyExistException e) {
             throw new ConflictException(e);
         }
     }
 
-
-    @ApiMethod(name = "sports.remove", httpMethod = "delete")
+    @ApiMethod(
+            name = "remove",
+            path = "sports/{id}",
+            httpMethod = HttpMethod.DELETE
+    )
     public void removeSport(@Named("id") Integer id) throws NotFoundException {
         try {
             service.removeSport(id);
         } catch (Exception e) {
             throw new NotFoundException(e);
         }
+    }
+
+
+    private List<Sport> buildMockedSports() {
+        Sport s1 = new Sport(1, "Futbol");
+        Sport s2 = new Sport(2, "Rugby");
+        List<Sport> startingSports = new ArrayList<>();
+        startingSports.add(s1);
+        startingSports.add(s2);
+        return startingSports;
     }
 }

@@ -67,14 +67,14 @@ public class SportServiceTest {
     }
 
     @Test
-    public void testUpdateSport() throws SportNotFoundException {
+    public void testUpdateSport() throws SportNotFoundException, SportNameAlreadyExistException {
         service.updateSport(2,"Hockey");
         Assert.assertEquals("Hockey", service.getSportById(2).getName());
         Assert.assertEquals(2, service.getAllSports().size());
     }
 
     @Test( expected = SportNotFoundException.class )
-    public void testNotFoundWhileUpdatingSport() throws SportNotFoundException {
+    public void testNotFoundWhileUpdatingSport() throws SportNotFoundException, SportNameAlreadyExistException {
         service.updateSport(4, "Hockey");
     }
 

@@ -7,6 +7,7 @@ import org.utn.edu.ar.model.domain.Sport;
 import org.utn.edu.ar.model.exceptions.match.MatchNotFoundException;
 import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
 import org.utn.edu.ar.model.persistence.IMatchStorage;
+import org.utn.edu.ar.util.Pair;
 
 import java.util.List;
 
@@ -31,21 +32,21 @@ public class MatchService {
         return match;
     }
 
-    public void createMatch(Sport sport, int playersNeeded, Player creator, double latitude, double longitude) {
-        storage.createMatch(sport, playersNeeded, DateTime.now(), creator, latitude, longitude);
+    public void createMatch(Sport sport, int playersNeeded, Player creator, Pair<Double, Double> location) {
+        storage.createMatch(sport, playersNeeded, DateTime.now(), creator, location);
     }
 
     public boolean exists(int id) {
         return storage.exists(id);
     }
 
-    public void updateMatch(int id, Sport sport, int playersNeeded, org.joda.time.DateTime date, Player creator, double latitude, double longitude)
+    public void updateMatch(int id, Sport sport, int playersNeeded, org.joda.time.DateTime date, Player creator, Pair<Double, Double> location)
             throws MatchNotFoundException {
 
         if (!exists(id)) {
             throw new MatchNotFoundException(id);
         }
-        storage.updateMatch(id, sport, playersNeeded, date, creator, latitude, longitude);
+        storage.updateMatch(id, sport, playersNeeded, date, creator, location);
     }
 
     public void deleteMatch(int id) throws MatchNotFoundException {

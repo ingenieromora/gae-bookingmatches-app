@@ -41,15 +41,18 @@ public class SportService {
 
     public void createSport(String sportName) throws SportNameAlreadyExistException {
         if(storage.exists(sportName)){
-            throw new SportNameAlreadyExistException("sport", sportName);
+            throw new SportNameAlreadyExistException(sportName);
         }
         storage.createSport(sportName);
     }
 
-    public void updateSport(Integer sportId, String sportName) throws SportNotFoundException {
+    public void updateSport(Integer sportId, String sportName)
+            throws SportNotFoundException, SportNameAlreadyExistException {
         if(!storage.exists(sportId)){
             throw new SportNotFoundException(sportId);
         }
+        if(storage.exists(sportName))
+            throw new SportNameAlreadyExistException(sportName);
         storage.updateSport(sportId, sportName);
     }
 

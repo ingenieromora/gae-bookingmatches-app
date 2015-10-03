@@ -3,13 +3,11 @@ package org.utn.edu.ar.model.domain;
 import org.joda.time.DateTime;
 import org.utn.edu.ar.model.exceptions.match.PlayerAlreadyConfirmedException;
 import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
+import org.utn.edu.ar.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
 
-/**
- * Created by juan pablo.
- */
 public class Match {
 
     private int id;
@@ -17,19 +15,17 @@ public class Match {
     private int playersNeeded;
     private DateTime date;
     private Player creator;
-    private double latitude;
-    private double longitude;
+    private Pair<Double, Double> location;
     private List<Player> starters;
     private List<Player> alternates;
 
-    public Match(int id, Sport sport, int playersNeeded, DateTime date, Player creator, double latitude, double longitude) {
+    public Match(int id, Sport sport, int playersNeeded, DateTime date, Player creator, Pair<Double, Double> location) {
         this.id = id;
         this.sport = sport;
         this.playersNeeded = playersNeeded;
         this.date = date;
         this.creator = creator;
-        this.latitude = latitude;
-        this.longitude = longitude;
+        this.location = location;
         this.starters = new ArrayList<Player>();
         this.alternates = new ArrayList<Player>();
     }
@@ -47,14 +43,14 @@ public class Match {
 
     public void removePlayer(String fbId) throws PlayerNotFoundException {
         for(Player p : starters){
-            if(p.getFacebookId().equals(fbId)){
+            if(p.getFbId().equals(fbId)){
                 starters.remove(p);
                 return;
             }
         }
 
         for(Player p : alternates){
-            if(p.getFacebookId().equals(fbId)){
+            if(p.getFbId().equals(fbId)){
                 alternates.remove(p);
                 return;
             }
@@ -103,22 +99,6 @@ public class Match {
         this.creator = creator;
     }
 
-    public double getLatitude() {
-        return latitude;
-    }
-
-    public void setLatitude(double latitude) {
-        this.latitude = latitude;
-    }
-
-    public double getLongitude() {
-        return longitude;
-    }
-
-    public void setLongitude(double longitude) {
-        this.longitude = longitude;
-    }
-
     public List<Player> getStarters() {
         return starters;
     }
@@ -133,5 +113,13 @@ public class Match {
 
     public void setAlternates(List<Player> alternates) {
         this.alternates = alternates;
+    }
+
+    public Pair<Double, Double> getLocation() {
+        return location;
+    }
+
+    public void setLocation(Pair<Double, Double> location) {
+        this.location = location;
     }
 }

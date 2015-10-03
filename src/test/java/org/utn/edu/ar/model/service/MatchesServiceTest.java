@@ -8,6 +8,7 @@ import org.utn.edu.ar.model.MatchService;
 import org.utn.edu.ar.model.domain.Match;
 import org.utn.edu.ar.model.exceptions.match.MatchNotFoundException;
 import org.utn.edu.ar.model.persistence.memoryStorage.MatchesStorage;
+import org.utn.edu.ar.util.Pair;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -19,9 +20,9 @@ public class MatchesServiceTest {
 
     private MatchService service;
 
-    private Match m1 = new Match(1, null, 7, DateTime.now(), null, 1.0, 1.0);
-    private Match m2 = new Match(2, null, 7, DateTime.now(), null, 2.0, 2.0);
-    private Match m3 = new Match(3, null, 7, DateTime.now(), null, 3.0, 3.0);
+    private Match m1 = new Match(1, null, 7, DateTime.now(), null, new Pair(1.0, 1.0));
+    private Match m2 = new Match(2, null, 7, DateTime.now(), null, new Pair(2.0, 2.0));
+    private Match m3 = new Match(3, null, 7, DateTime.now(), null, new Pair(3.0, 3.0));
 
     @Before
     public void setup() {
@@ -49,20 +50,20 @@ public class MatchesServiceTest {
 
     @Test
     public void testCreateMatch() {
-        service.createMatch(null, 7, null, 4.0, 4.0);
+        service.createMatch(null, 7, null, new Pair(4.0, 4.0));
         Assert.assertEquals(4, service.getAllMatches().size());
     }
 
     @Test
     public void testUpdateMatch() throws MatchNotFoundException {
-        service.updateMatch(2, null, 5, DateTime.now(), null, 2.0, 5.0);
+        service.updateMatch(2, null, 5, DateTime.now(), null, new Pair(2.0, 5.0));
         Assert.assertEquals(5, service.getMatchById(2).getPlayersNeeded());
-        Assert.assertEquals(5.0, service.getMatchById(2).getLongitude(), 0.0);
+        Assert.assertEquals(5.0, service.getMatchById(2).getLocation().getRight(), 0.0);
     }
 
     @Test(expected = MatchNotFoundException.class)
     public void testUpdateMatchNotFound() throws MatchNotFoundException {
-        service.updateMatch(5, null, 5, DateTime.now(), null, 2.0, 5.0);
+        service.updateMatch(5, null, 5, DateTime.now(), null, new Pair(2.0, 5.0));
     }
 
     @Test

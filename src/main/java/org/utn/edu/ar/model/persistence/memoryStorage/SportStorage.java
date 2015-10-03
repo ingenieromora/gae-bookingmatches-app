@@ -6,9 +6,6 @@ import org.utn.edu.ar.model.persistence.ISportStorage;
 import java.util.Iterator;
 import java.util.List;
 
-/**
- * Created by leandro.mora on 20/09/15.
- */
 public class SportStorage implements ISportStorage {
 
     private List<Sport> sportList;
@@ -38,10 +35,9 @@ public class SportStorage implements ISportStorage {
 
     @Override
     public boolean exists(String sportName) {
-        for(Sport s : sportList){
-            if(s.getName().equals(sportName)) {
+        for(Sport s : sportList) {
+            if(s.getName().equals(sportName))
                 return true;
-            }
         }
         return false;
     }
