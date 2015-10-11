@@ -1,0 +1,16 @@
+<div class="container">
+    <h1>Deportes</h1>
+    <ul>
+        <li ng-repeat="sport in sports">{{sport.name}}</li>
+    </ul>
+
+    <h2>Nuevo Deporte</h2>
+    <form role="form" name="sportForm">
+        <div class="row-fluid">
+            <input type="text" ng-model="name" ng-required="true">
+        </div>
+        <div class="row-fluid">
+            <button class="btn btn-info" ng-click="saveSport()">Guardar</button>
+        </div>
+    </form>
+</div>

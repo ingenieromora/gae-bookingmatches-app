@@ -1,0 +1,39 @@
+<div class="container">
+    <h1>Crear partido</h1>
+    <form role="form" name="sportForm">
+        <div class="row-fluid">
+            <div class="col-md-6">
+                <p>Deporte:</p>
+                <select name="sportSelect" id="sportSelect" ng-model="match.sportId">
+                    <option ng-repeat="sport in sports" value="{{sport.id}}">
+                        {{sport.name}}
+                    </option>
+                </select>
+            </div>
+            <div class="col-md-6">
+                <p>Cantidad de Jugadores:</p>
+                <input type="number" ng-model="match.playersNeeded" ng-required="true">
+            </div>
+        </div>
+        <div class="row-fluid">
+            <div class="col-md-6">
+                <p>Lugar:</p>
+                <map center="{{initialCenter}}" zoom="11" on-click="placeMarker()">
+                    <marker ng-repeat="pos in positions" position="{{pos.lat}}, {{pos.lng}}"></marker>
+                </map>
+            </div>
+            <div class="col-md-6">
+                <p>Fecha:</p>
+                <div style="display:inline-block;">
+                    <datepicker ng-model="match.date" ng-required="true" min-date="minDate" show-weeks="false" class="well well-sm"></datepicker>
+                </div>
+            </div>
+        </div>
+	
+		<div class="toolbar">
+			<div>
+				<button class="btn btn-info" ng-click="saveMatch()" ng-disabled="!sportForm.$valid || !validAddress">Guardar</button>
+			</div>
+		</div>
+    </form>
+</div>
