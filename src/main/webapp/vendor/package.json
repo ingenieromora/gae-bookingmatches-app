@@ -1,9 +1,9 @@
 {
-  "name": "angular-seed",
+  "name": "bookingmatches",
   "private": true,
   "version": "0.0.0",
-  "description": "A starter project for AngularJS",
-  "repository": "https://github.com/angular/angular-seed",
+  "description": "TP TACS 2C2015",
+  "repository": "https://github.com/leomora/gae-bookingmatches-app",
   "license": "MIT",
   "devDependencies": {
     "bower": "^1.3.1",
