@@ -45,7 +45,8 @@ public class SportStorage implements ISportStorage {
     @Override
     public void updateSport(Integer sportId, String sportName) {
         removeSport(sportId);
-        createSport(sportName);
+        Sport currentSport = new Sport(sportId, sportName);
+        sportList.add(currentSport);
     }
 
     @Override
