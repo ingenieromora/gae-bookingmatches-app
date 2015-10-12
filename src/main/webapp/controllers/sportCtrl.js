@@ -19,12 +19,13 @@ angular.module('bookingMatches')
 
     $scope.saveSport = function(){
         SportService.save($scope.name)
-			.success(function(sport) {
-				$scope.sports.push(sport);
-				Notification.success({message: 'Deporte ' + sport.name + ' creado exitosamente'});
-			})
-			.error(function(error) {
-				Notification.error({message: error.name});
-			});
+            .success(function(sport) {
+                $scope.sports.push(sport);
+                Notification.success({message: 'Deporte ' + sport.name + ' creado exitosamente'});
+                $scope.name = '';
+            })
+            .error(function(error) {
+                Notification.error({message: error.name});
+            });
     }
 });

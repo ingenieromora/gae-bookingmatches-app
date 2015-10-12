@@ -54,9 +54,9 @@ public class SportController {
             path = "sports",
             httpMethod = HttpMethod.POST
     )
-    public void createSport(NameRequest rq) throws ConflictException {
+    public Sport createSport(NameRequest rq) throws ConflictException {
         try {
-            service.createSport(rq.getName());
+            return service.createSport(rq.getName());
         } catch (SportNameAlreadyExistException e) {
             throw new ConflictException(e);
         }

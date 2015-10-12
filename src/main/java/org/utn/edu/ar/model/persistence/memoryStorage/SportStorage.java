@@ -49,10 +49,11 @@ public class SportStorage implements ISportStorage {
     }
 
     @Override
-    public void createSport(String sportName) {
+    public Sport createSport(String sportName) {
         int lastId = getLastId();
         Sport currentSport = new Sport(lastId, sportName);
         sportList.add(currentSport);
+        return currentSport;
     }
 
     @Override
