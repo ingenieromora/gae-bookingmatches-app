@@ -5,6 +5,7 @@ import org.utn.edu.ar.model.domain.Match;
 import org.utn.edu.ar.model.domain.Player;
 import org.utn.edu.ar.model.domain.Sport;
 import org.utn.edu.ar.model.exceptions.match.MatchNotFoundException;
+import org.utn.edu.ar.model.exceptions.match.PlayerAlreadyConfirmedException;
 import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
 import org.utn.edu.ar.model.request.MatchRequest;
 import org.utn.edu.ar.util.Coordinates;
@@ -30,4 +31,6 @@ public interface IMatchStorage {
 
     public void removePlayer(Integer matchId, String fbId)
             throws MatchNotFoundException, PlayerNotFoundException;
+
+    public void addPlayer(Integer matchId, Player playerFbId) throws PlayerAlreadyConfirmedException;
 }

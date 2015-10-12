@@ -5,9 +5,15 @@ import org.junit.Assert;
 import org.junit.Before;
 import org.junit.Test;
 import org.utn.edu.ar.model.MatchService;
+import org.utn.edu.ar.model.PlayerService;
 import org.utn.edu.ar.model.domain.Match;
+import org.utn.edu.ar.model.domain.Player;
 import org.utn.edu.ar.model.exceptions.match.MatchNotFoundException;
+import org.utn.edu.ar.model.exceptions.match.PlayerAlreadyConfirmedException;
+import org.utn.edu.ar.model.exceptions.player.PlayerAlreadyExistsException;
+import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
 import org.utn.edu.ar.model.persistence.memoryStorage.MatchesStorage;
+import org.utn.edu.ar.model.persistence.memoryStorage.PlayersStorage;
 import org.utn.edu.ar.model.request.MatchRequest;
 import org.utn.edu.ar.util.Coordinates;
 
@@ -21,19 +27,31 @@ public class MatchesServiceTest {
 
     private MatchService service;
 
-    private Match m1 = new Match(1, 1, 7, DateTime.now(), null, new Coordinates(1.0, 1.0));
-    private Match m2 = new Match(2, 1, 7, DateTime.now(), null, new Coordinates(2.0, 2.0));
-    private Match m3 = new Match(3, 2, 7, DateTime.now(), null, new Coordinates(3.0, 3.0));
-
     private MatchRequest rq = new MatchRequest(DateTime.now(), new Coordinates(4.0, 4.0), 1, 7, 1);
 
     @Before
     public void setup() {
+        Match m1 = new Match(1, 1, 7, DateTime.now(), null, new Coordinates(1.0, 1.0));
+        Match m2 = new Match(2, 1, 7, null, null, new Coordinates(2.0, 2.0));
+        Match m3 = new Match(3, 2, 7, DateTime.now(), null, new Coordinates(3.0, 3.0));
+
         List<Match> matches = new ArrayList<>();
         matches.add(m1);
         matches.add(m2);
         matches.add(m3);
-        service = new MatchService(new MatchesStorage(matches));
+
+        List<Player> playerList = new ArrayList<Player>();
+        Player tom = new Player(1, "tom");
+        Player nico = new Player(2, "nico");
+        Player leo = new Player(3, "leo");
+
+        playerList.add(tom);
+        playerList.add(nico);
+        playerList.add(leo);
+
+        PlayerService playerService = new PlayerService(new PlayersStorage(playerList));
+
+        service = new MatchService(new MatchesStorage(matches), playerService);
     }
 
     @Test
@@ -43,7 +61,8 @@ public class MatchesServiceTest {
 
     @Test
     public void testGetMatchById() throws MatchNotFoundException {
-        Assert.assertEquals(m2, service.getMatchById(2));
+        Match m2 = new Match(2, 1, 7, null, null, new Coordinates(2.0, 2.0));
+        Assert.assertEquals(m2.toString(), service.getMatchById(2).toString());
     }
 
     @Test(expected = MatchNotFoundException.class)
@@ -80,4 +99,49 @@ public class MatchesServiceTest {
     public void testDeleteMatchNotFound() throws MatchNotFoundException {
         service.deleteMatch(5);
     }
+
+
+    @Test
+    public void testAddExistentPlayerToMatch() throws MatchNotFoundException, PlayerAlreadyConfirmedException, PlayerNotFoundException, PlayerAlreadyExistsException {
+
+        service.addPlayerToMatch(1, "tom");
+
+        Player outputPlayer = service.getMatchById(1).getStarters().get(0);
+
+        Player expectedPlayer = new Player(1, "tom");
+
+        Assert.assertEquals(outputPlayer, expectedPlayer);
+    }
+
+    @Test
+    public void testAddNonExistentPlayerToMatch() throws MatchNotFoundException, PlayerAlreadyConfirmedException, PlayerNotFoundException, PlayerAlreadyExistsException {
+
+        service.addPlayerToMatch(1, "manuginobili");
+
+        Player outputPlayer = service.getMatchById(1).getStarters().get(0);
+
+        Player expectedPlayer = new Player(4, "manuginobili");
+
+        Assert.assertEquals(outputPlayer, expectedPlayer);
+    }
+
+    @Test
+    public void testRemovePlayerToMatch() throws MatchNotFoundException, PlayerAlreadyConfirmedException, PlayerNotFoundException, PlayerAlreadyExistsException {
+
+        service.addPlayerToMatch(1, "messi");
+
+        service.addPlayerToMatch(1, "romero");
+
+        service.removePlayer(1, "messi");
+
+        Player outputPlayer = service.getMatchById(1).getStarters().get(0);
+
+        Player expectedPlayer = new Player(5, "romero");
+
+        Assert.assertEquals(outputPlayer, expectedPlayer);
+        int number_starters = service.getMatchById(1).getStarters().size();
+        Assert.assertEquals(1, number_starters);
+    }
+
 }
+

@@ -24,6 +24,10 @@ public class PlayerService {
         return storage.getById(id);
     }
 
+    public Player getByFacebookId(String fbId) throws PlayerNotFoundException {
+        return storage.getByFacebookId(fbId);
+    }
+
     public void create(String fbId) throws PlayerAlreadyExistsException {
         storage.create(fbId);
     }
@@ -35,4 +39,6 @@ public class PlayerService {
     public void remove(Integer id) throws PlayerNotFoundException {
         storage.remove(id);
     }
+
+    public boolean exists(String fbId) { return storage.exists(fbId); }
 }

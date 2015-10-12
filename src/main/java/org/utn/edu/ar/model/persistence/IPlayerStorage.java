@@ -17,6 +17,7 @@ public interface IPlayerStorage {
     public Player getById(Integer id) throws PlayerNotFoundException;
 
     public boolean exists(Integer id);
+
     public boolean exists(String fbId);
 
     public void create(String fbId) throws PlayerAlreadyExistsException;
@@ -24,4 +25,6 @@ public interface IPlayerStorage {
     public void update(Integer id, String fbId) throws PlayerNotFoundException;
 
     public void remove(Integer id) throws PlayerNotFoundException;
+
+    public Player getByFacebookId(String id) throws PlayerNotFoundException;
 }

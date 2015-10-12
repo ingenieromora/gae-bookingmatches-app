@@ -52,6 +52,10 @@ public class Match {
     }
 
     public void removePlayer(String fbId) throws PlayerNotFoundException {
+        System.out.println("TITULARES: "+starters);
+        System.out.println("SUPLENTES: "+alternates);
+        System.out.println("A REMOVER:" + fbId);
+
         for(Player p : starters){
             if(p.getFbId().equals(fbId)){
                 starters.remove(p);
@@ -131,5 +135,19 @@ public class Match {
 
     public void setSportId(int sportId) {
         this.sportId = sportId;
+    }
+
+    @Override
+    public String toString() {
+        return "Match{" +
+                "id=" + id +
+                ", sportId=" + sportId +
+                ", playersNeeded=" + playersNeeded +
+                ", date=" + date +
+                ", createdBy=" + createdBy +
+                ", location=" + location +
+                ", starters=" + starters +
+                ", alternates=" + alternates +
+                '}';
     }
 }

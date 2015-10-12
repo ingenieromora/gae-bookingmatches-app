@@ -3,8 +3,8 @@ package org.utn.edu.ar.model.persistence.memoryStorage;
 import org.joda.time.DateTime;
 import org.utn.edu.ar.model.domain.Match;
 import org.utn.edu.ar.model.domain.Player;
-import org.utn.edu.ar.model.domain.Sport;
 import org.utn.edu.ar.model.exceptions.match.MatchNotFoundException;
+import org.utn.edu.ar.model.exceptions.match.PlayerAlreadyConfirmedException;
 import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
 import org.utn.edu.ar.model.persistence.IMatchStorage;
 import org.utn.edu.ar.model.request.MatchRequest;
@@ -81,6 +81,14 @@ public class MatchesStorage implements IMatchStorage {
         if(match == null) throw new MatchNotFoundException(matchId);
 
         match.removePlayer(fbId);
+    }
+
+    @Override
+    public void addPlayer(Integer matchId, Player player) throws PlayerAlreadyConfirmedException {
+        Match match = getMatchById(matchId);
+
+        match.addPlayer(player);
+
     }
 
     private Integer nextId(){

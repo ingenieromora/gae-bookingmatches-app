@@ -1,7 +1,10 @@
 package org.utn.edu.ar.model;
 
 import org.utn.edu.ar.model.domain.Match;
+import org.utn.edu.ar.model.domain.Player;
 import org.utn.edu.ar.model.exceptions.match.MatchNotFoundException;
+import org.utn.edu.ar.model.exceptions.match.PlayerAlreadyConfirmedException;
+import org.utn.edu.ar.model.exceptions.player.PlayerAlreadyExistsException;
 import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
 import org.utn.edu.ar.model.persistence.IMatchStorage;
 import org.utn.edu.ar.model.request.MatchRequest;
@@ -10,14 +13,17 @@ import org.utn.edu.ar.util.Coordinates;
 import java.util.List;
 
 /**
- * Created by juan pablo.
+ * Created by juan pablo, leandro.mora
  */
 public class MatchService {
 
     private IMatchStorage storage;
+    private PlayerService playerService;
 
-    public MatchService(IMatchStorage storage) {
+    public MatchService(IMatchStorage storage, PlayerService playerService) {
+
         this.storage = storage;
+        this.playerService = playerService;
     }
 
     public List<Match> getAllMatches() {
@@ -56,4 +62,22 @@ public class MatchService {
             throws MatchNotFoundException, PlayerNotFoundException {
         storage.removePlayer(matchId, fbId);
     }
+
+    public void addPlayerToMatch(Integer matchId, String playerFbId) throws MatchNotFoundException, PlayerAlreadyExistsException, PlayerNotFoundException, PlayerAlreadyConfirmedException {
+        if (!exists(matchId)) throw new MatchNotFoundException(matchId);
+
+        Player createdPlayer = getPlayer(playerFbId);
+
+        storage.addPlayer(matchId, createdPlayer);
+    }
+
+    private Player getPlayer(String playerFbId) throws PlayerAlreadyExistsException, PlayerNotFoundException {
+        if( !playerService.exists(playerFbId) ) { playerService.create(playerFbId); }
+
+        Player createdPlayer = playerService.getByFacebookId(playerFbId);
+
+        return createdPlayer;
+    }
+
+
 }

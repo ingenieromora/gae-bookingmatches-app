@@ -55,6 +55,16 @@ public class PlayersStorage implements IPlayerStorage {
         throw new PlayerNotFoundException(id);
     }
 
+    @Override
+    public Player getByFacebookId(String fbId) throws PlayerNotFoundException {
+        for(Player p: players){
+            if(p.getFbId() == fbId){
+                return p;
+            }
+        }
+        throw new PlayerNotFoundException(fbId);
+    }
+
     public Integer nextId(){
         int lastInt = 0;
 

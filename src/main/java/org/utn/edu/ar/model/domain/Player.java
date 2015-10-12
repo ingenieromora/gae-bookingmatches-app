@@ -44,4 +44,12 @@ public class Player {
         result = 31 * result + (fbId != null ? fbId.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "Player{" +
+                "id=" + id +
+                ", fbId='" + fbId + '\'' +
+                '}';
+    }
 }
