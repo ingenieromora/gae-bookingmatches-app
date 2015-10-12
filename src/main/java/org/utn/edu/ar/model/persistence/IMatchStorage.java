@@ -20,7 +20,7 @@ public interface IMatchStorage {
 
     public Match getMatchById(int id);
 
-    public void createMatch(MatchRequest rq);
+    public Match createMatch(MatchRequest rq);
 
     public boolean exists(int id);
 

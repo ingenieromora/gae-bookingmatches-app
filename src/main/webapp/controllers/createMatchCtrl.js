@@ -15,20 +15,20 @@ angular.module('bookingMatches')
     $scope.match = {};
 
     SportService.list().success(function(data){
-        $scope.sports = data;
+        $scope.sports = data.items;
     });
 
     $scope.saveMatch = function(){
         $scope.match.date = $filter('date')($scope.match.date, 'dd-MM-yyyy');
         $scope.match.address = $scope.positions[0];
         MatchService.save($scope.match)
-			.success(function(match) {
-				$location.path('/matches/' + match.id);
-				Notification.success({message: 'Partido creado exitosamente'});
-			})
-			.error(function(error) {
-				Notification.error({message: error.name});
-			});
+            .success(function(match) {
+                $location.path('/matches/' + match.id);
+                Notification.success({message: 'Partido creado exitosamente'});
+            })
+            .error(function(error) {
+                Notification.error({message: error.error.message});
+            });
     }
 
     //DatePicker

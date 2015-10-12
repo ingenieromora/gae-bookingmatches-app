@@ -36,10 +36,11 @@ public class MatchesStorage implements IMatchStorage {
     }
 
     @Override
-    public void createMatch(MatchRequest rq) {
+    public Match createMatch(MatchRequest rq) {
         Match match = new Match(rq);
         match.setId(nextId());
         matches.add(match);
+        return match;
     }
 
     @Override
