@@ -102,8 +102,8 @@ Another thing to bear in mind is that Google Cloud Endpoints return lists as a J
 #### Recommendations
 * `GET recommendations` returns all available recommendations.
 * `GET recommendations/{recommendationID}` returns the recommendation for the given id, if it exists.
-* `GET recommendations/destination/{playerId}` returns all recommendations for the destination player id.
-* `GET recommendations/origin/{playerId}` returns all recommendations created by the given player id.
+* `GET recommendations?destination={playerId}` returns all recommendations for the destination player id.
+* `GET recommendations?origin={playerId}` returns all recommendations created by the given player id.
 * `POST recommendations` creates a recommendation for the given matchId to be delivered to the corresponding destination id.
 ```
 {

@@ -45,7 +45,10 @@ public class RecommendationController {
             path = "recommendations",
             httpMethod = HttpMethod.GET
     )
-    public List<Recommendation> getAll(){
+    public List<Recommendation> getAll(@Nullable @Named("origin") Integer originId,
+                                       @Nullable @Named("destination") Integer destinationId){
+        if(originId != null) return service.getForEmitter(originId);
+        if(destinationId != null) return service.getForReceiver(destinationId);
         return service.getAll();
     }
 
@@ -57,25 +60,4 @@ public class RecommendationController {
     public Recommendation getById(@Named("id") Integer id){
         return service.getById(id);
     }
-
-
-    @ApiMethod(
-            name = "getForEmitter",
-            path = "recommendations/origin/{playerId}",
-            httpMethod = HttpMethod.GET
-    )
-     public List<Recommendation> getForEmitter(@Named("playerId") Integer id){
-        return service.getForEmitter(id);
-    }
-
-    @ApiMethod(
-            name = "getForReceiver",
-            path = "recommendations/destination/{playerId}",
-            httpMethod = HttpMethod.GET
-    )
-    public List<Recommendation> getForReceiver(@Named("playerId") Integer id){
-        return service.getForReceiver(id);
-    }
-
-
 }
