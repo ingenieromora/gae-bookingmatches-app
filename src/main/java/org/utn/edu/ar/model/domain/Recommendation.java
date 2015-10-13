@@ -5,40 +5,49 @@ package org.utn.edu.ar.model.domain;
  */
 public class Recommendation {
 
-    private int idEmitter;
-    private int idReceiver;
-    private int idMatch;
+    private int id;
+    private int matchId;
+    private int emitterId;
+    private int receiverId;
 
     public Recommendation(){}
 
-    public Recommendation(int idEmitter, int idReceiver, int idMatch) {
-        this.idEmitter = idEmitter;
-        this.idReceiver = idReceiver;
-        this.idMatch = idMatch;
+    public Recommendation(int emitterId, int receiverId, int matchId) {
+        this.emitterId = emitterId;
+        this.receiverId = receiverId;
+        this.matchId = matchId;
     }
 
-    public int getIdEmitter() {
-        return idEmitter;
+    public int getEmitterId() {
+        return emitterId;
     }
 
-    public void setIdEmitter(int idEmitter) {
-        this.idEmitter = idEmitter;
+    public void setEmitterId(int emitterId) {
+        this.emitterId = emitterId;
     }
 
-    public int getIdReceiver() {
-        return idReceiver;
+    public int getReceiverId() {
+        return receiverId;
     }
 
-    public void setIdReceiver(int idReceiver) {
-        this.idReceiver = idReceiver;
+    public void setReceiverId(int receiverId) {
+        this.receiverId = receiverId;
     }
 
-    public int getIdMatch() {
-        return idMatch;
+    public int getMatchId() {
+        return matchId;
     }
 
-    public void setIdMatch(int idMatch) {
-        this.idMatch = idMatch;
+    public void setMatchId(int matchId) {
+        this.matchId = matchId;
+    }
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
     @Override
@@ -48,17 +57,17 @@ public class Recommendation {
 
         Recommendation that = (Recommendation) o;
 
-        if (idEmitter != that.idEmitter) return false;
-        if (idReceiver != that.idReceiver) return false;
-        return idMatch == that.idMatch;
+        if (emitterId != that.emitterId) return false;
+        if (receiverId != that.receiverId) return false;
+        return matchId == that.matchId;
 
     }
 
     @Override
     public int hashCode() {
-        int result = idEmitter;
-        result = 31 * result + idReceiver;
-        result = 31 * result + idMatch;
+        int result = emitterId;
+        result = 31 * result + receiverId;
+        result = 31 * result + matchId;
         return result;
     }
 }
