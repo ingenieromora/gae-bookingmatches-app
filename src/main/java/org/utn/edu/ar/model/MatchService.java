@@ -36,6 +36,12 @@ public class MatchService {
         return match;
     }
 
+    public Match getMatchByCreatedBy(int createdBy) throws MatchNotFoundException {
+        Match match = storage.getMatchByCreatedBy(createdBy);
+        if (match == null) throw new MatchNotFoundException(createdBy);
+        return match;
+    }
+
     public Match createMatch(MatchRequest rq) {
         return storage.createMatch(rq);
     }

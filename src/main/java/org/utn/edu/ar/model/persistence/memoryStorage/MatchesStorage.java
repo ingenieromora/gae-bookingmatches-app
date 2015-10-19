@@ -27,10 +27,18 @@ public class MatchesStorage implements IMatchStorage {
 
     @Override
     public Match getMatchById(int id) {
-//        return matches.stream().filter(m -> m.getId() == id).findFirst().get();
         Match match = null;
         for (Match m : matches) {
             if (m.getId() == id) match = m;
+        }
+        return match;
+    }
+
+    @Override
+    public Match getMatchByCreatedBy(Integer createdBy) {
+        Match match = null;
+        for (Match m : matches) {
+            if (m.getCreatedBy() == createdBy) match = m;
         }
         return match;
     }
@@ -45,7 +53,6 @@ public class MatchesStorage implements IMatchStorage {
 
     @Override
     public boolean exists(int id) {
-//        return matches.stream().anyMatch(m -> m.getId() == id);
         for (Match m : matches) {
             if (m.getId() == id) return true;
         }

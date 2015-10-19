@@ -13,7 +13,7 @@ import org.utn.edu.ar.util.Coordinates;
 import java.util.List;
 
 /**
- * Created by juan pablo.
+ * Created by juan pablo, leandro.mora
  */
 public interface IMatchStorage {
 
@@ -33,4 +33,6 @@ public interface IMatchStorage {
             throws MatchNotFoundException, PlayerNotFoundException;
 
     public void addPlayer(Integer matchId, Player playerFbId) throws PlayerAlreadyConfirmedException;
+
+    public Match getMatchByCreatedBy(Integer createdBy);
 }

@@ -37,8 +37,7 @@ public class MatchController {
             httpMethod = HttpMethod.POST
     )
     public void create(MatchRequest rq) {
-            //TODO Chequear que si algunso parametros fundamentales no estan presentes, no cree nada
-            service.createMatch(rq);
+        service.createMatch(rq);
     }
 
 
@@ -105,6 +104,19 @@ public class MatchController {
     }
 
     @ApiMethod(
+            name = "getMatchByCreatedBy",
+            //path = "matches",
+            httpMethod = HttpMethod.GET
+    )
+    public Match getMatchByCreatedBy(@Named("createdBy") Integer id) throws NotFoundException {
+        try {
+            return service.getMatchByCreatedBy(id);
+        } catch (MatchNotFoundException e) {
+            throw new NotFoundException("Match "+id+" does not exist.");
+        }
+    }
+
+    @ApiMethod(
             name = "matches.updateMatches",
             path = "matches/{id}",
             httpMethod = HttpMethod.PUT
@@ -112,7 +124,7 @@ public class MatchController {
     public void updateMatches(@Named("id") Integer id, MatchRequest request) throws NotFoundException {
         try {
             service.updateMatch(id, request.getSportId(), request.getPlayersNeeded(),
-                                        request.getDate(),request.getCreatedBy(), request.getLocation());
+                    request.getDate(),request.getCreatedBy(), request.getLocation());
         } catch (MatchNotFoundException e) {
             throw new NotFoundException("Match "+id+" does not exist.");
         }
