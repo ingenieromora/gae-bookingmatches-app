@@ -16,6 +16,7 @@ import org.utn.edu.ar.model.exceptions.player.PlayerAlreadyExistsException;
 import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
 import org.utn.edu.ar.model.persistence.memoryStorage.MatchesStorage;
 import org.utn.edu.ar.model.persistence.memoryStorage.PlayersStorage;
+import org.utn.edu.ar.model.request.FacebookIdRequest;
 import org.utn.edu.ar.model.request.MatchRequest;
 import org.utn.edu.ar.model.request.NameRequest;
 
@@ -66,14 +67,14 @@ public class MatchController {
             path = "matches/{id}/inscriptions",
             httpMethod = HttpMethod.DELETE
     )
-    public void removePlayer(@Named("id") Integer matchId, NameRequest fbId) throws NotFoundException {
+    public void removePlayer(@Named("id") Integer matchId, FacebookIdRequest fbId) throws NotFoundException {
         try {
             //TODO SOLVE! Return "fbId.getNmae()"null, why??
-            System.out.println("----------------INPUT: "+fbId.getName());
-            service.removePlayer(matchId, fbId.getName());
+            System.out.println("----------------INPUT: "+fbId.getFbId());
+            service.removePlayer(matchId, fbId.getFbId());
         }
         catch(PlayerNotFoundException e){
-            throw new NotFoundException("Player "+fbId.getName()+" does not exist in match "+matchId);
+            throw new NotFoundException("Player "+fbId.getFbId()+" does not exist in match "+matchId);
         } catch (MatchNotFoundException e) {
             throw new NotFoundException("Match "+matchId.toString()+" does not exist.");
         }
@@ -130,4 +131,16 @@ public class MatchController {
         }
     }
 
+    @ApiMethod(
+            name = "matches.deleteMatch",
+            path = "matches/{id}",
+            httpMethod = HttpMethod.DELETE
+    )
+    public void deleteMatch(@Named("id") Integer id) throws NotFoundException {
+        try {
+            service.deleteMatch(id);
+        } catch (MatchNotFoundException e) {
+            throw new NotFoundException("Match "+id+" does not exist.");
+        }
+    }
 }
