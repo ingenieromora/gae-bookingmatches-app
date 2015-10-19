@@ -13,7 +13,7 @@ public interface ISportStorage {
     public boolean exists(Integer sportId);
     public boolean exists(String sportName);
 
-    public void createSport(String sportName);
+    public Sport createSport(String sportName);
 
     public void updateSport(Integer sportId, String sportName);
 

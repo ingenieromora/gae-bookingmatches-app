@@ -57,13 +57,13 @@ public class SportServiceTest {
 
     @Test
     public void testCreateSport() throws SportNameAlreadyExistException, SportNotFoundException {
-        service.createSport("Tenis");
+        Sport created = service.createSport("Tenis");
         Assert.assertEquals(3, service.getAllSports().size());
     }
 
     @Test(expected = SportNameAlreadyExistException.class)
     public void testNameAlreadeExistException() throws SportNameAlreadyExistException {
-        service.createSport("Futbol");
+        Sport created = service.createSport("Futbol");
     }
 
     @Test

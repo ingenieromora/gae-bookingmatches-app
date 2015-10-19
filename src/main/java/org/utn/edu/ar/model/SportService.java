@@ -39,11 +39,11 @@ public class SportService {
         this.storage = storage;
     }
 
-    public void createSport(String sportName) throws SportNameAlreadyExistException {
+    public Sport createSport(String sportName) throws SportNameAlreadyExistException {
         if(storage.exists(sportName)){
             throw new SportNameAlreadyExistException(sportName);
         }
-        storage.createSport(sportName);
+        return storage.createSport(sportName);
     }
 
     public void updateSport(Integer sportId, String sportName)

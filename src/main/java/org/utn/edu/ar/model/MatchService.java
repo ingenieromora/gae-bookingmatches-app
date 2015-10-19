@@ -36,8 +36,8 @@ public class MatchService {
         return match;
     }
 
-    public void createMatch(MatchRequest rq) {
-        storage.createMatch(rq);
+    public Match createMatch(MatchRequest rq) {
+        return storage.createMatch(rq);
     }
 
     public boolean exists(int id) {

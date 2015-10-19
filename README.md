@@ -1,60 +1,36 @@
-appengine-endpoints-helloendpoints-java-maven
+TACS-2C2015
 =============================================
+[TP cuatrimestral TACS ](https://docs.google.com/document/d/1QVK2Ua9IBlcdvLbIWmJsNY2Ev5bSSBdmugOwHuchMhE/pub) "El que no salta, abandonó"
 
-A "hello world" application for Google Cloud Endpoints in Java.
+## Clonación del repositorio
+`git clone https://github.com/leomora/gae-bookingmatches-app.git"
 
-## Products
-- [App Engine][1]
+## Descarga de dependencias del front-end
+Ver [Instalación del FrontEnd](/src/main/webapp/README.md)
+```
+cd /path/to/project/gae-bookingmatches-app/src/main/webapp/vendor
+npm install
+```
 
-## Language
-- [Java][2]
+## Edición de hosts
+Este paso es necesario para poder hacer la integración con facebook, ya que requiere un dominio y un sitio y tiene conflictos utilizando localhost.
 
-## APIs
-- [Google Cloud Endpoints][3]
-- [Google App Engine Maven plugin][4]
+`cd /etc/hosts`
+Agregar la línea:
+`127.0.0.1          local.bookingmatches.com`
 
-## Setup Instructions
+## Correr la aplicación localmente
+Desde la ruta del proyecto, ejecutar `mvn appengine:devserver`, y verificar que esté funcionando, visitando la dirección del servidor local ([local.bookingmatches.com:8080][1])
 
-1. Update the value of `application` in `appengine-web.xml` to the app
-   ID you have registered in the App Engine admin console and would
-   like to use to host your instance of this sample.
+## Generar el .jar
+`mvn appengine:endpoints_get_client_lib`
+Se generará en `target/endpoints-client-libs/<api-name>/target` 
 
-1. Optional step: These sub steps are not required but you need to do
-   this if you want to use auth protected API methods.
-
-    1. Update the values in `src/main/java/${packageInPathFormat}/Constants.java`
-       to reflect the respective client IDs you have registered in the
-       [APIs Console][6].
-
-    1. Update the value of `google.devrel.samples.helloendpoints.CLIENT_ID`
-       in `src/main/webapp/base.js` to reflect the web client ID you have
-       registered in the [APIs Console][4].
-
-1. Run the application with `mvn appengine:devserver`, and ensure it's
-   running by visiting your local server's address (by default
-   [localhost:8080][5].)
-
-1. Get the client library with
-
-   $ mvn appengine:endpoints_get_client_lib
-
-   It will generate a jar file named something like
-   `helloworld-v1-1.18.0-rc-SNAPSHOT.jar` under the
-   `target/endpoints-client-libs/<api-name>/target` directory of your
-   project, as well as install the artifact into your local maven
-   repository.
-
-1. Deploy your application to Google App Engine with
-
-   $ mvn appengine:update
+## Desplegar aplicación en Google App Engine
+`mvn appengine:update`
    
-Finally, go to
+###Exploración de API
+[local.bookingmatches.com:8080/_ah/api/explorer][2]
 
-   `localhost:8080/_ah/api/explorer` to test the API
-
-[1]: https://developers.google.com/appengine
-[2]: http://java.com/en/
-[3]: https://developers.google.com/appengine/docs/java/endpoints/
-[4]: https://developers.google.com/appengine/docs/java/tools/maven
-[5]: https://localhost:8080/
-[6]: https://console.developers.google.com/
+[1]: http://local.bookingmatches.com:8080
+[2]: http://local.bookingmatches.com:8080/_ah/api/explorer

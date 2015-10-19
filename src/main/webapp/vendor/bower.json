@@ -1,0 +1,21 @@
+{
+  "name": "bookingmatches",
+  "description": "TP TACS 2C2015",
+  "version": "0.0.0",
+  "homepage": "https://github.com/leomora/gae-bookingmatches-app",
+  "license": "MIT",
+  "private": true,
+  "dependencies": {
+    "angular": "~1.4.0",
+    "angular-bootstrap": "~0.13.4",
+    "angular-loader": "~1.4.0",
+    "angular-mocks": "~1.4.0",
+    "angular-route": "~1.4.0",
+    "angular-ui-notification": "~0.0.14",
+    "bootstrap": "3.3.4",
+    "html5-boilerplate": "~5.2.0",
+    "ng-facebook": "~0.1.6",
+    "ng-table": "1.0.0-beta.5",
+    "ngmap": "~1.13.4"
+  }
+}

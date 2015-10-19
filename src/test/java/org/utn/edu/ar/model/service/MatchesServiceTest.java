@@ -72,7 +72,7 @@ public class MatchesServiceTest {
 
     @Test
     public void testCreateMatch() {
-        service.createMatch(rq);
+        Match created = service.createMatch(rq);
         Assert.assertEquals(4, service.getAllMatches().size());
     }
 

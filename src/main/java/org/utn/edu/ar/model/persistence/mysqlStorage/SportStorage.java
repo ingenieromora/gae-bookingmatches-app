@@ -29,8 +29,9 @@ public class SportStorage implements ISportStorage{
     }
 
     @Override
-    public void createSport(String sportName) {
+    public Sport createSport(String sportName) {
         //TODO CODE IT
+        return new Sport();
     }
 
     @Override
