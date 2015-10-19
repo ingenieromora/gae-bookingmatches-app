@@ -10,7 +10,5 @@ angular.module('bookingMatches')
 }])
 
 .controller('MainCtrl', ['$scope', function($scope, $facebook) {
-    $scope.user = {
-        id: 'TomD'
-    };
+
 }]);

@@ -9,7 +9,7 @@ angular.module('bookingMatches')
     });
 }])
 
-.controller('CreateMatchCtrl', function($scope, $location, $filter, MatchService, SportService, Notification) {
+.controller('CreateMatchCtrl', function($scope, $location, $filter, MatchService, SportService, FBService, Notification) {
     $scope.sports = [];
     $scope.user = {};
     $scope.match = {};
@@ -42,5 +42,10 @@ angular.module('bookingMatches')
         $scope.positions = [];
         $scope.positions.push({lat:e.latLng.lat(),lng:e.latLng.lng()});
         $scope.validAddress = true;
-    }
+    };
+
+    //Facebook
+    $scope.postToWall = function(){
+        FBService.postMatchToWall();
+    };
 });

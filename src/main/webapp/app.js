@@ -15,6 +15,7 @@ angular.module('bookingMatches', [
 
 .config( function( $facebookProvider ) {
   $facebookProvider.setAppId('1496941813951092');
+  $facebookProvider.setPermissions("user_friends,publish_actions");
 })
 
 .run( function( $rootScope ) {
