@@ -50,7 +50,8 @@ public class MatchService {
         return storage.exists(id);
     }
 
-    public void updateMatch(int id, Integer sportId, int playersNeeded, org.joda.time.DateTime date, Integer creator, Coordinates location)
+
+    public void updateMatch(int id, Integer sportId, Integer playersNeeded, org.joda.time.DateTime date, Integer creator, Coordinates location)
             throws MatchNotFoundException {
 
         if (!exists(id)) {
