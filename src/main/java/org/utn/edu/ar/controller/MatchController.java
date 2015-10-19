@@ -43,7 +43,7 @@ public class MatchController {
 
 
     @ApiMethod(
-            name = "matches.addPlayerToMatch",
+            name = "addPlayerToMatch",
             path = "matches/{id}/inscriptions",
             httpMethod = HttpMethod.POST
     )
@@ -63,7 +63,7 @@ public class MatchController {
 
 
     @ApiMethod(
-            name = "matches.removePlayer",
+            name = "removePlayer",
             path = "matches/{id}/inscriptions",
             httpMethod = HttpMethod.DELETE
     )
@@ -82,7 +82,7 @@ public class MatchController {
 
 
     @ApiMethod(
-            name = "matches.getAllMatches",
+            name = "getAllMatches",
             path = "matches",
             httpMethod = HttpMethod.GET
     )
@@ -92,7 +92,7 @@ public class MatchController {
 
 
     @ApiMethod(
-            name = "matches.getMatchesById",
+            name = "getMatchesById",
             path = "matches/{id}",
             httpMethod = HttpMethod.GET
     )

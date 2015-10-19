@@ -10,8 +10,16 @@ import java.util.List;
  */
 public interface IRecommendationStorage {
 
-    public List<Recommendation> getFor(Integer playerId);
+    public List<Recommendation> getForEmitter(Integer playerId);
+
+    public List<Recommendation> getForReceiver(Integer playerId);
 
     public void create(Recommendation rec);
+
+    public void delete(Integer id);
+
+    public Recommendation getById(Integer id);
+
+    public List<Recommendation> getAll();
 
 }
