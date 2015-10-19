@@ -3,7 +3,7 @@ TACS-2C2015
 [TP cuatrimestral TACS ](https://docs.google.com/document/d/1QVK2Ua9IBlcdvLbIWmJsNY2Ev5bSSBdmugOwHuchMhE/pub) "El que no salta, abandonó"
 
 ## Clonación del repositorio
-`git clone https://github.com/leomora/gae-bookingmatches-app.git"
+`git clone https://github.com/leomora/gae-bookingmatches-app.git`
 
 ## Descarga de dependencias del front-end
 Ver [Instalación del FrontEnd](/src/main/webapp/README.md)
@@ -24,6 +24,7 @@ Desde la ruta del proyecto, ejecutar `mvn appengine:devserver`, y verificar que 
 
 ## Generar el .jar
 `mvn appengine:endpoints_get_client_lib`
+
 Se generará en `target/endpoints-client-libs/<api-name>/target` 
 
 ## Desplegar aplicación en Google App Engine
