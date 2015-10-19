@@ -52,13 +52,13 @@ public class MatchesStorage implements IMatchStorage {
     }
 
     @Override
-    public void updateMatch(int id, Integer sportId, int playersNeeded, DateTime date, Integer createdBy, Coordinates location) {
+    public void updateMatch(int id, Integer sportId, Integer playersNeeded, DateTime date, Integer createdBy, Coordinates location) {
         Match match = getMatchById(id);
-        match.setSportId(sportId);
-        match.setPlayersNeeded(playersNeeded);
-        match.setDate(date);
-        match.setCreatedBy(createdBy);
-        match.setLocation(location);
+        if ( sportId != null ) match.setSportId(sportId);
+        if (playersNeeded != null) match.setPlayersNeeded(playersNeeded);
+        if (date != null) match.setDate(date);
+        if (createdBy != null) match.setCreatedBy(createdBy);
+        if (location != null) match.setLocation(location);
     }
 
     @Override

@@ -104,5 +104,18 @@ public class MatchController {
         }
     }
 
+    @ApiMethod(
+            name = "matches.updateMatches",
+            path = "matches/{id}",
+            httpMethod = HttpMethod.PUT
+    )
+    public void updateMatches(@Named("id") Integer id, MatchRequest request) throws NotFoundException {
+        try {
+            service.updateMatch(id, request.getSportId(), request.getPlayersNeeded(),
+                                        request.getDate(),request.getCreatedBy(), request.getLocation());
+        } catch (MatchNotFoundException e) {
+            throw new NotFoundException("Match "+id+" does not exist.");
+        }
+    }
 
 }

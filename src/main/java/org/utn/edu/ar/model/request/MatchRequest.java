@@ -85,4 +85,15 @@ public class MatchRequest {
         result = 31 * result + (createdBy != null ? createdBy.hashCode() : 0);
         return result;
     }
+
+    @Override
+    public String toString() {
+        return "MatchRequest{" +
+                "date=" + date +
+                ", location=" + location +
+                ", sportId=" + sportId +
+                ", playersNeeded=" + playersNeeded +
+                ", createdBy=" + createdBy +
+                '}';
+    }
 }
