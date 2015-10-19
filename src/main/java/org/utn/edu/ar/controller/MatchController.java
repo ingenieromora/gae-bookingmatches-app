@@ -64,17 +64,15 @@ public class MatchController {
 
     @ApiMethod(
             name = "removePlayer",
-            path = "matches/{id}/inscriptions",
+            path = "matches/{id}/inscriptions/{fbId}",
             httpMethod = HttpMethod.DELETE
     )
-    public void removePlayer(@Named("id") Integer matchId, FacebookIdRequest fbId) throws NotFoundException {
+    public void removePlayer(@Named("id") Integer matchId, @Named("fbId") String fbId) throws NotFoundException {
         try {
-            //TODO SOLVE! Return "fbId.getNmae()"null, why??
-            System.out.println("----------------INPUT: "+fbId.getFbId());
-            service.removePlayer(matchId, fbId.getFbId());
+            service.removePlayer(matchId, fbId);
         }
         catch(PlayerNotFoundException e){
-            throw new NotFoundException("Player "+fbId.getFbId()+" does not exist in match "+matchId);
+            throw new NotFoundException("Player "+fbId+" does not exist in match "+matchId);
         } catch (MatchNotFoundException e) {
             throw new NotFoundException("Match "+matchId.toString()+" does not exist.");
         }
