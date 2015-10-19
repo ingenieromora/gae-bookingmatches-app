@@ -13,8 +13,8 @@
     <link rel="stylesheet" href="vendor/bower_components/html5-boilerplate/dist/css/main.css">
     <link rel="stylesheet" href="vendor/bower_components/bootstrap/dist/css/bootstrap-theme.min.css">
     <link rel="stylesheet" href="vendor/bower_components/bootstrap/dist/css/bootstrap.min.css">
-	<link rel="stylesheet" href="vendor/bower_components/ng-table/dist/ng-table.min.css">
-	<link rel="stylesheet" href="vendor/bower_components/angular-ui-notification/dist/angular-ui-notification.min.css">
+    <link rel="stylesheet" href="vendor/bower_components/ng-table/dist/ng-table.min.css">
+    <link rel="stylesheet" href="vendor/bower_components/angular-ui-notification/dist/angular-ui-notification.min.css">
     <link rel="stylesheet" href="app.css">
     <!-- bower:js -->
     <script src="vendor/bower_components/jquery/dist/jquery.js"></script>
@@ -25,12 +25,12 @@
     <script src="vendor/bower_components/angular-route/angular-route.js"></script>
     <script src="vendor/bower_components/angular-ui-notification/dist/angular-ui-notification.min.js"></script>
     <script src="vendor/bower_components/bootstrap/dist/js/bootstrap.js"></script>
+    <script src="vendor/bower_components/ng-facebook/ngFacebook.js"></script>
     <script src="vendor/bower_components/ng-table/dist/ng-table.min.js"></script>
     <script src="vendor/bower_components/ngmap/build/scripts/ng-map.js"></script>
     <!-- endbower -->
     <script src="vendor/bower_components/html5-boilerplate/dist/js/vendor/modernizr-2.8.3.min.js"></script>
     <script src="http://maps.google.com/maps/api/js"></script>
-
 </head>
 <body ng-controller="MainCtrl">
     <!--[if lt IE 7]>
@@ -42,18 +42,18 @@
             <div class="container-fluid">
                 <ul class="nav navbar-nav">
                     <li ng-class="{ active: isActive('/main')}"><a href="#/main">Inicio</a></li>
-                    <li ng-class="{ active: isActive('/sports')}"><a href="#/sports">Deportes</a></li>					
-					<li class="dropdown" ng-class="{ active: isActive('/matches/create') || isActive('/matches/created/{{user.id}}') || isActive('/matches')}">
-					  <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Partidos<span class="caret"></span></a>
-					  <ul class="dropdown-menu">
-						<li><a href="#/matches/create">Crear</a></li>
-						<li><a ng-href="#/matches/created/{{user.id}}">Creados por mi</a></li>
-						<li><a href="#">Inscripto</a></li>
-						<li><a href="#">Recomendados</a></li>
-						<li role="separator" class="divider"></li>
-						<li><a href="#/matches">Admin</a></li>
-					  </ul>
-					</li>
+                    <li ng-class="{ active: isActive('/sports')}"><a href="#/sports">Deportes</a></li>                  
+                    <li class="dropdown" ng-class="{ active: isActive('/matches/create') || isActive('/matches/created/{{user.id}}') || isActive('/matches')}">
+                        <a class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Partidos<span class="caret"></span></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="#/matches/create">Crear</a></li>
+                            <li><a ng-href="#/matches/created/{{user.id}}">Creados por mi</a></li>
+                            <li><a href="#">Inscripto</a></li>
+                            <li><a href="#">Recomendados</a></li>
+                            <li role="separator" class="divider"></li>
+                            <li><a href="#/matches">Admin</a></li>
+                        </ul>
+                    </li>
                 </ul>
             </div>
         </nav>
@@ -76,5 +76,6 @@
     <script src="controllers/matchDetailCtrl.js"></script>
     <script src="controllers/createdMatchesCtrl.js"></script>
     <script src="controllers/matchesCtrl.js"></script>
+    <script src="controllers/fbCtrl.js"></script>
 </body>
 </html>
