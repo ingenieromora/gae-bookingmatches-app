@@ -91,7 +91,7 @@ public class PlayersController {
         }
     }
 
-    /*
+
     @ApiMethod(
             name = "validate",
             path = "players/validate",
@@ -112,7 +112,7 @@ public class PlayersController {
       response.setMessage(out);
       return response;
     }
-    */
+
 
     private List<Player> buildMockedPlayers(){
         Player p1 = new Player(1, "Leo");
