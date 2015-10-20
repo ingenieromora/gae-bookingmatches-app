@@ -3,7 +3,7 @@
 angular.module('bookingMatches')
 
 .config(['$routeProvider', function($routeProvider) {
-    $routeProvider.when('/matches/created/', {
+    $routeProvider.when('/matches/created/:userId', {
         templateUrl: 'views/createdMatches.html',
         controller: 'CreatedMatchesCtrl'
     });
