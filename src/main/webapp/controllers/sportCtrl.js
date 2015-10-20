@@ -18,8 +18,10 @@ angular.module('bookingMatches')
     });
 
     $scope.saveSport = function(){
-        if ($scope.name == '')
-                Notification.warn({message: 'El nombre del deporte no puede ser vacío'});
+        if ($scope.name == '') {
+            Notification.warning({message: 'El nombre del deporte no puede ser vacío'});
+            return;
+        }
 
         SportService.save($scope.name)
             .success(function(sport) {
