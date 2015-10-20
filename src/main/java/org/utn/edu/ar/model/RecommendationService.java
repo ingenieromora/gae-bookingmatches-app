@@ -16,8 +16,8 @@ public class RecommendationService {
 
     public RecommendationService(IRecommendationStorage st){ this.storage = st; }
 
-    public void create(Recommendation rec){
-        storage.create(rec);
+    public Recommendation create(Recommendation rec){
+        return storage.create(rec);
     }
 
     public List<Recommendation> getAll(){

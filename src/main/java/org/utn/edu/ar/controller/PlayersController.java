@@ -15,6 +15,7 @@ import org.utn.edu.ar.model.persistence.memoryStorage.PlayersStorage;
 import org.utn.edu.ar.model.request.Facebook;
 import org.utn.edu.ar.model.request.FacebookIdRequest;
 import org.utn.edu.ar.model.request.ValidateRequest;
+import org.utn.edu.ar.model.response.MessageResponse;
 
 import java.util.*;
 
@@ -27,8 +28,8 @@ public class PlayersController {
 
     private PlayerService service = new PlayerService(new PlayersStorage(buildMockedPlayers()));
 
-    /** The map holding FbId -> Access Token pairs, used as a cache to know if a player has authenticated or not.*/
-    private Map<String, String> authenticationCache = new HashMap<String, String>();
+    /** The map holding Access Token -> FbId pairs, used as a cache to know if a player has authenticated or not.*/
+    private static Map<String, String> authenticationCache = new HashMap<String, String>();
 
     @ApiMethod(
             name = "getAll",
@@ -89,25 +90,29 @@ public class PlayersController {
         }
     }
 
-    /*
+
     @ApiMethod(
             name = "validate",
             path = "players/validate",
             httpMethod = HttpMethod.POST
     )
-    public String validatePlayerWithFB(final ValidateRequest rq){
+    public MessageResponse validatePlayerWithFB(final ValidateRequest rq){
+      String out;
       // Search inside cache if we haven't stored that Pair already.
       if(authenticationCache.containsKey(rq.getFbId()) &&
-         authenticationCache.get(rq.getFbId()).equals(rq.getAccessToken()))
-        return "OK";
+         authenticationCache.get(rq.getAccessToken()).equals(rq.getFbId()))
+        out = "OK";
       else {
-        String out = Facebook.authenticate(rq);
+        out = Facebook.authenticate(rq);
         if(out.equals("OK"))
-          authenticationCache.put(rq.getFbId(), rq.getAccessToken());
-        return out;
+          authenticationCache.put(rq.getAccessToken(), rq.getFbId());
       }
+
+      MessageResponse response = new MessageResponse();
+      response.setMessage(out);
+      return response;
     }
-    */
+
 
     private List<Player> buildMockedPlayers(){
         Player p1 = new Player(1, "Leo");

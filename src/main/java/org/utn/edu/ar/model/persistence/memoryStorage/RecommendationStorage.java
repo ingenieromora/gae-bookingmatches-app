@@ -38,9 +38,10 @@ public class RecommendationStorage implements IRecommendationStorage {
         return out;
     }
 
-    public void create(Recommendation r) {
+    public Recommendation create(Recommendation r) {
         r.setId(nextId());
         recommendations.add(r);
+        return r;
     }
 
     public void delete(Integer id){
