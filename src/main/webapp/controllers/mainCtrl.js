@@ -9,5 +9,6 @@ angular.module('bookingMatches')
     });
 }])
 
-.controller('MainCtrl', ['$scope', function($scope, $facebook) {
+.controller('MainCtrl', ['$scope', '$rootScope', '$facebook', function($scope, $rootScope, $facebook) {
+    
 }]);

@@ -9,17 +9,20 @@ angular.module('bookingMatches')
     });
 }])
 
-.controller('SportCtrl', function($scope, SportService, Notification) {
+.controller('SportCtrl', function($scope, $rootScope, SportService, Notification) {
     $scope.name = '';
     $scope.sports = [];
+    $scope.user = $rootScope.user;
 
     SportService.list().success(function(data){
         $scope.sports = data.items;
     });
 
     $scope.saveSport = function(){
-        if ($scope.name == '')
-                Notification.warn({message: 'El nombre del deporte no puede ser vacío'});
+        if ($scope.name == '') {
+            Notification.warning({message: 'El nombre del deporte no puede ser vacío'});
+            return;
+        }
 
         SportService.save($scope.name)
             .success(function(sport) {
