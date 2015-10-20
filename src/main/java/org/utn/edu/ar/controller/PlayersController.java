@@ -28,8 +28,8 @@ public class PlayersController {
 
     private PlayerService service = new PlayerService(new PlayersStorage(buildMockedPlayers()));
 
-    /** The map holding FbId -> Access Token pairs, used as a cache to know if a player has authenticated or not.*/
-    private Map<String, String> authenticationCache = new HashMap<String, String>();
+    /** The map holding Access Token -> FbId pairs, used as a cache to know if a player has authenticated or not.*/
+    private static Map<String, String> authenticationCache = new HashMap<String, String>();
 
     @ApiMethod(
             name = "getAll",
@@ -100,13 +100,14 @@ public class PlayersController {
       String out;
       // Search inside cache if we haven't stored that Pair already.
       if(authenticationCache.containsKey(rq.getFbId()) &&
-         authenticationCache.get(rq.getFbId()).equals(rq.getAccessToken()))
+         authenticationCache.get(rq.getAccessToken()).equals(rq.getFbId()))
         out = "OK";
       else {
         out = Facebook.authenticate(rq);
         if(out.equals("OK"))
-          authenticationCache.put(rq.getFbId(), rq.getAccessToken());
+          authenticationCache.put(rq.getAccessToken(), rq.getFbId());
       }
+
       MessageResponse response = new MessageResponse();
       response.setMessage(out);
       return response;
