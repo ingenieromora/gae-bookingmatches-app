@@ -16,7 +16,6 @@ import org.utn.edu.ar.model.request.Facebook;
 import org.utn.edu.ar.model.request.FacebookIdRequest;
 import org.utn.edu.ar.model.request.ValidateRequest;
 import org.utn.edu.ar.model.response.MessageResponse;
-import sun.plugin2.message.Message;
 
 import java.util.*;
 
