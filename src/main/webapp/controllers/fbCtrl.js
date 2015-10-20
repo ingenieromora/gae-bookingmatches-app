@@ -3,14 +3,14 @@
 angular.module('bookingMatches')
 
 .controller('FBCtrl', function ($scope, $rootScope, FBService) {
-    $scope.isLoggedIn = false;
+    $rootScope.isLoggedIn = false;
     $scope.login = function() {
         FBService.login().then(function(response) {
             var user = {
                 fbId: response.authResponse.userID,
                 accessToken: response.authResponse.accessToken
             };
-            FBService.validate(user);
+            //FBService.validate(user);
             $rootScope.user = user;
             console.log(response);
             refresh();
@@ -20,10 +20,16 @@ angular.module('bookingMatches')
         FBService.getMe().then( 
             function(response) {
                 $scope.welcomeMsg = 'Bienvenido ' + response.name;
-                $scope.isLoggedIn = true;
+                $rootScope.isLoggedIn = true;
+				$rootScope.user = {
+                    fbId: response.id,
+                    accessToken: FBService.getAuthResponse()['accessToken'],
+                    name: response.name
+                };
             },
             function(err) {
                 $scope.welcomeMsg = 'Login con Facebook';
+                $rootScope.isLoggedIn = false;
                 console.log(err);
             }
         );

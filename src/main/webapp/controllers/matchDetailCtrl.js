@@ -16,16 +16,19 @@ angular.module('bookingMatches')
 		canSubscribe: true, //TODO
 		canUnsubscribe: true //TODO
 	};
+	$scope.user = {
+		fbId: 1234,
+		accessToken: "asdasdasd",
+		name: "sarasa"
+	};
 
     MatchService.get($routeParams.id).success(function(data){
         $scope.match = data;
-		
-		$scope.actions.canDelete = data.createdBy.fbId == $scope.user.id;
-		
-		
+		$scope.actions.canDelete = data.createdBy == $scope.user.fbId;
+
 		//TODOMap
 		$scope.positions = [];
-		$scope.initialCenter = "-34.6087014,-58.4293986";
+		$scope.initialCenter = data.location.latitude + "," + data.location.longitude;
 		$scope.validAddress = false;
 		$scope.placeMarker = function(e) {
 			$scope.positions = [];

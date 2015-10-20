@@ -9,9 +9,10 @@ angular.module('bookingMatches')
     });
 }])
 
-.controller('SportCtrl', function($scope, SportService, Notification) {
+.controller('SportCtrl', function($scope, $rootScope, SportService, Notification) {
     $scope.name = '';
     $scope.sports = [];
+    $scope.user = $rootScope.user;
 
     SportService.list().success(function(data){
         $scope.sports = data.items;
