@@ -12,10 +12,11 @@ import org.utn.edu.ar.model.domain.Player;
 import org.utn.edu.ar.model.exceptions.player.PlayerAlreadyExistsException;
 import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
 import org.utn.edu.ar.model.persistence.memoryStorage.PlayersStorage;
+import org.utn.edu.ar.model.request.Facebook;
 import org.utn.edu.ar.model.request.FacebookIdRequest;
+import org.utn.edu.ar.model.request.ValidateRequest;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.*;
 
 @Api(
         name = "players",
@@ -25,6 +26,9 @@ import java.util.List;
 public class PlayersController {
 
     private PlayerService service = new PlayerService(new PlayersStorage(buildMockedPlayers()));
+
+    /** The map holding FbId -> Access Token pairs, used as a cache to know if a player has authenticated or not.*/
+    private Map<String, String> authenticationCache = new HashMap<String, String>();
 
     @ApiMethod(
             name = "getAll",
@@ -83,6 +87,24 @@ public class PlayersController {
         } catch (Exception e) {
             throw new NotFoundException(e);
         }
+    }
+
+    @ApiMethod(
+            name = "validate",
+            path = "players/validate",
+            httpMethod = HttpMethod.POST
+    )
+    public String validatePlayerWithFB(final ValidateRequest rq){
+      // Search inside cache if we haven't stored that Pair already.
+      if(authenticationCache.containsKey(rq.getFbId()) &&
+         authenticationCache.get(rq.getFbId()).equals(rq.getAccessToken()))
+        return "OK";
+      else {
+        String out = Facebook.authenticate(rq);
+        if(out.equals("OK"))
+          authenticationCache.put(rq.getFbId(), rq.getAccessToken());
+        return out;
+      }
     }
 
     private List<Player> buildMockedPlayers(){

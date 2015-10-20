@@ -76,6 +76,12 @@ public class MatchesServiceTest {
         Assert.assertEquals(4, service.getAllMatches().size());
     }
 
+    @Test(expected = IllegalArgumentException.class)
+    public void testCreateMatchWithLessParameterThanExpected() {
+        MatchRequest rq2 = new MatchRequest(null, new Coordinates(4.0, 4.0), 1, 7, 1);
+        service.createMatch(rq2);
+    }
+
     @Test
     public void testUpdateMatch() throws MatchNotFoundException {
         service.updateMatch(2, 1, 5, DateTime.now(), null, new Coordinates(2.0, 5.0));

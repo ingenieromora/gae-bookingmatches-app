@@ -43,14 +43,22 @@ public class MatchService {
     }
 
     public Match createMatch(MatchRequest rq) {
+        if( !validParams(rq) ) throw new IllegalArgumentException("The match received less number of arguments than expected");
         return storage.createMatch(rq);
+    }
+
+    private boolean validParams(MatchRequest rq) {
+        return ((rq.getCreatedBy() != null) && (rq.getDate() != null)
+                && (rq.getLocation() != null) && (rq.getPlayersNeeded() != null)
+                && (rq.getSportId() != null));
     }
 
     public boolean exists(int id) {
         return storage.exists(id);
     }
 
-    public void updateMatch(int id, Integer sportId, int playersNeeded, org.joda.time.DateTime date, Integer creator, Coordinates location)
+
+    public void updateMatch(int id, Integer sportId, Integer playersNeeded, org.joda.time.DateTime date, Integer creator, Coordinates location)
             throws MatchNotFoundException {
 
         if (!exists(id)) {
@@ -80,9 +88,7 @@ public class MatchService {
     private Player getPlayer(String playerFbId) throws PlayerAlreadyExistsException, PlayerNotFoundException {
         if( !playerService.exists(playerFbId) ) { playerService.create(playerFbId); }
 
-        Player createdPlayer = playerService.getByFacebookId(playerFbId);
-
-        return createdPlayer;
+        return playerService.getByFacebookId(playerFbId);
     }
 
 
