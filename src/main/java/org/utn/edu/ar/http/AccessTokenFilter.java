@@ -33,7 +33,7 @@ public class AccessTokenFilter implements Filter {
         HttpServletResponse resp = (HttpServletResponse) response;
         resp.reset();
         resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        resp.getWriter().print("You need an access token to continue using this API.");
+        resp.getWriter().print("You need an access token to continue using this API. Please go to /players/validate.");
         return;
       }
     }
