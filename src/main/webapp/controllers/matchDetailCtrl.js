@@ -26,15 +26,11 @@ angular.module('bookingMatches')
         $scope.match = data;
 		$scope.actions.canDelete = data.createdBy == $scope.user.fbId;
 
-		//TODOMap
+		$scope.match.date = new Date(data.date.year + '-' + data.date.monthOfYear + '-' + data.date.dayOfMonth);
+
 		$scope.positions = [];
+		$scope.positions.push({ lat: data.location.latitude, lng: data.location.longitude });
 		$scope.initialCenter = data.location.latitude + "," + data.location.longitude;
-		$scope.validAddress = false;
-		$scope.placeMarker = function(e) {
-			$scope.positions = [];
-			$scope.positions.push({lat:e.latLng.lat(),lng:e.latLng.lng()});
-			$scope.validAddress = true;
-		}
     });
 	
 	$scope.subscribe = function() {
