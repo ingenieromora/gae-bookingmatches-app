@@ -5,11 +5,11 @@ import org.apache.commons.io.IOUtils;
 import org.utn.edu.ar.Constants;
 import org.utn.edu.ar.model.response.FbIdNameResponse;
 
-import javax.net.ssl.HttpsURLConnection;
 import java.io.IOException;
 import java.io.InputStream;
 import java.io.StringWriter;
 import java.net.URL;
+import java.net.URLConnection;
 
 /**
  * Created by tom on 10/18/15.
@@ -41,7 +41,7 @@ public class Facebook {
     URL url;
     try {
       url = new URL(validateUserURL + rq.getAccessToken());
-      HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+      URLConnection conn = url.openConnection();
       InputStream in =conn.getInputStream();
       FbIdNameResponse response = mapper.readValue(in, FbIdNameResponse.class);
       if(rq.getFbId().equals(response.getId())) return "OK";
@@ -55,7 +55,7 @@ public class Facebook {
     URL url;
     try {
       url = new URL(getAppTokenURL);
-      HttpsURLConnection conn = (HttpsURLConnection) url.openConnection();
+      URLConnection conn = url.openConnection();
       InputStream in =conn.getInputStream();
       StringWriter writer = new StringWriter();
       IOUtils.copy(in, writer);
