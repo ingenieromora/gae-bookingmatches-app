@@ -10,5 +10,4 @@ angular.module('bookingMatches')
 }])
 
 .controller('MainCtrl', ['$scope', function($scope, $facebook) {
-
 }]);

@@ -18,6 +18,9 @@ angular.module('bookingMatches')
     });
 
     $scope.saveSport = function(){
+        if ($scope.name == '')
+                Notification.warn({message: 'El nombre del deporte no puede ser vacío'});
+
         SportService.save($scope.name)
             .success(function(sport) {
                 $scope.sports.push(sport);
@@ -25,7 +28,7 @@ angular.module('bookingMatches')
                 $scope.name = '';
             })
             .error(function(error) {
-                Notification.error({message: error.name});
+                Notification.error({message: error.error.message});
             });
     }
 });

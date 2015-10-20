@@ -6,11 +6,12 @@ angular.module('bookingMatches')
     $scope.isLoggedIn = false;
     $scope.login = function() {
         FBService.login().then(function(response) {
-            FBService.validate(response.authResponse);
-            $rootScope.user = {
-                id: response.userID,
-                accessToken: response.accessToken
+            var user = {
+                fbId: response.authResponse.userID,
+                accessToken: response.authResponse.accessToken
             };
+            FBService.validate(user);
+            $rootScope.user = user;
             console.log(response);
             refresh();
         });

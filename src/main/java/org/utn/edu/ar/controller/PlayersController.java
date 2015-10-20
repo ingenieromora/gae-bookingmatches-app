@@ -89,6 +89,7 @@ public class PlayersController {
         }
     }
 
+    /*
     @ApiMethod(
             name = "validate",
             path = "players/validate",
@@ -106,6 +107,7 @@ public class PlayersController {
         return out;
       }
     }
+    */
 
     private List<Player> buildMockedPlayers(){
         Player p1 = new Player(1, "Leo");
