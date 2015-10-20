@@ -15,6 +15,8 @@ import org.utn.edu.ar.model.persistence.memoryStorage.PlayersStorage;
 import org.utn.edu.ar.model.request.Facebook;
 import org.utn.edu.ar.model.request.FacebookIdRequest;
 import org.utn.edu.ar.model.request.ValidateRequest;
+import org.utn.edu.ar.model.response.MessageResponse;
+import sun.plugin2.message.Message;
 
 import java.util.*;
 
@@ -94,17 +96,20 @@ public class PlayersController {
             path = "players/validate",
             httpMethod = HttpMethod.POST
     )
-    public String validatePlayerWithFB(final ValidateRequest rq){
+    public MessageResponse validatePlayerWithFB(final ValidateRequest rq){
+      String out;
       // Search inside cache if we haven't stored that Pair already.
       if(authenticationCache.containsKey(rq.getFbId()) &&
          authenticationCache.get(rq.getFbId()).equals(rq.getAccessToken()))
-        return "OK";
+        out = "OK";
       else {
-        String out = Facebook.authenticate(rq);
+        out = Facebook.authenticate(rq);
         if(out.equals("OK"))
           authenticationCache.put(rq.getFbId(), rq.getAccessToken());
-        return out;
       }
+      MessageResponse response = new MessageResponse();
+      response.setMessage(out);
+      return response;
     }
 
     private List<Player> buildMockedPlayers(){
