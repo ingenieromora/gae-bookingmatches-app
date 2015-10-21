@@ -23,7 +23,7 @@ angular.module('bookingMatches')
             localStorage.setJson('currentUser', user);
         };
         localStorage.getUser = function() {
-            localStorage.getJson('currentUser');
+            return localStorage.getJson('currentUser');
         };
 
         return localStorage;
