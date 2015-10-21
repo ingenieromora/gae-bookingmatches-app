@@ -23,13 +23,4 @@
             <td>{{match.alternates.length}}</td>
         </tr>
     </table>
-
-    <select ng-model="friendsToRecommend" multiple>
-        <option ng-repeat="friend in friends">
-            {{friend.name}}
-        </option>
-    </select>
-    <button class="btn btn-info" ng-click="recommend()">
-        <i class="fa fa-share"></i> Recomendar
-    </button>
 </div>

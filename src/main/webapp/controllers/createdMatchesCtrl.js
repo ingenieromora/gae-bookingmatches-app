@@ -24,13 +24,4 @@ angular.module('bookingMatches')
             $defer.resolve($scope.matches);
         }
     });
-
-    FBService.getFriends().then(function(response) {
-        $scope.friends = response.data;
-    });
-
-    $scope.friensToRecommend = [];
-    $scope.recommend = function() {
-        RecommendationService.addAll($scope.friensToRecommend);
-    };
 });

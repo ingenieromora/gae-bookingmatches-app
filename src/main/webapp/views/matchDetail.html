@@ -2,54 +2,63 @@
     <h1>Partido</h1>
 
     <h2>Detalle</h2>
-	<div class="row-fluid">
-		<div class="col-md-4">
-			<h3>Deporte</h3>
-			<h4>{{match.sportId}}<code>TODO: objeto Sport</code></h4>
-			
-			<h3>Lugar</h3>
-			<map center="{{initialCenter}}" 
-				  zoom="15"
-				  disable-default-u-i="true"
-				  disable-double-click-zoom="true">
-				<marker ng-repeat="pos in positions" position="{{pos.lat}}, {{pos.lng}}"></marker>
-			</map>
-		</div>
-		<div class="col-md-4">
-			<h3>Cantidad de Jugadores</h3>
-			<h4>{{match.playersNeeded}}</h4>
-			
-			<h3>Fecha</h3>
-			<div style="display:inline-block;">
-				<datepicker ng-model="match.date" ng-required="true" show-weeks="false" class="well well-sm" date-disabled="'true'" month-disabled="'true'" disabled></datepicker>
-			</div>
-		</div>
-		<div class="col-md-4">
-			<h3>Creado por</h3>
-			<h4>{{match.createdBy}}<code>TODO: objeto User</code></h4>
-			
-			<h3>Jugadores titulares</h3>
-			<ul>
-				<li ng-repeat="starter in match.starters">
-					{{starter.fbId}}
-				</li>
-			</ul>
-			
-			<h3>Jugadores suplentes</h3>
-			<ul>
-				<li ng-repeat="alternate in match.alternates">
-					{{alternate.fbId}}
-				</li>
-			</ul>
-		</div>
-	</div>
-	
-	<div class="toolbar">
-		<div>
-			<button class="btn btn-info" ng-click="recommend()">Recomendar</button>
-			<button class="btn btn-success" ng-click="subscribe()" ng-show="actions.canSubscribe">Inscribirse</button>
-			<button class="btn btn-danger" ng-click="unsuscribe()" ng-show="actions.canUnsubscribe">Desinscribirse</button>
-			<button class="btn btn-danger" ng-click="delete()" ng-show="actions.canDelete">Eliminar</button>
-		</div>
-	</div>
+    <div class="row-fluid">
+        <div class="col-md-4">
+            <h3>Deporte</h3>
+            <h4>{{match.sportId}}<code>TODO: objeto Sport</code></h4>
+            
+            <h3>Lugar</h3>
+            <map center="{{initialCenter}}" 
+                  zoom="15"
+                  disable-default-u-i="true"
+                  disable-double-click-zoom="true">
+                <marker ng-repeat="pos in positions" position="{{pos.lat}}, {{pos.lng}}"></marker>
+            </map>
+        </div>
+        <div class="col-md-4">
+            <h3>Cantidad de Jugadores</h3>
+            <h4>{{match.playersNeeded}}</h4>
+            
+            <h3>Fecha</h3>
+            <div style="display:inline-block;">
+                <datepicker ng-model="match.date" ng-required="true" show-weeks="false" class="well well-sm" date-disabled="'true'" month-disabled="'true'" disabled></datepicker>
+            </div>
+        </div>
+        <div class="col-md-4">
+            <h3>Creado por</h3>
+            <h4>{{match.createdBy}}<code>TODO: objeto User</code></h4>
+            
+            <h3>Jugadores titulares</h3>
+            <ul>
+                <li ng-repeat="starter in match.starters">
+                    {{starter.fbId}}
+                </li>
+            </ul>
+            
+            <h3>Jugadores suplentes</h3>
+            <ul>
+                <li ng-repeat="alternate in match.alternates">
+                    {{alternate.fbId}}
+                </li>
+            </ul>
+        </div>
+    </div>
+
+    <select ng-model="friendToRecommend">
+        <option ng-repeat="friend in friends" ng-value="friend.id">
+            {{friend.name}}
+        </option>
+    </select>
+    <button class="btn btn-info" ng-click="recommend()">
+        <i class="fa fa-share"></i> Recomendar
+    </button>
+    
+    <div class="toolbar">
+        <div>
+            <button class="btn btn-info" ng-click="recommend()">Recomendar</button>
+            <button class="btn btn-success" ng-click="subscribe()" ng-show="actions.canSubscribe">Inscribirse</button>
+            <button class="btn btn-danger" ng-click="unsuscribe()" ng-show="actions.canUnsubscribe">Desinscribirse</button>
+            <button class="btn btn-danger" ng-click="delete()" ng-show="actions.canDelete">Eliminar</button>
+        </div>
+    </div>
 </div>
