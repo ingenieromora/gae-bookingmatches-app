@@ -18,7 +18,7 @@ angular.module('bookingMatches', [
   $facebookProvider.setPermissions("user_friends,publish_actions");
 })
 
-.run( function( $rootScope ) {
+.run( function( $rootScope, $location, FBService) {
     // Load the facebook SDK asynchronously
     (function(){
     if (document.getElementById('facebook-jssdk')) {return;}
@@ -31,4 +31,14 @@ angular.module('bookingMatches', [
 
     firstScriptElement.parentNode.insertBefore(facebookJS, firstScriptElement);
    }());
+
+
+    // register listener to watch route changes
+    $rootScope.$on( "$routeChangeStart", function(event, next, current) {
+        FBService.getLoginStatus().then(function(response) {
+            if(response.status !== 'connected' && next.templateUrl != 'views/main.html'){
+                $location.path( "/main" );
+            }
+        });
+    });
 });

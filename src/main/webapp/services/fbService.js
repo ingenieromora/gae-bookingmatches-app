@@ -7,6 +7,9 @@ angular.module('bookingMatches')
         login: function(){
             return $facebook.login();
         },
+        getLoginStatus: function(){
+            return $facebook.getLoginStatus();
+        },
         getAuthResponse: function(){
             return $facebook.getAuthResponse();
         },
