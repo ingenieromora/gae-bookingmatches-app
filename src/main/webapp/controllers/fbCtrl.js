@@ -2,7 +2,7 @@
 
 angular.module('bookingMatches')
 
-.controller('FBCtrl', function ($scope, $rootScope, FBService) {
+.controller('FBCtrl', function ($scope, $rootScope, FBService, localStorage) {
     $rootScope.isLoggedIn = false;
     $scope.login = function() {
         FBService.login().then(function(response) {
@@ -10,7 +10,9 @@ angular.module('bookingMatches')
                 fbId: response.authResponse.userID,
                 accessToken: response.authResponse.accessToken
             };
-            //FBService.validate(user);
+            FBService.validate(user).then(function(response){
+                if(response.data.message == 'OK') localStorage.setUser(user);
+            });
             $rootScope.user = user;
             console.log(response);
             refresh();
@@ -21,7 +23,7 @@ angular.module('bookingMatches')
             function(response) {
                 $scope.welcomeMsg = 'Bienvenido ' + response.name;
                 $rootScope.isLoggedIn = true;
-				$rootScope.user = {
+                $rootScope.user = {
                     fbId: response.id,
                     accessToken: FBService.getAuthResponse()['accessToken'],
                     name: response.name
