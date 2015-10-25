@@ -7,6 +7,6 @@ angular.module('bookingMatches')
         return viewLocation === $location.path();
     };
 
-    $scope.userId = localStorage.getUser().fbId;
+    $scope.userId = (localStorage.getUser()) ? localStorage.getUser().fbId : null;
 
 });

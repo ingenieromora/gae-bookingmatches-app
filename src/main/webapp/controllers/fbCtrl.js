@@ -3,8 +3,6 @@
 angular.module('bookingMatches')
 
 .controller('FBCtrl', function ($scope, $rootScope, FBService, localStorage) {
-    $scope.isLoggedIn = false;
-
     $scope.login = function() {
         FBService.login().then(function(response) {
             var user = {
@@ -15,26 +13,28 @@ angular.module('bookingMatches')
             FBService.validate(user).then(function(response){
                 if(response.data.message == 'OK'){
                     refresh();
-                    $scope.isLoggedIn = true;
                 }
             });
         });
     };
 
     function refresh() {
-        FBService.getMe().then( 
-            function(response) {
-                $scope.welcomeMsg = 'Bienvenido ' + response.name;
-                localStorage.setUser({
-                    fbId: response.id,
-                    accessToken: FBService.getAuthResponse()['accessToken'],
-                    name: response.name
-                });
-            },
-            function(err) {
-                $scope.welcomeMsg = 'Login con Facebook';
-            }
-        );
+        if($rootScope.isLoggedIn){
+            $rootScope.welcomeMsg = 'Bienvenido ' + localStorage.getUser().name;
+        }else{
+            $rootScope.welcomeMsg = 'Login con Facebook';
+            FBService.getMe().then( 
+                function(response) {
+                    $rootScope.welcomeMsg = 'Bienvenido ' + response.name;
+                    localStorage.setUser({
+                        fbId: response.id,
+                        accessToken: FBService.getAuthResponse()['accessToken'],
+                        name: response.name
+                    });
+                    $rootScope.isLoggedIn = true;
+                }
+            );
+        }
     }
 
     refresh();
