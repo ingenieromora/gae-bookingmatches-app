@@ -1,5 +1,16 @@
 <div class="container">
-    <h1>Partidos creados</h1>
+    <h1>Partidos creados por {{user.name}}</h1>
+
+    <div class="row" ng-hide="hideFriends">
+        <div class="col-md-12">
+            <select ng-model="friendToGo" 
+                    ng-change="redirect()" 
+                    ng-options="friend as friend.name for friend in friends">
+            </select>
+        </div>
+    </div>
+
+    <hr/>
 
     <table ng-table="tableParams" class="table table-bordered table-striped table-condensed" show-filter="false">
         <thead>

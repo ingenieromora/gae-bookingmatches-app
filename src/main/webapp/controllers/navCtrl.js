@@ -2,11 +2,8 @@
 
 angular.module('bookingMatches')
 
-.controller('NavCtrl', function($scope, $location, localStorage) {
+.controller('NavCtrl', function($scope, $location) {
     $scope.isActive = function (viewLocation) { 
         return viewLocation === $location.path();
     };
-
-    $scope.userId = (localStorage.getUser()) ? localStorage.getUser().fbId : null;
-
 });
