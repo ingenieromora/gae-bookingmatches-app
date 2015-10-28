@@ -32,11 +32,11 @@ public class RecommendationService {
         storage.delete(id);
     }
 
-    public List<Recommendation> getForEmitter(Integer playerId){
+    public List<Recommendation> getForEmitter(String playerId){
         return storage.getForEmitter(playerId);
     }
 
-    public List<Recommendation> getForReceiver(Integer playerId){
+    public List<Recommendation> getForReceiver(String playerId){
         return storage.getForReceiver(playerId);
     }
 }

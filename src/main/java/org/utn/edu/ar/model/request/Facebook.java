@@ -42,7 +42,7 @@ public class Facebook {
     try {
       url = new URL(validateUserURL + rq.getAccessToken());
       URLConnection conn = url.openConnection();
-      InputStream in =conn.getInputStream();
+      InputStream in = conn.getInputStream();
       FbIdNameResponse response = mapper.readValue(in, FbIdNameResponse.class);
       if(rq.getFbId().equals(response.getId())) return "OK";
     } catch (IOException e){

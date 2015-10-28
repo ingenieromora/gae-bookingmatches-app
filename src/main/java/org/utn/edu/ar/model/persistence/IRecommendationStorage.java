@@ -9,9 +9,9 @@ import java.util.List;
  */
 public interface IRecommendationStorage {
 
-    public List<Recommendation> getForEmitter(Integer playerId);
+    public List<Recommendation> getForEmitter(String playerId);
 
-    public List<Recommendation> getForReceiver(Integer playerId);
+    public List<Recommendation> getForReceiver(String playerId);
 
     public Recommendation create(Recommendation rec);
 
