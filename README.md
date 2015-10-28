@@ -2,6 +2,11 @@ TACS-2C2015
 =============================================
 [TP cuatrimestral TACS ](https://docs.google.com/document/d/1QVK2Ua9IBlcdvLbIWmJsNY2Ev5bSSBdmugOwHuchMhE/pub) "El que no salta, abandonó"
 
+## Accesos a la aplicación
+App independiente en GAE: https://gae-bookingmatches-app.appspot.com/#/main
+
+Facebook Canvas: https://apps.facebook.com/1496941813951092/
+
 ## Clonación del repositorio
 `git clone https://github.com/leomora/gae-bookingmatches-app.git`
 
