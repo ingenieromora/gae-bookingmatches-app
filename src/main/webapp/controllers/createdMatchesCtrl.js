@@ -46,7 +46,7 @@ angular.module('bookingMatches')
     $scope.matches = [];
 
     MatchService.getCreatedBy($scope.user.fbId).success(function(data){
-        $scope.matches = data;
+        $scope.matches = data.items;
     });
 
 

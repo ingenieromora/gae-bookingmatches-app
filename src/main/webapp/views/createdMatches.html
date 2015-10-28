@@ -14,9 +14,8 @@
 
     <table ng-table="tableParams" class="table table-bordered table-striped table-condensed" show-filter="false">
         <thead>
-            <th>ID</th>
+            <th></th>
             <th>Deporte</th>
-            <th>Direccion</th>
             <th>Jugadores necesarios</th>
             <th>Fecha</th>
             <th>Titulares</th>
@@ -24,12 +23,11 @@
         </thead>
         <tr ng-repeat="match in matches">
             <td>
-                <a href="#/matches/{{match.id}}">{{match.id}}</a>
+                <a ng-href="/#/matches/{{match.id}}" class="btn btn-info">Detalle</a>
             </td>
             <td>{{match.sport.name}}</td>
-            <td>{{match.address}}</td>
             <td>{{match.playersNeeded}}</td>
-            <td>{{match.date | date:'dd/MM/yyyy hh:mm'}}</td>
+            <td>{{match.date.dayOfMonth +'/'+match.date.monthOfYear+'/'+match.date.year}}</td>
             <td>{{match.starters.length}}</td>
             <td>{{match.alternates.length}}</td>
         </tr>
