@@ -10,15 +10,15 @@ angular.module('bookingMatches')
         getAll: function(){
             return $http.get(CONFIG.API_URL + 'matches/v1/matches');
         },
-		getCreatedBy: function(fbId) {
-			return $http.get(CONFIG.API_URL + 'matches/v1/matches?createdBy=' + fbId)
-		},		
+        getCreatedBy: function(fbId) {
+            return $http.get(CONFIG.API_URL + 'matches/v1/matches?createdBy=' + fbId)
+        },
         save: function(name){
             return $http.post(CONFIG.API_URL + 'matches/v1/matches', name);
-        },		
+        },
         subscribe: function(id, fbId){
             return $http.post(CONFIG.API_URL + 'matches/v1/matches/' + id + '/inscriptions', fbId);
-        },	
+        },
         unsubscribe: function(id, fbId){
             return $http.delete(CONFIG.API_URL + 'matches/v1/matches/' + id + '/inscriptions', fbId);
         },

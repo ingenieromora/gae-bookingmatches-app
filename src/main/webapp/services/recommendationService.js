@@ -10,6 +10,9 @@ angular.module('bookingMatches')
         getAll: function(){
             return $http.get(CONFIG.API_URL + 'recommendations/v1/recommendations');
         },
+        getAllFor: function(id){
+            return $http.get(CONFIG.API_URL + 'recommendations/v1/recommendations', {destination: id});
+        },
         save: function(matchId, emitterId, receiverId){
             return $http.post(CONFIG.API_URL + 'recommendations/v1/recommendations', {
                 'matchId': matchId,
