@@ -9,20 +9,19 @@ angular.module('bookingMatches')
     });
 }])
 
-.controller('CreatedMatchesCtrl', function($scope, $routeParams, ngTableParams, MatchService) {
+.controller('CreatedMatchesCtrl', function($scope, $routeParams, ngTableParams, MatchService, FBService) {
 
-	$scope.matches = [];
-	
-	MatchService.getCreatedBy($routeParams.userId).success(function(data){
-		$scope.matches = data;
-	});
-	
-	
-	 $scope.tableParams = new ngTableParams({},
-      {
+    $scope.matches = [];
+
+    MatchService.getCreatedBy($routeParams.userId).success(function(data){
+        $scope.matches = data;
+    });
+
+    $scope.tableParams = new ngTableParams({},
+    {
         total: $scope.matches.length,
         getData: function($defer, params) {
-			$defer.resolve($scope.matches);
+            $defer.resolve($scope.matches);
         }
     });
 });

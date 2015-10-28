@@ -9,9 +9,9 @@ angular.module('bookingMatches')
     });
 }])
 
-.controller('CreateMatchCtrl', function($scope, $location, $filter, MatchService, SportService, Notification) {
+.controller('CreateMatchCtrl', function($scope, $location, $filter, MatchService, SportService, FBService, Notification, localStorage) {
     $scope.sports = [];
-    $scope.user = {};
+    $scope.user = localStorage.getUser();
     $scope.match = {};
 
     SportService.list().success(function(data){
@@ -19,8 +19,14 @@ angular.module('bookingMatches')
     });
 
     $scope.saveMatch = function(){
-        $scope.match.date = $filter('date')($scope.match.date, 'dd-MM-yyyy');
-        $scope.match.address = $scope.positions[0];
+        var address = $scope.positions[0];
+        $scope.match.location = {
+            latitude: address.lat,
+            longitude: address.lng
+        };
+        
+        $scope.match.date = $scope.date.getTime();
+        $scope.match.createdBy = $scope.user.fbId;
         MatchService.save($scope.match)
             .success(function(match) {
                 $location.path('/matches/' + match.id);
@@ -42,5 +48,14 @@ angular.module('bookingMatches')
         $scope.positions = [];
         $scope.positions.push({lat:e.latLng.lat(),lng:e.latLng.lng()});
         $scope.validAddress = true;
-    }
+    };
+
+    //Facebook
+    $scope.postToWall = function(){
+        FBService.postMatchToWall();
+    };
+
+    $scope.sendNotification = function(){
+        FBService.sendNotification('una notificacion', $scope.user.fbId);
+    };
 });

@@ -16,31 +16,32 @@ public class RecommendationStorage implements IRecommendationStorage {
 
     public List<Recommendation> getAll(){ return this.getRecommendations(); }
 
-    public List<Recommendation> getForReceiver(Integer playerId){
+    public List<Recommendation> getForReceiver(String playerId){
         List<Recommendation> out = new ArrayList<>();
 
         for(Recommendation r : recommendations){
-            if(r.getReceiverId() == playerId)
+            if(r.getReceiverId().equals(playerId))
                 out.add(r);
         }
 
         return out;
     }
 
-    public List<Recommendation> getForEmitter(Integer playerId){
+    public List<Recommendation> getForEmitter(String playerId){
         List<Recommendation> out = new ArrayList<>();
 
         for(Recommendation r : recommendations){
-            if(r.getEmitterId() == playerId)
+            if(r.getEmitterId().equals(playerId))
                 out.add(r);
         }
 
         return out;
     }
 
-    public void create(Recommendation r) {
+    public Recommendation create(Recommendation r) {
         r.setId(nextId());
         recommendations.add(r);
+        return r;
     }
 
     public void delete(Integer id){

@@ -1,26 +1,26 @@
 <div class="container">
     <h1>Partidos creados</h1>
-	
-	<table ng-table="tableParams" class="table table-bordered table-striped table-condensed" show-filter="false">
-	<thead>
-		<th>ID</th>
-		<th>Deporte</th>
-		<th>Direccion</th>
-		<th>Jugadores necesarios</th>
-		<th>Fecha</th>
-		<th>Titulares</th>
-		<th>Suplentes</th>
-	</thead>
-    <tr ng-repeat="match in matches">
-        <td>
-			<a href="#/matches/{{match.id}}">{{match.id}}</a>
-		</td>
-        <td>{{match.sport.name}}</td>
-        <td>{{match.address}}</td>
-        <td>{{match.playersNeeded}}</td>
-        <td>{{match.date | date:'dd/MM/yyyy hh:mm'}}</td>
-        <td>{{match.starters.length}}</td>
-        <td>{{match.alternates.length}}</td>
-    </tr>
-</table>
+
+    <table ng-table="tableParams" class="table table-bordered table-striped table-condensed" show-filter="false">
+        <thead>
+            <th>ID</th>
+            <th>Deporte</th>
+            <th>Direccion</th>
+            <th>Jugadores necesarios</th>
+            <th>Fecha</th>
+            <th>Titulares</th>
+            <th>Suplentes</th>
+        </thead>
+        <tr ng-repeat="match in matches">
+            <td>
+                <a href="#/matches/{{match.id}}">{{match.id}}</a>
+            </td>
+            <td>{{match.sport.name}}</td>
+            <td>{{match.address}}</td>
+            <td>{{match.playersNeeded}}</td>
+            <td>{{match.date | date:'dd/MM/yyyy hh:mm'}}</td>
+            <td>{{match.starters.length}}</td>
+            <td>{{match.alternates.length}}</td>
+        </tr>
+    </table>
 </div>

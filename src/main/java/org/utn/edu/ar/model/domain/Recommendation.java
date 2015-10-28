@@ -6,39 +6,39 @@ package org.utn.edu.ar.model.domain;
 public class Recommendation {
 
     private int id;
-    private int matchId;
-    private int emitterId;
-    private int receiverId;
+    private String matchId;
+    private String emitterId;
+    private String receiverId;
 
     public Recommendation(){}
 
-    public Recommendation(int emitterId, int receiverId, int matchId) {
+    public Recommendation(String emitterId, String receiverId, String matchId) {
         this.emitterId = emitterId;
         this.receiverId = receiverId;
         this.matchId = matchId;
     }
 
-    public int getEmitterId() {
+    public String getEmitterId() {
         return emitterId;
     }
 
-    public void setEmitterId(int emitterId) {
+    public void setEmitterId(String emitterId) {
         this.emitterId = emitterId;
     }
 
-    public int getReceiverId() {
+    public String getReceiverId() {
         return receiverId;
     }
 
-    public void setReceiverId(int receiverId) {
+    public void setReceiverId(String receiverId) {
         this.receiverId = receiverId;
     }
 
-    public int getMatchId() {
+    public String getMatchId() {
         return matchId;
     }
 
-    public void setMatchId(int matchId) {
+    public void setMatchId(String matchId) {
         this.matchId = matchId;
     }
 
@@ -65,9 +65,10 @@ public class Recommendation {
 
     @Override
     public int hashCode() {
-        int result = emitterId;
-        result = 31 * result + receiverId;
-        result = 31 * result + matchId;
+        int result = id;
+        result = 31 * result + matchId.hashCode();
+        result = 31 * result + emitterId.hashCode();
+        result = 31 * result + receiverId.hashCode();
         return result;
     }
 }

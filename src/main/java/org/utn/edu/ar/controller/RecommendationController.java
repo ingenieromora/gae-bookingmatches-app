@@ -27,8 +27,8 @@ public class RecommendationController {
             path = "recommendations",
             httpMethod = HttpMethod.POST
     )
-    public void create(Recommendation rec) {
-            service.create(rec);
+    public Recommendation create(Recommendation rec) {
+            return service.create(rec);
     }
 
     @ApiMethod(
@@ -45,8 +45,8 @@ public class RecommendationController {
             path = "recommendations",
             httpMethod = HttpMethod.GET
     )
-    public List<Recommendation> getAll(@Nullable @Named("origin") Integer originId,
-                                       @Nullable @Named("destination") Integer destinationId){
+    public List<Recommendation> getAll(@Nullable @Named("origin") String originId,
+                                       @Nullable @Named("destination") String destinationId){
         if(originId != null) return service.getForEmitter(originId);
         if(destinationId != null) return service.getForReceiver(destinationId);
         return service.getAll();

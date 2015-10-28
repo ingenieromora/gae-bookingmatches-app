@@ -25,15 +25,23 @@
             <div class="col-md-6">
                 <p>Fecha:</p>
                 <div style="display:inline-block;">
-                    <datepicker ng-model="match.date" ng-required="true" min-date="minDate" show-weeks="false" class="well well-sm"></datepicker>
+                    <datepicker ng-model="date" ng-required="true" min-date="minDate" show-weeks="false" class="well well-sm"></datepicker>
                 </div>
             </div>
         </div>
-	
-		<div class="toolbar">
-			<div>
-				<button class="btn btn-info" ng-click="saveMatch()" ng-disabled="!sportForm.$valid || !validAddress">Guardar</button>
-			</div>
-		</div>
+
+        <div class="toolbar">
+            <div>
+                <button class="btn btn-info" ng-click="saveMatch()" ng-disabled="!sportForm.$valid || !validAddress">Guardar</button>
+                <button class="btn btn-primary" ng-click="postToWall()">
+                    <i class="fa fa-facebook"></i>
+                    Postear en el muro
+                </button>
+                <button class="btn btn-primary" ng-click="sendNotification()">
+                    <i class="fa fa-facebook"></i>
+                    Mandar notificación
+                </button>
+            </div>
+        </div>
     </form>
 </div>
