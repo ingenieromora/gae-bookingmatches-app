@@ -9,13 +9,9 @@ angular.module('bookingMatches')
     });
 }])
 
-.controller('CreateMatchCtrl', function($scope, $location, $filter, MatchService, SportService, FBService, Notification) {
+.controller('CreateMatchCtrl', function($scope, $location, $filter, MatchService, SportService, FBService, Notification, localStorage) {
     $scope.sports = [];
-    $scope.user = {
-        fbId: 1234,
-        accessToken: "asdasdasd",
-        name: "sarasa"
-    };
+    $scope.user = localStorage.getUser();
     $scope.match = {};
 
     SportService.list().success(function(data){
@@ -57,5 +53,9 @@ angular.module('bookingMatches')
     //Facebook
     $scope.postToWall = function(){
         FBService.postMatchToWall();
+    };
+
+    $scope.sendNotification = function(){
+        FBService.sendNotification('una notificacion', $scope.user.fbId);
     };
 });

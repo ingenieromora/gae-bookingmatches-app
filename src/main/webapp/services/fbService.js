@@ -22,6 +22,9 @@ angular.module('bookingMatches')
         validate: function(data){
             return $http.post(CONFIG.API_URL + 'players/v1/players/validate', data);
         },
+        getAppAccessToken: function(data){
+            return $http.get(CONFIG.API_URL + 'facebook/v1/facebook/app-access-token');
+        },
         postMatchToWall: function(id){
             $facebook.ui(
                 {
@@ -41,6 +44,16 @@ angular.module('bookingMatches')
                     }
                 }
             );
+        },
+        sendNotification: function(text, userId){
+            this.getAppAccessToken().then(function(response) {
+                var url = 'https://graph.facebook.com/v2.4/'+userId+'/notifications';
+                url += '?access_token='+response.data.message;
+                url += '&template='+text;
+                url += '&href='+CONFIG.SITE_URL;
+
+                $http.post(url);
+            });
         }
     }
 });
