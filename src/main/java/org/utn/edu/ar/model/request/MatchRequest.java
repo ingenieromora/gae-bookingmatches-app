@@ -8,11 +8,11 @@ public class MatchRequest {
     private Coordinates location;
     private Integer sportId;
     private Integer playersNeeded;
-    private Integer createdBy;
+    private String createdBy;
 
     public MatchRequest(){}
 
-    public MatchRequest(DateTime date, Coordinates location, Integer sportId, Integer playersNeeded, Integer createdBy) {
+    public MatchRequest(DateTime date, Coordinates location, Integer sportId, Integer playersNeeded, String createdBy) {
         this.date = date;
         this.location = location;
         this.sportId = sportId;
@@ -52,11 +52,11 @@ public class MatchRequest {
         this.playersNeeded = playersNeeded;
     }
 
-    public Integer getCreatedBy() {
+    public String getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(Integer createdBy) {
+    public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
     }
 

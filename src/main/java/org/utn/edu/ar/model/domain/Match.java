@@ -15,12 +15,12 @@ public class Match {
     private int sportId;
     private int playersNeeded;
     private DateTime date;
-    private Integer createdBy;
+    private String createdBy;
     private Coordinates location;
     private List<Player> starters;
     private List<Player> alternates;
 
-    public Match(int id, int sportId, int playersNeeded, DateTime date, Integer createdBy, Coordinates location) {
+    public Match(int id, int sportId, int playersNeeded, DateTime date, String createdBy, Coordinates location) {
         this.id = id;
         this.sportId = sportId;
         this.playersNeeded = playersNeeded;
@@ -97,11 +97,11 @@ public class Match {
         this.date = date;
     }
 
-    public Integer getCreatedBy() {
+    public String getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(Integer createdBy) {
+    public void setCreatedBy(String createdBy) {
         this.createdBy = createdBy;
     }
 

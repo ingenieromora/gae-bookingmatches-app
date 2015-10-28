@@ -35,7 +35,7 @@ public class MatchesStorage implements IMatchStorage {
     }
 
     @Override
-    public Match getMatchByCreatedBy(Integer createdBy) {
+    public Match getMatchByCreatedBy(String createdBy) {
         Match match = null;
         for (Match m : matches) {
             if (m.getCreatedBy() == createdBy) match = m;
@@ -60,7 +60,7 @@ public class MatchesStorage implements IMatchStorage {
     }
 
     @Override
-    public void updateMatch(int id, Integer sportId, Integer playersNeeded, DateTime date, Integer createdBy, Coordinates location) {
+    public void updateMatch(int id, Integer sportId, Integer playersNeeded, DateTime date, String createdBy, Coordinates location) {
         Match match = getMatchById(id);
         if ( sportId != null ) match.setSportId(sportId);
         if (playersNeeded != null) match.setPlayersNeeded(playersNeeded);

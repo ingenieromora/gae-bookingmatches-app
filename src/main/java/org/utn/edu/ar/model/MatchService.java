@@ -36,7 +36,7 @@ public class MatchService {
         return match;
     }
 
-    public Match getMatchByCreatedBy(int createdBy) throws MatchNotFoundException {
+    public Match getMatchByCreatedBy(String createdBy) throws MatchNotFoundException {
         Match match = storage.getMatchByCreatedBy(createdBy);
         if (match == null) throw new MatchNotFoundException(createdBy);
         return match;
@@ -58,13 +58,13 @@ public class MatchService {
     }
 
 
-    public void updateMatch(int id, Integer sportId, Integer playersNeeded, org.joda.time.DateTime date, Integer creator, Coordinates location)
+    public void updateMatch(int id, Integer sportId, Integer playersNeeded, org.joda.time.DateTime date, String createdBy, Coordinates location)
             throws MatchNotFoundException {
 
         if (!exists(id)) {
             throw new MatchNotFoundException(id);
         }
-        storage.updateMatch(id, sportId, playersNeeded, date, creator, location);
+        storage.updateMatch(id, sportId, playersNeeded, date, createdBy, location);
     }
 
     public void deleteMatch(int id) throws MatchNotFoundException {

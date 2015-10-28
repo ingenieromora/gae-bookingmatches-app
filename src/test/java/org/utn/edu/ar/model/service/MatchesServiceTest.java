@@ -27,7 +27,7 @@ public class MatchesServiceTest {
 
     private MatchService service;
 
-    private MatchRequest rq = new MatchRequest(DateTime.now(), new Coordinates(4.0, 4.0), 1, 7, 1);
+    private MatchRequest rq = new MatchRequest(DateTime.now(), new Coordinates(4.0, 4.0), 1, 7, "1");
 
     @Before
     public void setup() {
@@ -78,7 +78,7 @@ public class MatchesServiceTest {
 
     @Test(expected = IllegalArgumentException.class)
     public void testCreateMatchWithLessParameterThanExpected() {
-        MatchRequest rq2 = new MatchRequest(null, new Coordinates(4.0, 4.0), 1, 7, 1);
+        MatchRequest rq2 = new MatchRequest(null, new Coordinates(4.0, 4.0), 1, 7, "1");
         service.createMatch(rq2);
     }
 

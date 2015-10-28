@@ -25,7 +25,7 @@ public interface IMatchStorage {
 
     public boolean exists(int id);
 
-    public void updateMatch(int id, Integer sportId, Integer playersNeeded, DateTime date, Integer createdBy, Coordinates location);
+    public void updateMatch(int id, Integer sportId, Integer playersNeeded, DateTime date, String createdBy, Coordinates location);
 
     public void deleteMatch(int id);
 
@@ -34,5 +34,5 @@ public interface IMatchStorage {
 
     public void addPlayer(Integer matchId, Player playerFbId) throws PlayerAlreadyConfirmedException;
 
-    public Match getMatchByCreatedBy(Integer createdBy);
+    public Match getMatchByCreatedBy(String createdBy);
 }
