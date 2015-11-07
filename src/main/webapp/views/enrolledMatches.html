@@ -1,0 +1,26 @@
+<div class="container">
+    <h1>Partidos a los que estoy inscripto</h1>
+
+    <hr/>
+
+    <table ng-table="tableParams" class="table table-bordered table-striped table-condensed" show-filter="false">
+        <thead>
+            <th></th>
+            <th>Deporte</th>
+            <th>Jugadores necesarios</th>
+            <th>Fecha</th>
+            <th>Titulares</th>
+            <th>Suplentes</th>
+        </thead>
+        <tr ng-repeat="match in matches">
+            <td>
+                <a ng-href="/#/matches/{{match.id}}" class="btn btn-info">Detalle</a>
+            </td>
+            <td>{{match.sport.name}}</td>
+            <td>{{match.playersNeeded}}</td>
+            <td>{{match.date.dayOfMonth +'/'+match.date.monthOfYear+'/'+match.date.year}}</td>
+            <td>{{match.starters.length}}</td>
+            <td>{{match.alternates.length}}</td>
+        </tr>
+    </table>
+</div>
