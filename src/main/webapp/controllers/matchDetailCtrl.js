@@ -56,9 +56,8 @@ angular.module('bookingMatches')
     $scope.delete = function() {
         MatchService.delete($routeParams.id)
             .success(function(data) {
-                //retorno a /matches hasta que lo definamos
                 Notification.success({message: 'Partido eliminado exitosamente'});
-                $location.path('/matches');
+                $location.path('/matches/created/me');
             })
             .error(function(error) {
                 Notification.error({message: error.name});
