@@ -9,9 +9,10 @@ angular.module('bookingMatches')
     });
 }])
 
-.controller('MatchesCtrl', function($scope, ngTableParams, MatchService) {
+.controller('MatchesCtrl', function($scope, ngTableParams, MatchService, Notification) {
 
     $scope.matches = [];
+    $scope.authorized = false;
 
     MatchService.getAll().success(function(data){
         $scope.matches = data.items;
@@ -24,4 +25,12 @@ angular.module('bookingMatches')
             $defer.resolve($scope.matches);
         }
     });
+
+    $scope.validateAdmin = function(){
+        if($scope.username == 'admin' && $scope.password == 'admin'){
+            $scope.authorized = true;
+        }else{
+            Notification.error({message: 'Login incorrecto'});
+        }
+    }
 });

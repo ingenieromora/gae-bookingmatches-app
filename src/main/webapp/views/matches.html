@@ -1,4 +1,10 @@
-<div class="container">
+<div ng-show="!authorized" class="container">
+    Username: <input type="text" class="form-control" ng-model="username">
+    Password: <input type="password" class="form-control" ng-model="password">
+    <button class="btn btn-primary" ng-click="validateAdmin()">Autenticar</button>
+</div>
+
+<div ng-show="authorized" class="container">
     <h1>Admin</h1>
     <h2>Partidos</h2>
     
