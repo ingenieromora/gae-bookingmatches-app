@@ -42,9 +42,9 @@ public class Match {
     }
 
     public void addPlayer(Player player) throws PlayerAlreadyConfirmedException {
-        if(starters.size() < playersNeeded && !starters.contains(player))
+        if(starters.size() < playersNeeded && !starters.contains(player)){
             starters.add(player);
-        else {
+        } else {
             if(!alternates.contains(player))
                 alternates.add(player);
             else throw new PlayerAlreadyConfirmedException(player);
@@ -52,10 +52,6 @@ public class Match {
     }
 
     public void removePlayer(String fbId) throws PlayerNotFoundException {
-        System.out.println("TITULARES: "+starters);
-        System.out.println("SUPLENTES: "+alternates);
-        System.out.println("A REMOVER:" + fbId);
-
         for(Player p : starters){
             if(p.getFbId().equals(fbId)){
                 starters.remove(p);
