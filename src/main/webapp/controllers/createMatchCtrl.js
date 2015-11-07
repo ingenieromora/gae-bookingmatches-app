@@ -59,8 +59,4 @@ angular.module('bookingMatches')
         $scope.positions.push({lat:e.latLng.lat(),lng:e.latLng.lng()});
         $scope.validAddress = true;
     };
-
-    $scope.sendNotification = function(){
-        FBService.sendNotification('una notificacion', $scope.user.fbId);
-    };
 });
