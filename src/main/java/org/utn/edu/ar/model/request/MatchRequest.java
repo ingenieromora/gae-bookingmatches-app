@@ -1,10 +1,12 @@
 package org.utn.edu.ar.model.request;
 
-import org.joda.time.DateTime;
+
 import org.utn.edu.ar.util.Coordinates;
 
+import java.util.Date;
+
 public class MatchRequest {
-    private DateTime date;
+    private Date date;
     private Coordinates location;
     private Integer sportId;
     private Integer playersNeeded;
@@ -12,7 +14,8 @@ public class MatchRequest {
 
     public MatchRequest(){}
 
-    public MatchRequest(DateTime date, Coordinates location, Integer sportId, Integer playersNeeded, String createdBy) {
+    public MatchRequest(Date date, Coordinates location, Integer sportId, Integer playersNeeded, String createdBy) {
+
         this.date = date;
         this.location = location;
         this.sportId = sportId;
@@ -20,11 +23,11 @@ public class MatchRequest {
         this.createdBy = createdBy;
     }
 
-    public DateTime getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(DateTime date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

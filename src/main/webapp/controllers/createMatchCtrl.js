@@ -25,7 +25,7 @@ angular.module('bookingMatches')
             longitude: address.lng
         };
         
-        $scope.match.date = $scope.date.getTime();
+        $scope.match.date = $filter('date')($scope.date, 'yyyy-MM-dd');
         $scope.match.createdBy = $scope.user.fbId;
         MatchService.save($scope.match)
             .success(function(match) {

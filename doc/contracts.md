@@ -81,6 +81,7 @@ Another thing to bear in mind is that Google Cloud Endpoints return lists as a J
 * `GET matches?createdBy={fbId}` returns created matches by a facebook user
 * `GET matches` returns all created matches with its players
 * `GET matches/{id}` returns match correlating the aforementioned id, if it exists.
+* `GET matches/inscriptions/enrolled/{fbId}` retrieves all match ids in which `fbId` is enrolled.
 
 #### players
 * `GET players` returns all players
@@ -104,7 +105,8 @@ Another thing to bear in mind is that Google Cloud Endpoints return lists as a J
   accessToken
   fbId
 }
-``` 
+```
+
 
 #### Recommendations
 * `GET recommendations` returns all available recommendations.

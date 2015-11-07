@@ -50,7 +50,7 @@
                             <li><a href="#/matches/create">Crear</a></li>
                             <li><a ng-href="#/matches/created/me">Creados por mi</a></li>
                             <li><a ng-href="#/matches/created/friends">Creados por amigos</a></li>
-                            <li><a href="#">Inscripto</a></li>
+                            <li><a ng-href="#/enrolledMatches/">Inscripto</a></li>
                             <li><a ng-href="#/recommendedMatches/">Recomendados</a></li>
                         </ul>
                     </li>
@@ -71,6 +71,7 @@
     <script src="services/matchService.js"></script>
     <script src="services/fbService.js"></script>
     <script src="services/recommendationService.js"></script>
+    <script src="services/inscriptionService.js"></script>
 
     <!--CONTROLLERS-->
     <script src="controllers/navCtrl.js"></script>
@@ -82,5 +83,6 @@
     <script src="controllers/matchesCtrl.js"></script>
     <script src="controllers/fbCtrl.js"></script>
     <script src="controllers/recommendedMatchesCtrl.js"></script>
+    <script src="controllers/enrolledMatchesCtrl.js"></script>
 </body>
 </html>
