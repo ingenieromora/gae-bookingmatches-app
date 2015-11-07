@@ -1,6 +1,5 @@
 package org.utn.edu.ar.model.persistence.memoryStorage;
 
-import org.joda.time.DateTime;
 import org.utn.edu.ar.model.domain.Match;
 import org.utn.edu.ar.model.domain.Player;
 import org.utn.edu.ar.model.exceptions.match.MatchNotFoundException;
@@ -10,6 +9,7 @@ import org.utn.edu.ar.model.persistence.IMatchStorage;
 import org.utn.edu.ar.model.request.MatchRequest;
 import org.utn.edu.ar.util.Coordinates;
 
+import java.util.Date;
 import java.util.List;
 
 public class MatchesStorage implements IMatchStorage {
@@ -60,7 +60,7 @@ public class MatchesStorage implements IMatchStorage {
     }
 
     @Override
-    public void updateMatch(int id, Integer sportId, Integer playersNeeded, DateTime date, String createdBy, Coordinates location) {
+    public void updateMatch(int id, Integer sportId, Integer playersNeeded, Date date, String createdBy, Coordinates location) {
         Match match = getMatchById(id);
         if ( sportId != null ) match.setSportId(sportId);
         if (playersNeeded != null) match.setPlayersNeeded(playersNeeded);

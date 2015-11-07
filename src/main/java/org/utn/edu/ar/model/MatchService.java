@@ -10,6 +10,7 @@ import org.utn.edu.ar.model.persistence.IMatchStorage;
 import org.utn.edu.ar.model.request.MatchRequest;
 import org.utn.edu.ar.util.Coordinates;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -58,7 +59,7 @@ public class MatchService {
     }
 
 
-    public void updateMatch(int id, Integer sportId, Integer playersNeeded, org.joda.time.DateTime date, String createdBy, Coordinates location)
+    public void updateMatch(int id, Integer sportId, Integer playersNeeded, Date date, String createdBy, Coordinates location)
             throws MatchNotFoundException {
 
         if (!exists(id)) {

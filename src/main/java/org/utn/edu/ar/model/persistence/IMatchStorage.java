@@ -1,15 +1,14 @@
 package org.utn.edu.ar.model.persistence;
 
-import org.joda.time.DateTime;
 import org.utn.edu.ar.model.domain.Match;
 import org.utn.edu.ar.model.domain.Player;
-import org.utn.edu.ar.model.domain.Sport;
 import org.utn.edu.ar.model.exceptions.match.MatchNotFoundException;
 import org.utn.edu.ar.model.exceptions.match.PlayerAlreadyConfirmedException;
 import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
 import org.utn.edu.ar.model.request.MatchRequest;
 import org.utn.edu.ar.util.Coordinates;
 
+import java.util.Date;
 import java.util.List;
 
 /**
@@ -25,7 +24,7 @@ public interface IMatchStorage {
 
     public boolean exists(int id);
 
-    public void updateMatch(int id, Integer sportId, Integer playersNeeded, DateTime date, String createdBy, Coordinates location);
+    public void updateMatch(int id, Integer sportId, Integer playersNeeded, Date date, String createdBy, Coordinates location);
 
     public void deleteMatch(int id);
 

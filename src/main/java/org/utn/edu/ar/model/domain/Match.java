@@ -1,12 +1,12 @@
 package org.utn.edu.ar.model.domain;
 
-import org.joda.time.DateTime;
 import org.utn.edu.ar.model.exceptions.match.PlayerAlreadyConfirmedException;
 import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
 import org.utn.edu.ar.model.request.MatchRequest;
 import org.utn.edu.ar.util.Coordinates;
 
 import java.util.ArrayList;
+import java.util.Date;
 import java.util.List;
 
 public class Match {
@@ -14,13 +14,13 @@ public class Match {
     private int id;
     private int sportId;
     private int playersNeeded;
-    private DateTime date;
     private String createdBy;
+    private Date date;
     private Coordinates location;
     private List<Player> starters;
     private List<Player> alternates;
 
-    public Match(int id, int sportId, int playersNeeded, DateTime date, String createdBy, Coordinates location) {
+    public Match(int id, int sportId, int playersNeeded, Date date, String createdBy, Coordinates location) {
         this.id = id;
         this.sportId = sportId;
         this.playersNeeded = playersNeeded;
@@ -89,11 +89,11 @@ public class Match {
         this.playersNeeded = playersNeeded;
     }
 
-    public DateTime getDate() {
+    public Date getDate() {
         return date;
     }
 
-    public void setDate(DateTime date) {
+    public void setDate(Date date) {
         this.date = date;
     }
 

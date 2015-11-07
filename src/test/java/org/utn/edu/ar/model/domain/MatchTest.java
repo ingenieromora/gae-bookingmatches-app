@@ -1,14 +1,15 @@
 package org.utn.edu.ar.model.domain;
 
-import org.joda.time.DateTime;
 import org.junit.Assert;
 import org.junit.Test;
 import org.utn.edu.ar.model.exceptions.match.PlayerAlreadyConfirmedException;
 import org.utn.edu.ar.util.Coordinates;
 
+import java.util.Date;
+
 public class MatchTest {
 
-    private Match testMatch = new Match(1, 1, 2, DateTime.now(), null, new Coordinates(1.0D, 1.0D));
+    private Match testMatch = new Match(1, 1, 2, new Date(), null, new Coordinates(1.0D, 1.0D));
 
     private Player p1 = new Player(1, "Leo");
     private Player p2 = new Player(2, "Tom");

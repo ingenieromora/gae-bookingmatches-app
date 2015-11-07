@@ -90,7 +90,7 @@ public class MatchController {
 
 
     @ApiMethod(
-            name = "getMatchesById",
+            name = "getMatcheById",
             path = "matches/{id}",
             httpMethod = HttpMethod.GET
     )
