@@ -4,16 +4,30 @@ import org.utn.edu.ar.model.domain.Sport;
 import org.utn.edu.ar.model.exceptions.sport.SportNameAlreadyExistException;
 import org.utn.edu.ar.model.exceptions.sport.SportNotFoundException;
 import org.utn.edu.ar.model.persistence.ISportStorage;
+import org.utn.edu.ar.model.persistence.memoryStorage.SportStorage;
 
+import java.util.ArrayList;
 import java.util.List;
 
 public class SportService {
+
+    private static SportService instance = null;
 
     private ISportStorage storage;
 
     public SportService(ISportStorage storage) { this.storage = storage; }
 
-    public SportService() {}
+
+    public static SportService getInstance() {
+        if (instance == null) {
+            synchronized (MatchService.class) {
+                if (instance == null) {
+                    instance = new SportService(new SportStorage());
+                }
+            }
+        }
+        return instance;
+    }
 
     /**
      * Get all sports. In case the storage returns null, throws NotFoundException.

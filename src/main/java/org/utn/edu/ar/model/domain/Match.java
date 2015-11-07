@@ -1,7 +1,10 @@
 package org.utn.edu.ar.model.domain;
 
+import org.utn.edu.ar.model.PlayerService;
+import org.utn.edu.ar.model.SportService;
 import org.utn.edu.ar.model.exceptions.match.PlayerAlreadyConfirmedException;
 import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
+import org.utn.edu.ar.model.exceptions.sport.SportNotFoundException;
 import org.utn.edu.ar.model.request.MatchRequest;
 import org.utn.edu.ar.util.Coordinates;
 
@@ -12,42 +15,45 @@ import java.util.List;
 public class Match {
 
     private int id;
-    private int sportId;
+    private Sport sport;
     private int playersNeeded;
-    private String createdBy;
+    private Player createdBy;
     private Date date;
     private Coordinates location;
     private List<Player> starters;
     private List<Player> alternates;
 
-    public Match(int id, int sportId, int playersNeeded, Date date, String createdBy, Coordinates location) {
+    public Match(int id, int sportId, int playersNeeded, Date date, String createdBy, Coordinates location)
+            throws SportNotFoundException, PlayerNotFoundException {
         this.id = id;
-        this.sportId = sportId;
+        this.sport = SportService.getInstance().getSportById(sportId);
         this.playersNeeded = playersNeeded;
         this.date = date;
-        this.createdBy = createdBy;
+        this.createdBy = PlayerService.getInstance().getByFacebookId(createdBy);
         this.location = location;
         this.starters = new ArrayList<Player>();
         this.alternates = new ArrayList<Player>();
     }
 
-    public Match(MatchRequest rq) {
-        this.sportId = rq.getSportId();
+    public Match(MatchRequest rq) throws SportNotFoundException, PlayerNotFoundException {
+        this.sport = SportService.getInstance().getSportById(rq.getSportId());
         this.playersNeeded = rq.getPlayersNeeded();
         this.date = rq.getDate();
-        this.createdBy = rq.getCreatedBy();
+        this.createdBy = PlayerService.getInstance().getByFacebookId(rq.getCreatedBy());
         this.location = rq.getLocation();
         this.starters = new ArrayList<Player>();
         this.alternates = new ArrayList<Player>();
     }
 
     public void addPlayer(Player player) throws PlayerAlreadyConfirmedException {
+        if(starters.contains(player) || alternates.contains(player)) {
+            throw new PlayerAlreadyConfirmedException(player);
+        }
         if(starters.size() < playersNeeded && !starters.contains(player))
             starters.add(player);
         else {
-            if(!alternates.contains(player))
+            if(!alternates.contains(player) )
                 alternates.add(player);
-            else throw new PlayerAlreadyConfirmedException(player);
         }
     }
 
@@ -97,11 +103,11 @@ public class Match {
         this.date = date;
     }
 
-    public String getCreatedBy() {
+    public Player getCreatedBy() {
         return createdBy;
     }
 
-    public void setCreatedBy(String createdBy) {
+    public void setCreatedBy(Player createdBy) {
         this.createdBy = createdBy;
     }
 
@@ -129,19 +135,19 @@ public class Match {
         this.location = location;
     }
 
-    public int getSportId() {
-        return sportId;
+    public Sport getSport() {
+        return sport;
     }
 
-    public void setSportId(int sportId) {
-        this.sportId = sportId;
+    public void setSport(int sportId) throws SportNotFoundException {
+        this.sport = SportService.getInstance().getSportById(sportId);
     }
 
     @Override
     public String toString() {
         return "Match{" +
                 "id=" + id +
-                ", sportId=" + sportId +
+                ", sport=" + sport +
                 ", playersNeeded=" + playersNeeded +
                 ", date=" + date +
                 ", createdBy=" + createdBy +

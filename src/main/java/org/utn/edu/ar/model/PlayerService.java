@@ -12,11 +12,24 @@ import java.util.List;
  */
 public class PlayerService {
 
+    private static PlayerService instance = null;
+
     private IPlayerStorage storage;
 
     public PlayerService(IPlayerStorage storage){ this.storage = storage; }
 
-    public PlayerService(){}
+    private PlayerService(){}
+
+    public static PlayerService getInstance() {
+        if (instance == null) {
+            synchronized (PlayerService.class) {
+                if (instance == null) {
+                    instance = new PlayerService();
+                }
+            }
+        }
+        return instance;
+    }
 
     public List<Player> getAll(){ return storage.getAll(); }
 

@@ -26,7 +26,7 @@ import java.util.*;
 )
 public class PlayersController {
 
-    private PlayerService service = new PlayerService(new PlayersStorage(buildMockedPlayers()));
+    private PlayerService service = PlayerService.getInstance();
 
     /** The map holding Access Token -> FbId pairs, used as a cache to know if a player has authenticated or not.*/
     private static Map<String, String> authenticationCache = new HashMap<String, String>();

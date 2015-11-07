@@ -24,7 +24,7 @@ import java.util.List;
 )
 public class SportController {
 
-    private SportService service = new SportService(new SportStorage(buildMockedSports()));
+    private SportService service = SportService.getInstance();
 
     @ApiMethod(
             name = "getAll",

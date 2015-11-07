@@ -7,20 +7,16 @@ import com.google.api.server.spi.config.Named;
 import com.google.api.server.spi.response.NotFoundException;
 import org.utn.edu.ar.Constants;
 import org.utn.edu.ar.model.MatchService;
-import org.utn.edu.ar.model.PlayerService;
 import org.utn.edu.ar.model.domain.Match;
-import org.utn.edu.ar.model.domain.Player;
 import org.utn.edu.ar.model.exceptions.match.MatchNotFoundException;
 import org.utn.edu.ar.model.exceptions.match.PlayerAlreadyConfirmedException;
 import org.utn.edu.ar.model.exceptions.player.PlayerAlreadyExistsException;
 import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
-import org.utn.edu.ar.model.persistence.memoryStorage.MatchesStorage;
-import org.utn.edu.ar.model.persistence.memoryStorage.PlayersStorage;
+import org.utn.edu.ar.model.exceptions.sport.SportNotFoundException;
 import org.utn.edu.ar.model.request.FacebookIdRequest;
 import org.utn.edu.ar.model.request.MatchRequest;
 import org.utn.edu.ar.model.request.NameRequest;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Api(
@@ -30,14 +26,14 @@ import java.util.List;
 )
 public class MatchController {
 
-    private MatchService service = new MatchService(new MatchesStorage(new ArrayList<Match>()),new PlayerService(new PlayersStorage(new ArrayList<Player>())));
+    private MatchService service = MatchService.getInstance();
 
     @ApiMethod(
             name = "add",
             path = "matches",
             httpMethod = HttpMethod.POST
     )
-    public Match create(MatchRequest rq) {
+    public Match create(MatchRequest rq) throws SportNotFoundException, PlayerNotFoundException {
         return service.createMatch(rq);
     }
 
@@ -47,9 +43,9 @@ public class MatchController {
             path = "matches/{id}/inscriptions",
             httpMethod = HttpMethod.POST
     )
-    public void addPlayerToMatch(@Named("id") Integer matchId, NameRequest fbId) throws NotFoundException {
+    public void addPlayerToMatch(@Named("id") Integer matchId, FacebookIdRequest fbId) throws NotFoundException {
         try {
-            service.addPlayerToMatch(matchId, fbId.getName());
+            service.addPlayerToMatch(matchId, fbId.getFbId());
         } catch (MatchNotFoundException e) {
             throw new NotFoundException("Match "+matchId+" does not exist.");
         } catch (PlayerAlreadyConfirmedException e) {
@@ -110,8 +106,10 @@ public class MatchController {
     public Match getMatchByCreatedBy(@Named("createdBy") String id) throws NotFoundException {
         try {
             return service.getMatchByCreatedBy(id);
+        } catch (PlayerNotFoundException e) {
+            throw new NotFoundException("Player with fbId: " + id + " was not found.");
         } catch (MatchNotFoundException e) {
-            throw new NotFoundException("Match "+id+" does not exist.");
+            throw new NotFoundException("There were no matches created by "+ id);
         }
     }
 
@@ -120,12 +118,14 @@ public class MatchController {
             path = "matches/{id}",
             httpMethod = HttpMethod.PUT
     )
-    public void updateMatches(@Named("id") Integer id, MatchRequest request) throws NotFoundException {
+    public void updateMatches(@Named("id") Integer id, MatchRequest request) throws NotFoundException, SportNotFoundException {
         try {
             service.updateMatch(id, request.getSportId(), request.getPlayersNeeded(),
                     request.getDate(),request.getCreatedBy(), request.getLocation());
         } catch (MatchNotFoundException e) {
             throw new NotFoundException("Match "+id+" does not exist.");
+        } catch (PlayerNotFoundException e) {
+            throw new NotFoundException("Player with creator with fbId"+request.getCreatedBy()+" does not exist.");
         }
     }
 

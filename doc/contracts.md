@@ -50,7 +50,7 @@ Another thing to bear in mind is that Google Cloud Endpoints return lists as a J
 {
   date
   location
-  sportId
+  sport
   playersNeeded
   createdBy
 }
@@ -60,7 +60,7 @@ Another thing to bear in mind is that Google Cloud Endpoints return lists as a J
 {
   date
   location
-  sportId
+  sport
   playersNeeded
   createdBy
 }

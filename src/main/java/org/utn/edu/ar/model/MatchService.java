@@ -1,15 +1,19 @@
 package org.utn.edu.ar.model;
 
+import com.google.appengine.repackaged.com.google.api.client.util.Lists;
 import org.utn.edu.ar.model.domain.Match;
 import org.utn.edu.ar.model.domain.Player;
 import org.utn.edu.ar.model.exceptions.match.MatchNotFoundException;
 import org.utn.edu.ar.model.exceptions.match.PlayerAlreadyConfirmedException;
 import org.utn.edu.ar.model.exceptions.player.PlayerAlreadyExistsException;
 import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
+import org.utn.edu.ar.model.exceptions.sport.SportNotFoundException;
 import org.utn.edu.ar.model.persistence.IMatchStorage;
+import org.utn.edu.ar.model.persistence.memoryStorage.MatchesStorage;
 import org.utn.edu.ar.model.request.MatchRequest;
 import org.utn.edu.ar.util.Coordinates;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -18,6 +22,8 @@ import java.util.List;
  */
 public class MatchService {
 
+    private static MatchService instance = null;
+
     private IMatchStorage storage;
     private PlayerService playerService;
 
@@ -25,6 +31,19 @@ public class MatchService {
 
         this.storage = storage;
         this.playerService = playerService;
+    }
+
+    public static MatchService getInstance() {
+        if (instance == null) {
+            synchronized (MatchService.class) {
+                if (instance == null) {
+                    instance = new MatchService(
+                            new MatchesStorage(new ArrayList<Match>()),
+                            PlayerService.getInstance());
+                }
+            }
+        }
+        return instance;
     }
 
     public List<Match> getAllMatches() {
@@ -37,13 +56,13 @@ public class MatchService {
         return match;
     }
 
-    public Match getMatchByCreatedBy(String createdBy) throws MatchNotFoundException {
+    public Match getMatchByCreatedBy(String createdBy) throws MatchNotFoundException, PlayerNotFoundException {
         Match match = storage.getMatchByCreatedBy(createdBy);
         if (match == null) throw new MatchNotFoundException(createdBy);
         return match;
     }
 
-    public Match createMatch(MatchRequest rq) {
+    public Match createMatch(MatchRequest rq) throws SportNotFoundException, PlayerNotFoundException {
         if( !validParams(rq) ) throw new IllegalArgumentException("The match received less number of arguments than expected");
         return storage.createMatch(rq);
     }
@@ -60,7 +79,7 @@ public class MatchService {
 
 
     public void updateMatch(int id, Integer sportId, Integer playersNeeded, Date date, String createdBy, Coordinates location)
-            throws MatchNotFoundException {
+            throws MatchNotFoundException, SportNotFoundException, PlayerNotFoundException {
 
         if (!exists(id)) {
             throw new MatchNotFoundException(id);

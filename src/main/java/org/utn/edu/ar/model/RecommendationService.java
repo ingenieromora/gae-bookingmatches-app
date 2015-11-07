@@ -10,9 +10,22 @@ import java.util.List;
  */
 public class RecommendationService {
 
+    private static RecommendationService instance = null;
+
     private IRecommendationStorage storage;
 
-    public RecommendationService(){}
+    private RecommendationService(){}
+
+    public static RecommendationService getInstance() {
+        if (instance == null) {
+            synchronized (RecommendationService.class) {
+                if (instance == null) {
+                    instance = new RecommendationService();
+                }
+            }
+        }
+        return instance;
+    }
 
     public RecommendationService(IRecommendationStorage st){ this.storage = st; }
 

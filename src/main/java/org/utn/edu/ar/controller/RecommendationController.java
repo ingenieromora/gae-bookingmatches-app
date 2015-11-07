@@ -20,8 +20,7 @@ import java.util.List;
 )
 public class RecommendationController {
 
-    private RecommendationService service = new RecommendationService(new RecommendationStorage(new ArrayList<Recommendation>()));
-
+    private RecommendationService service = RecommendationService.getInstance();
     @ApiMethod(
             name = "create",
             path = "recommendations",

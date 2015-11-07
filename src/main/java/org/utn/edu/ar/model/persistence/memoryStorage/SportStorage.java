@@ -3,12 +3,13 @@ package org.utn.edu.ar.model.persistence.memoryStorage;
 import org.utn.edu.ar.model.domain.Sport;
 import org.utn.edu.ar.model.persistence.ISportStorage;
 
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 
 public class SportStorage implements ISportStorage {
 
-    private List<Sport> sportList;
+    private List<Sport> sportList = new ArrayList<Sport>();
 
     public SportStorage() {
     }

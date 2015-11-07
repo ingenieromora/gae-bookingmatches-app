@@ -1,10 +1,12 @@
 package org.utn.edu.ar.model.persistence.memoryStorage;
 
+import org.utn.edu.ar.model.PlayerService;
 import org.utn.edu.ar.model.domain.Match;
 import org.utn.edu.ar.model.domain.Player;
 import org.utn.edu.ar.model.exceptions.match.MatchNotFoundException;
 import org.utn.edu.ar.model.exceptions.match.PlayerAlreadyConfirmedException;
 import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
+import org.utn.edu.ar.model.exceptions.sport.SportNotFoundException;
 import org.utn.edu.ar.model.persistence.IMatchStorage;
 import org.utn.edu.ar.model.request.MatchRequest;
 import org.utn.edu.ar.util.Coordinates;
@@ -35,16 +37,18 @@ public class MatchesStorage implements IMatchStorage {
     }
 
     @Override
-    public Match getMatchByCreatedBy(String createdBy) {
+    public Match getMatchByCreatedBy(String createdBy) throws PlayerNotFoundException {
         Match match = null;
         for (Match m : matches) {
-            if (m.getCreatedBy() == createdBy) match = m;
+            if (m.getCreatedBy().equals(
+                    PlayerService.getInstance().getByFacebookId(createdBy)
+            )) match = m;
         }
         return match;
     }
 
     @Override
-    public Match createMatch(MatchRequest rq) {
+    public Match createMatch(MatchRequest rq) throws SportNotFoundException, PlayerNotFoundException {
         Match match = new Match(rq);
         match.setId(nextId());
         matches.add(match);
@@ -60,12 +64,13 @@ public class MatchesStorage implements IMatchStorage {
     }
 
     @Override
-    public void updateMatch(int id, Integer sportId, Integer playersNeeded, Date date, String createdBy, Coordinates location) {
+    public void updateMatch(int id, Integer sportId, Integer playersNeeded, Date date, String createdBy, Coordinates location)
+            throws SportNotFoundException, PlayerNotFoundException {
         Match match = getMatchById(id);
-        if ( sportId != null ) match.setSportId(sportId);
+        if ( sportId != null ) match.setSport(sportId);
         if (playersNeeded != null) match.setPlayersNeeded(playersNeeded);
         if (date != null) match.setDate(date);
-        if (createdBy != null) match.setCreatedBy(createdBy);
+        if (createdBy != null) match.setCreatedBy(PlayerService.getInstance().getByFacebookId(createdBy));
         if (location != null) match.setLocation(location);
     }
 
