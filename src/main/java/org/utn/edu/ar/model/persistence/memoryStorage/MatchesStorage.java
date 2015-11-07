@@ -37,12 +37,12 @@ public class MatchesStorage implements IMatchStorage {
 
     @Override
     public List<Match> getMatchByCreatedBy(String createdBy) {
-        List<Match> matches = new ArrayList<>();
+        List<Match> createdBymatches = new ArrayList<>();
 
         for (Match m : matches) {
-            if (m.getCreatedBy().equalsIgnoreCase(createdBy)) matches.add(m);
+            if (m.getCreatedBy().equalsIgnoreCase(createdBy)) createdBymatches.add(m);
         }
-        return matches;
+        return createdBymatches;
     }
 
     @Override

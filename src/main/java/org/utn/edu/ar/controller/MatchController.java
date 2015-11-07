@@ -104,7 +104,7 @@ public class MatchController {
 
     @ApiMethod(
             name = "getMatchByCreatedBy",
-            //path = "matches",
+            path = "matches/createdBy/{createdBy}",
             httpMethod = HttpMethod.GET
     )
     public List<Match> getMatchByCreatedBy(@Named("createdBy") String id) {
