@@ -17,7 +17,7 @@ angular.module('bookingMatches')
             return $http.post(CONFIG.API_URL + 'matches/v1/matches', name);
         },
         subscribe: function(id, fbId){
-            return $http.post(CONFIG.API_URL + 'matches/v1/matches/' + id + '/inscriptions', fbId);
+            return $http.post(CONFIG.API_URL + 'matches/v1/matches/' + id + '/inscriptions', {fbId: fbId});
         },
         unsubscribe: function(id, fbId){
             return $http.delete(CONFIG.API_URL + 'matches/v1/matches/' + id + '/inscriptions', fbId);
