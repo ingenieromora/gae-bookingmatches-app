@@ -107,12 +107,8 @@ public class MatchController {
             //path = "matches",
             httpMethod = HttpMethod.GET
     )
-    public Match getMatchByCreatedBy(@Named("createdBy") String id) throws NotFoundException {
-        try {
-            return service.getMatchByCreatedBy(id);
-        } catch (MatchNotFoundException e) {
-            throw new NotFoundException("Match "+id+" does not exist.");
-        }
+    public List<Match> getMatchByCreatedBy(@Named("createdBy") String id) {
+        return service.getMatchByCreatedBy(id);
     }
 
     @ApiMethod(

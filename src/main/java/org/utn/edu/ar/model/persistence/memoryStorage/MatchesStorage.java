@@ -9,6 +9,7 @@ import org.utn.edu.ar.model.persistence.IMatchStorage;
 import org.utn.edu.ar.model.request.MatchRequest;
 import org.utn.edu.ar.util.Coordinates;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -35,12 +36,13 @@ public class MatchesStorage implements IMatchStorage {
     }
 
     @Override
-    public Match getMatchByCreatedBy(String createdBy) {
-        Match match = null;
+    public List<Match> getMatchByCreatedBy(String createdBy) {
+        List<Match> matches = new ArrayList<>();
+
         for (Match m : matches) {
-            if (m.getCreatedBy() == createdBy) match = m;
+            if (m.getCreatedBy().equalsIgnoreCase(createdBy)) matches.add(m);
         }
-        return match;
+        return matches;
     }
 
     @Override

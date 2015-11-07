@@ -22,7 +22,15 @@ angular.module('bookingMatches')
         $scope.match = data;
         $scope.actions.canDelete = data.createdBy == $scope.user.fbId;
 
-        $scope.match.date = new Date(data.date.year + '-' + data.date.monthOfYear + '-' + data.date.dayOfMonth);
+        var timezoneDate = new Date(data.date);
+        $scope.match.date = new Date(
+            timezoneDate.getUTCFullYear(),
+            timezoneDate.getUTCMonth(),
+            timezoneDate.getUTCDate(),
+            timezoneDate.getUTCHours(),
+            timezoneDate.getUTCMinutes(),
+            timezoneDate.getUTCSeconds()
+        );
 
         $scope.positions = [];
         $scope.positions.push({ lat: data.location.latitude, lng: data.location.longitude });
