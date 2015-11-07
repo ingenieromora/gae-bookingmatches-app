@@ -29,8 +29,18 @@ angular.module('bookingMatches')
         $scope.match.createdBy = $scope.user.fbId;
         MatchService.save($scope.match)
             .success(function(match) {
-                $location.path('/matches/' + match.id);
+
                 Notification.success({message: 'Partido creado exitosamente'});
+
+                FBService.postMatchToWall(match.id)
+                    .success(function(fbresponse) {
+                        Notification.success({message: 'Partido posteado en el muro exitosamente'});
+                    })
+                    .error(function(error) {
+                        Notification.error({message: error.error.message});
+                    });
+
+                    $location.path('/matches/' + match.id);
             })
             .error(function(error) {
                 Notification.error({message: error.error.message});
@@ -48,11 +58,6 @@ angular.module('bookingMatches')
         $scope.positions = [];
         $scope.positions.push({lat:e.latLng.lat(),lng:e.latLng.lng()});
         $scope.validAddress = true;
-    };
-
-    //Facebook
-    $scope.postToWall = function(){
-        FBService.postMatchToWall();
     };
 
     $scope.sendNotification = function(){
