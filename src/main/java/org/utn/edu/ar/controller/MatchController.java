@@ -47,9 +47,9 @@ public class MatchController {
             path = "matches/{id}/inscriptions",
             httpMethod = HttpMethod.POST
     )
-    public void addPlayerToMatch(@Named("id") Integer matchId, NameRequest fbId) throws NotFoundException {
+    public void addPlayerToMatch(@Named("id") Integer matchId, FacebookIdRequest fbId) throws NotFoundException {
         try {
-            service.addPlayerToMatch(matchId, fbId.getName());
+            service.addPlayerToMatch(matchId, fbId.getFbId());
         } catch (MatchNotFoundException e) {
             throw new NotFoundException("Match "+matchId+" does not exist.");
         } catch (PlayerAlreadyConfirmedException e) {
@@ -68,6 +68,7 @@ public class MatchController {
             httpMethod = HttpMethod.DELETE
     )
     public void removePlayer(@Named("id") Integer matchId, @Named("fbId") String fbId) throws NotFoundException {
+        System.out.println("llego aca");
         try {
             service.removePlayer(matchId, fbId);
         }
