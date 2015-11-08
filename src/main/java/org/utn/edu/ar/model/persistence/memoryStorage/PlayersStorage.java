@@ -1,18 +1,26 @@
 package org.utn.edu.ar.model.persistence.memoryStorage;
 
+import com.google.appengine.repackaged.com.google.api.client.util.Lists;
+import com.google.appengine.repackaged.com.google.common.base.Flag;
+import com.google.appengine.repackaged.com.google.common.base.Function;
+import com.google.appengine.repackaged.com.google.common.base.Predicate;
+import com.google.appengine.repackaged.com.google.common.collect.FluentIterable;
+import com.google.common.collect.Ordering;
 import org.utn.edu.ar.model.domain.Player;
 import org.utn.edu.ar.model.exceptions.player.PlayerAlreadyExistsException;
 import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
 import org.utn.edu.ar.model.persistence.IPlayerStorage;
+import org.utn.edu.ar.util.Utils;
 
 import java.util.List;
+import java.util.NoSuchElementException;
 
 /**
  * Created by tom on 9/28/15.
  */
 public class PlayersStorage implements IPlayerStorage {
 
-    private List<Player> players;
+    private List<Player> players = Lists.newArrayList();
 
     public PlayersStorage(){}
 
@@ -28,11 +36,13 @@ public class PlayersStorage implements IPlayerStorage {
         throw new PlayerNotFoundException(id);
     }
 
-    public void create(String fbId) throws PlayerAlreadyExistsException {
-        if(!exists(fbId))
-            players.add(new Player(nextId(), fbId));
-        else
-            throw new PlayerAlreadyExistsException(fbId);
+    public Player create(String fbId) throws PlayerAlreadyExistsException {
+      if(exists(fbId))
+        throw new PlayerAlreadyExistsException(fbId);
+
+      Player toAdd = new Player(nextId(), fbId);
+      players.add(toAdd);
+      return toAdd;
     }
 
     public void update(Integer id, String fbId) throws PlayerNotFoundException {
@@ -58,39 +68,45 @@ public class PlayersStorage implements IPlayerStorage {
     @Override
     public Player getByFacebookId(String fbId) throws PlayerNotFoundException {
         for(Player p: players){
-            if(p.getFbId() == fbId){
+          System.out.println(fbId);
+          System.out.println(p.getFbId());
+            if(p.getFbId().equals(fbId)){
                 return p;
             }
         }
         throw new PlayerNotFoundException(fbId);
     }
 
-    public Integer nextId(){
-        int lastInt = 0;
-
-        for (Player currentPlayer : players) {
-            if (currentPlayer.getId() > lastInt) {
-                lastInt = currentPlayer.getId();
-            }
-        }
-
-        return lastInt + 1;
+    public Integer nextId() {
+      try {
+        return Utils.successor.apply(
+                Ordering.<Integer>natural().max(
+                        FluentIterable.from(players).transform(
+                                new Function<Player, Integer>() {
+                                  @Override
+                                  public Integer apply(final Player player) {
+                                    return player.getId();
+                                  }
+                                })));
+      } catch (NoSuchElementException e) { return 1; }
     }
 
-    public boolean exists(String fbId){
-        for(Player p : players){
-            if(p.getFbId().equals(fbId))
-                return true;
-        }
-        return false;
+    public boolean exists(final String fbId){
+        return FluentIterable.from(players).anyMatch(new Predicate<Player>() {
+          @Override
+          public boolean apply(final Player player) {
+            return player.getFbId().equals(fbId);
+          }
+        });
     }
 
-    public boolean exists(Integer id){
-        for(Player p : players){
-            if(p.getId() == id)
-                return true;
-        }
-        return false;
+    public boolean exists(final Integer id){
+        return FluentIterable.from(players).anyMatch(new Predicate<Player>() {
+          @Override
+          public boolean apply(final Player player) {
+            return player.getId() == id;
+          }
+        });
     }
 
 

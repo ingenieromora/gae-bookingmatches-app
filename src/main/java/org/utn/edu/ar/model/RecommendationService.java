@@ -2,6 +2,7 @@ package org.utn.edu.ar.model;
 
 import org.utn.edu.ar.model.domain.Recommendation;
 import org.utn.edu.ar.model.persistence.IRecommendationStorage;
+import org.utn.edu.ar.model.persistence.memoryStorage.RecommendationStorage;
 
 import java.util.List;
 
@@ -16,18 +17,18 @@ public class RecommendationService {
 
     private RecommendationService(){}
 
+    public RecommendationService(IRecommendationStorage st){ this.storage = st; }
+
     public static RecommendationService getInstance() {
         if (instance == null) {
             synchronized (RecommendationService.class) {
                 if (instance == null) {
-                    instance = new RecommendationService();
+                    instance = new RecommendationService(new RecommendationStorage());
                 }
             }
         }
         return instance;
     }
-
-    public RecommendationService(IRecommendationStorage st){ this.storage = st; }
 
     public Recommendation create(Recommendation rec){
         return storage.create(rec);

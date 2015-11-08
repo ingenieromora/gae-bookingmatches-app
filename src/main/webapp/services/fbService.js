@@ -28,14 +28,14 @@ angular.module('bookingMatches')
         postMatchToWall: function(id){
             var url = 'https://graph.facebook.com/v2.4/me/feed';
             url += '?name=Creé un nuevo Partido';
-            url += '&link='+CONFIG.SITE_URL + 'matches/'+(id) ? id : '';
+            url += '&link='+CONFIG.SITE_URL + '%23/matches/'+ id;
             url += '&picture=https://encrypted-tbn3.gstatic.com/images?q=tbn:ANd9GcR8XAswE_qVuGyt5Gtg88-a2kxAdIIlNvzr_RNFTR41qHMGOVhQ';
             url += '&caption=PARTIDO';
             url += '&description=Inscribite a mi partido';
             url += '&message=Inscribite a mi partido';
             url += '&access_token='+localStorage.getUser().accessToken;
 
-            $http.post(url);
+            return $http.post(url);
         },
         sendNotification: function(text, userId){
             this.getAppAccessToken().then(function(response) {

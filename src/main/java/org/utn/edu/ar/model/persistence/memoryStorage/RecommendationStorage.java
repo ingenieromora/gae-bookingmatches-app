@@ -1,18 +1,23 @@
 package org.utn.edu.ar.model.persistence.memoryStorage;
 
+import com.google.appengine.repackaged.com.google.api.client.util.Lists;
+import com.google.appengine.repackaged.com.google.common.base.Function;
+import com.google.appengine.repackaged.com.google.common.collect.FluentIterable;
+import com.google.common.collect.Ordering;
+import org.utn.edu.ar.model.domain.Player;
 import org.utn.edu.ar.model.domain.Recommendation;
 import org.utn.edu.ar.model.persistence.IRecommendationStorage;
+import org.utn.edu.ar.util.Utils;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class RecommendationStorage implements IRecommendationStorage {
 
-    private List<Recommendation> recommendations;
+    private List<Recommendation> recommendations = Lists.newArrayList();
 
     public RecommendationStorage(){}
-
-    public RecommendationStorage(List<Recommendation> l){ this.recommendations = l; }
 
     public List<Recommendation> getAll(){ return this.getRecommendations(); }
 
@@ -63,13 +68,17 @@ public class RecommendationStorage implements IRecommendationStorage {
 
 
     public int nextId(){
-        int max = 0;
-
-        for(Recommendation r : recommendations){
-            if(max < r.getId()) max = r.getId();
-        }
-
-        return max + 1;
+        try {
+            return Utils.successor.apply(
+                    Ordering.<Integer>natural().max(
+                            FluentIterable.from(recommendations).transform(
+                                    new Function<Recommendation, Integer>() {
+                                        @Override
+                                        public Integer apply(final Recommendation player) {
+                                            return player.getId();
+                                        }
+                                    })));
+        } catch (NoSuchElementException e) { return 1; }
     }
 
     public List<Recommendation> getRecommendations() {

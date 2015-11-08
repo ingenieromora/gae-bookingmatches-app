@@ -4,6 +4,7 @@ import org.utn.edu.ar.model.domain.Player;
 import org.utn.edu.ar.model.exceptions.player.PlayerAlreadyExistsException;
 import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
 import org.utn.edu.ar.model.persistence.IPlayerStorage;
+import org.utn.edu.ar.model.persistence.memoryStorage.PlayersStorage;
 
 import java.util.List;
 
@@ -18,13 +19,11 @@ public class PlayerService {
 
     public PlayerService(IPlayerStorage storage){ this.storage = storage; }
 
-    private PlayerService(){}
-
     public static PlayerService getInstance() {
         if (instance == null) {
             synchronized (PlayerService.class) {
                 if (instance == null) {
-                    instance = new PlayerService();
+                    instance = new PlayerService(new PlayersStorage());
                 }
             }
         }
@@ -41,8 +40,8 @@ public class PlayerService {
         return storage.getByFacebookId(fbId);
     }
 
-    public void create(String fbId) throws PlayerAlreadyExistsException {
-        storage.create(fbId);
+    public Player create(String fbId) throws PlayerAlreadyExistsException {
+        return storage.create(fbId);
     }
 
     public void update(Integer id, String fbId) throws PlayerNotFoundException {

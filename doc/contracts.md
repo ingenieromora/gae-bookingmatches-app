@@ -45,7 +45,7 @@ Another thing to bear in mind is that Google Cloud Endpoints return lists as a J
 * `DELETE sports/{id}` deletes a sport
 
 #### matches
-* `POST matches` creates a match
+* `POST matches` creates a match, createdBy is a fbId.
 ```
 {
   date
@@ -78,7 +78,7 @@ Another thing to bear in mind is that Google Cloud Endpoints return lists as a J
 }
 ```
 * `DELETE matches/{matchId}` deletes a match and its inscriptions in cascade.
-* `GET matches?createdBy={fbId}` returns created matches by a facebook user
+* `GET matches/createdBy/{fbId}` returns created matches by a facebook user
 * `GET matches` returns all created matches with its players
 * `GET matches/{id}` returns match correlating the aforementioned id, if it exists.
 * `GET matches/inscriptions/enrolled/{fbId}` retrieves all match ids in which `fbId` is enrolled.

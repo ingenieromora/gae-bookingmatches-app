@@ -1,5 +1,10 @@
 package org.utn.edu.ar.model.persistence.memoryStorage;
 
+import com.google.appengine.repackaged.com.google.common.base.Function;
+import com.google.appengine.repackaged.com.google.common.base.Predicate;
+import com.google.appengine.repackaged.com.google.common.collect.FluentIterable;
+import com.google.appengine.repackaged.com.google.common.collect.Lists;
+import com.google.common.collect.Ordering;
 import org.utn.edu.ar.model.PlayerService;
 import org.utn.edu.ar.model.domain.Match;
 import org.utn.edu.ar.model.domain.Player;
@@ -10,17 +15,18 @@ import org.utn.edu.ar.model.exceptions.sport.SportNotFoundException;
 import org.utn.edu.ar.model.persistence.IMatchStorage;
 import org.utn.edu.ar.model.request.MatchRequest;
 import org.utn.edu.ar.util.Coordinates;
+import org.utn.edu.ar.util.Utils;
 
+import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
+import java.util.NoSuchElementException;
 
 public class MatchesStorage implements IMatchStorage {
 
-    private List<Match> matches;
+    private List<Match> matches = Lists.newArrayList();
 
-    public MatchesStorage(List<Match> matches) {
-        this.matches = matches;
-    }
+    public MatchesStorage(){}
 
     @Override
     public List<Match> getAllMatches() {
@@ -37,30 +43,36 @@ public class MatchesStorage implements IMatchStorage {
     }
 
     @Override
-    public Match getMatchByCreatedBy(String createdBy) throws PlayerNotFoundException {
-        Match match = null;
+    public List<Match> getMatchByCreatedBy(String createdBy) throws PlayerNotFoundException {
+        List<Match> matches = new ArrayList<>();
+
         for (Match m : matches) {
             if (m.getCreatedBy().equals(
-                    PlayerService.getInstance().getByFacebookId(createdBy)
-            )) match = m;
+                    PlayerService.getInstance().getByFacebookId(createdBy))) matches.add(m);
         }
-        return match;
+        return matches;
     }
 
     @Override
     public Match createMatch(MatchRequest rq) throws SportNotFoundException, PlayerNotFoundException {
         Match match = new Match(rq);
         match.setId(nextId());
+        match.setStarters(
+          Lists.newArrayList(
+            PlayerService.getInstance().getByFacebookId(
+              rq.getCreatedBy())));
         matches.add(match);
         return match;
     }
 
     @Override
-    public boolean exists(int id) {
-        for (Match m : matches) {
-            if (m.getId() == id) return true;
-        }
-        return false;
+    public boolean exists(final int id) {
+        return FluentIterable.from(matches).anyMatch(new Predicate<Match>() {
+            @Override
+            public boolean apply(final Match match) {
+                return match.getId() == id;
+            }
+        });
     }
 
     @Override
@@ -105,14 +117,16 @@ public class MatchesStorage implements IMatchStorage {
     }
 
     private Integer nextId(){
-        int lastInt = 0;
-
-        for (Match match : matches) {
-            if (match.getId() > lastInt) {
-                lastInt = match.getId();
-            }
-        }
-
-        return lastInt + 1;
+        try {
+            return Utils.successor.apply(
+                    Ordering.<Integer>natural().max(
+                            FluentIterable.from(matches).transform(
+                                    new Function<Match, Integer>() {
+                                        @Override
+                                        public Integer apply(final Match player) {
+                                            return player.getId();
+                                        }
+                                    })));
+        } catch (NoSuchElementException e) { return 1; }
     }
 }

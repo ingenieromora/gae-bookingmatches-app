@@ -22,7 +22,15 @@ angular.module('bookingMatches')
         $scope.match = data;
         $scope.actions.canDelete = data.createdBy == $scope.user.fbId;
 
-        $scope.match.date = new Date(data.date.year + '-' + data.date.monthOfYear + '-' + data.date.dayOfMonth);
+        var timezoneDate = new Date(data.date);
+        $scope.match.date = new Date(
+            timezoneDate.getUTCFullYear(),
+            timezoneDate.getUTCMonth(),
+            timezoneDate.getUTCDate(),
+            timezoneDate.getUTCHours(),
+            timezoneDate.getUTCMinutes(),
+            timezoneDate.getUTCSeconds()
+        );
 
         $scope.positions = [];
         $scope.positions.push({ lat: data.location.latitude, lng: data.location.longitude });
@@ -32,9 +40,8 @@ angular.module('bookingMatches')
     $scope.subscribe = function() {
         MatchService.subscribe($routeParams.id, $scope.user.fbId)
             .success(function(data) {
-                //espero que me devuelva el match con el jugador inscripto
-                $scope.match = data;
-                Notification.success({message: 'Jugador ' + $scope.user.fbId + ' inscripto exitosamente'});
+                Notification.success({message: 'La inscripción se realizó exitosamente'});
+                FBService.sendNotification('El jugador '+$scope.user.name+' se ha inscripto a un partido que creaste', $scope.match.createdBy);
             })
             .error(function(error) {
                 Notification.error({message: error.name});
@@ -44,9 +51,7 @@ angular.module('bookingMatches')
     $scope.unsubscribe = function() {
         MatchService.unsubscribe($routeParams.id, $scope.user.fbId)
             .success(function(data) {
-                //espero que me devuelva el match con el jugador desinscripto
-                $scope.match = data;
-                Notification.success({message: 'Jugador ' + $scope.user.fbId + ' desinscripto exitosamente'});
+                Notification.success({message: 'Se ha eliminado la inscripción exitosamente'});
             })
             .error(function(error) {
                 Notification.error({message: error.name});
@@ -56,9 +61,8 @@ angular.module('bookingMatches')
     $scope.delete = function() {
         MatchService.delete($routeParams.id)
             .success(function(data) {
-                //retorno a /matches hasta que lo definamos
                 Notification.success({message: 'Partido eliminado exitosamente'});
-                $location.path('/matches');
+                $location.path('/matches/created/me');
             })
             .error(function(error) {
                 Notification.error({message: error.name});

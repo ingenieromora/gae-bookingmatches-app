@@ -20,7 +20,7 @@ public interface IPlayerStorage {
 
     public boolean exists(String fbId);
 
-    public void create(String fbId) throws PlayerAlreadyExistsException;
+    public Player create(String fbId) throws PlayerAlreadyExistsException;
 
     public void update(Integer id, String fbId) throws PlayerNotFoundException;
 

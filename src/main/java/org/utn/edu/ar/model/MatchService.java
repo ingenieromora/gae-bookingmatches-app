@@ -1,6 +1,5 @@
 package org.utn.edu.ar.model;
 
-import com.google.appengine.repackaged.com.google.api.client.util.Lists;
 import org.utn.edu.ar.model.domain.Match;
 import org.utn.edu.ar.model.domain.Player;
 import org.utn.edu.ar.model.exceptions.match.MatchNotFoundException;
@@ -13,7 +12,6 @@ import org.utn.edu.ar.model.persistence.memoryStorage.MatchesStorage;
 import org.utn.edu.ar.model.request.MatchRequest;
 import org.utn.edu.ar.util.Coordinates;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
@@ -38,7 +36,7 @@ public class MatchService {
             synchronized (MatchService.class) {
                 if (instance == null) {
                     instance = new MatchService(
-                            new MatchesStorage(new ArrayList<Match>()),
+                            new MatchesStorage(),
                             PlayerService.getInstance());
                 }
             }
@@ -56,10 +54,8 @@ public class MatchService {
         return match;
     }
 
-    public Match getMatchByCreatedBy(String createdBy) throws MatchNotFoundException, PlayerNotFoundException {
-        Match match = storage.getMatchByCreatedBy(createdBy);
-        if (match == null) throw new MatchNotFoundException(createdBy);
-        return match;
+    public List<Match> getMatchByCreatedBy(String createdBy) throws PlayerNotFoundException {
+        return storage.getMatchByCreatedBy(createdBy);
     }
 
     public Match createMatch(MatchRequest rq) throws SportNotFoundException, PlayerNotFoundException {
@@ -106,6 +102,7 @@ public class MatchService {
     }
 
     private Player getPlayer(String playerFbId) throws PlayerAlreadyExistsException, PlayerNotFoundException {
+        PlayerService playerService = PlayerService.getInstance();
         if( !playerService.exists(playerFbId) ) { playerService.create(playerFbId); }
 
         return playerService.getByFacebookId(playerFbId);

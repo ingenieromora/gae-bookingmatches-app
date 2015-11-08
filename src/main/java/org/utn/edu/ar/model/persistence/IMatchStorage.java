@@ -34,5 +34,5 @@ public interface IMatchStorage {
 
     public void addPlayer(Integer matchId, Player playerFbId) throws PlayerAlreadyConfirmedException;
 
-    public Match getMatchByCreatedBy(String createdBy) throws PlayerNotFoundException;
+    public List<Match> getMatchByCreatedBy(String createdBy) throws PlayerNotFoundException;
 }

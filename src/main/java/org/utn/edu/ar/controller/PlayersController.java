@@ -56,9 +56,9 @@ public class PlayersController {
             path = "players",
             httpMethod = HttpMethod.POST
     )
-    public void createPlayer(FacebookIdRequest rq) throws ConflictException {
+    public Player createPlayer(FacebookIdRequest rq) throws ConflictException {
         try {
-            service.create(rq.getFbId());
+            return service.create(rq.getFbId());
         } catch (PlayerAlreadyExistsException e) {
             throw new ConflictException(e);
         }
@@ -111,17 +111,5 @@ public class PlayersController {
       MessageResponse response = new MessageResponse();
       response.setMessage(out);
       return response;
-    }
-
-
-    private List<Player> buildMockedPlayers(){
-        Player p1 = new Player(1, "Leo");
-        Player p2 = new Player(2, "Tom");
-        Player p3 = new Player(3, "Nico");
-        List<Player> l = new ArrayList<>();
-        l.add(p1);
-        l.add(p2);
-        l.add(p3);
-        return l;
     }
 }

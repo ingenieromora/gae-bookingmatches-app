@@ -1,14 +1,5 @@
 <div class="container">
-    <h1>Partidos creados por {{user.name}}</h1>
-
-    <div class="row" ng-hide="hideFriends">
-        <div class="col-md-12">
-            <select ng-model="friendToGo" 
-                    ng-change="redirect()" 
-                    ng-options="friend as friend.name for friend in friends">
-            </select>
-        </div>
-    </div>
+    <h1>Partidos a los que estoy inscripto</h1>
 
     <hr/>
 
@@ -27,7 +18,7 @@
             </td>
             <td>{{match.sport.name}}</td>
             <td>{{match.playersNeeded}}</td>
-            <td>{{match.date | date: 'yyyy-MM-dd'}}</td>
+            <td>{{match.date.dayOfMonth +'/'+match.date.monthOfYear+'/'+match.date.year}}</td>
             <td>{{match.starters.length}}</td>
             <td>{{match.alternates.length}}</td>
         </tr>

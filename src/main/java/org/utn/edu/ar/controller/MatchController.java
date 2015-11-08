@@ -64,6 +64,7 @@ public class MatchController {
             httpMethod = HttpMethod.DELETE
     )
     public void removePlayer(@Named("id") Integer matchId, @Named("fbId") String fbId) throws NotFoundException {
+        System.out.println("llego aca");
         try {
             service.removePlayer(matchId, fbId);
         }
@@ -100,17 +101,11 @@ public class MatchController {
 
     @ApiMethod(
             name = "getMatchByCreatedBy",
-            //path = "matches",
+            path = "matches/createdBy/{fbId}",
             httpMethod = HttpMethod.GET
     )
-    public Match getMatchByCreatedBy(@Named("createdBy") String id) throws NotFoundException {
-        try {
-            return service.getMatchByCreatedBy(id);
-        } catch (PlayerNotFoundException e) {
-            throw new NotFoundException("Player with fbId: " + id + " was not found.");
-        } catch (MatchNotFoundException e) {
-            throw new NotFoundException("There were no matches created by "+ id);
-        }
+    public List<Match> getMatchByCreatedBy(@Named("createdBy") String id) throws PlayerNotFoundException {
+        return service.getMatchByCreatedBy(id);
     }
 
     @ApiMethod(
