@@ -11,7 +11,7 @@ angular.module('bookingMatches')
             return $http.get(CONFIG.API_URL + 'matches/v1/matches');
         },
         getCreatedBy: function(fbId) {
-            return $http.get(CONFIG.API_URL + 'matches/v1/matches?createdBy=' + fbId)
+            return $http.get(CONFIG.API_URL + 'matches/v1/matches/createdBy/' + fbId)
         },
         save: function(name){
             return $http.post(CONFIG.API_URL + 'matches/v1/matches', name);

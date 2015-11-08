@@ -18,7 +18,7 @@
             </td>
             <td>{{match.sport.name}}</td>
             <td>{{match.playersNeeded}}</td>
-            <td>{{match.date.dayOfMonth +'/'+match.date.monthOfYear+'/'+match.date.year}}</td>
+            <td>{{match.date | date: 'yyyy-MM-dd'}}</td>
             <td>{{match.starters.length}}</td>
             <td>{{match.alternates.length}}</td>
         </tr>

@@ -74,6 +74,12 @@ angular.module('bookingMatches')
     });
 
     $scope.recommend = function() {
-        RecommendationService.save($routeParams.id, $scope.user.fbId, $scope.friendToRecommend);
+        RecommendationService.save($routeParams.id, $scope.user.fbId, $scope.friendToRecommend)
+            .success(function() {
+                Notification.success({message: 'Partido recomendado exitosamente'});
+            })
+            .error(function(error) {
+                Notification.error({message: error.name});
+            });
     };
 });

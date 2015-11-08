@@ -43,14 +43,13 @@ public class MatchesStorage implements IMatchStorage {
     }
 
     @Override
-    public List<Match> getMatchByCreatedBy(String createdBy) throws PlayerNotFoundException {
-        List<Match> matches = new ArrayList<>();
-
-        for (Match m : matches) {
-            if (m.getCreatedBy().equals(
-                    PlayerService.getInstance().getByFacebookId(createdBy))) matches.add(m);
-        }
-        return matches;
+    public List<Match> getMatchByCreatedBy(final String createdBy) throws PlayerNotFoundException {
+        return Lists.newArrayList(FluentIterable.from(matches).filter(new Predicate<Match>() {
+            @Override
+            public boolean apply(final Match match) {
+                return match.getCreatedBy().getFbId().equals(createdBy);
+            }
+        }));
     }
 
     @Override
