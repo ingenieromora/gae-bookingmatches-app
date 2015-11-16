@@ -8,7 +8,7 @@ import org.utn.edu.ar.model.exceptions.player.PlayerAlreadyExistsException;
 import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
 import org.utn.edu.ar.model.exceptions.sport.SportNotFoundException;
 import org.utn.edu.ar.model.persistence.IMatchStorage;
-import org.utn.edu.ar.model.persistence.memoryStorage.MatchesStorage;
+import org.utn.edu.ar.model.persistence.gaeDatastore.MatchesStorage;
 import org.utn.edu.ar.model.request.MatchRequest;
 import org.utn.edu.ar.util.Coordinates;
 

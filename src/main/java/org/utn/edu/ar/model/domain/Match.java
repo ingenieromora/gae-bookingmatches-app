@@ -36,10 +36,12 @@ public class Match {
     }
 
     public Match(MatchRequest rq) throws SportNotFoundException, PlayerNotFoundException {
-        this.sport = SportService.getInstance().getSportById(rq.getSportId());
+//        this.sport = SportService.getInstance().getSportById(rq.getSportId());
+        this.sport = new Sport();
         this.playersNeeded = rq.getPlayersNeeded();
         this.date = rq.getDate();
-        this.createdBy = PlayerService.getInstance().getByFacebookId(rq.getCreatedBy());
+        //this.createdBy = PlayerService.getInstance().getByFacebookId(rq.getCreatedBy());
+        this.createdBy = new Player(1, "leoMOra");
         this.location = rq.getLocation();
         this.starters = new ArrayList<Player>();
         this.alternates = new ArrayList<Player>();
