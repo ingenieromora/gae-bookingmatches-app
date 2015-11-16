@@ -75,6 +75,10 @@ public class Match {
         throw new PlayerNotFoundException(fbId);
     }
 
+    public Boolean hasPlayer(Player player){
+        return starters.contains(player) || alternates.contains(player);
+    }
+
     public int getId() {
         return id;
     }

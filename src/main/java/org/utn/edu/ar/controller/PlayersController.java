@@ -96,7 +96,7 @@ public class PlayersController {
             path = "players/validate",
             httpMethod = HttpMethod.POST
     )
-    public MessageResponse validatePlayerWithFB(final ValidateRequest rq){
+    public MessageResponse validatePlayerWithFB(final ValidateRequest rq) throws PlayerAlreadyExistsException{
       String out;
       // Search inside cache if we haven't stored that Pair already.
       if(authenticationCache.containsKey(rq.getFbId()) &&
@@ -107,6 +107,8 @@ public class PlayersController {
         if(out.equals("OK"))
           authenticationCache.put(rq.getAccessToken(), rq.getFbId());
       }
+
+      if(!service.exists(rq.getFbId())) service.create(rq.getFbId());
 
       MessageResponse response = new MessageResponse();
       response.setMessage(out);

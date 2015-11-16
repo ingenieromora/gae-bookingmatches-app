@@ -24,6 +24,7 @@ angular.module('bookingMatches')
             latitude: address.lat,
             longitude: address.lng
         };
+        $scope.match.sportId = $scope.match.sport;
         
         $scope.match.date = $filter('date')($scope.date, 'yyyy-MM-dd');
         $scope.match.createdBy = $scope.user.fbId;

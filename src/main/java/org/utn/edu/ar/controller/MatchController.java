@@ -16,6 +16,7 @@ import org.utn.edu.ar.model.exceptions.sport.SportNotFoundException;
 import org.utn.edu.ar.model.request.FacebookIdRequest;
 import org.utn.edu.ar.model.request.MatchRequest;
 import org.utn.edu.ar.model.request.NameRequest;
+import org.utn.edu.ar.model.response.MessageResponse;
 
 import java.util.List;
 
@@ -64,7 +65,6 @@ public class MatchController {
             httpMethod = HttpMethod.DELETE
     )
     public void removePlayer(@Named("id") Integer matchId, @Named("fbId") String fbId) throws NotFoundException {
-        System.out.println("llego aca");
         try {
             service.removePlayer(matchId, fbId);
         }
@@ -75,6 +75,20 @@ public class MatchController {
         }
     }
 
+    @ApiMethod(
+            name = "hasPlayer",
+            path = "matches/{id}/inscriptions/{fbId}",
+            httpMethod = HttpMethod.GET
+    )
+    public MessageResponse hasPlayer(@Named("id") Integer matchId, @Named("fbId") String fbId) throws PlayerAlreadyExistsException, PlayerNotFoundException{
+        String response;
+        if(service.hasPlayer(matchId, fbId)){
+            response = "YES";
+        }else{
+            response = "NO";
+        }
+        return new MessageResponse(response);
+    }
 
     @ApiMethod(
             name = "getAllMatches",
@@ -87,11 +101,11 @@ public class MatchController {
 
 
     @ApiMethod(
-            name = "getMatcheById",
+            name = "getMatchById",
             path = "matches/{id}",
             httpMethod = HttpMethod.GET
     )
-    public Match getMatchesById(@Named("id") Integer id) throws NotFoundException {
+    public Match getMatchById(@Named("id") Integer id) throws NotFoundException {
         try {
             return service.getMatchById(id);
         } catch (MatchNotFoundException e) {
@@ -106,6 +120,15 @@ public class MatchController {
     )
     public List<Match> getMatchByCreatedBy(@Named("createdBy") String id) throws PlayerNotFoundException {
         return service.getMatchByCreatedBy(id);
+    }
+
+    @ApiMethod(
+            name = "getMatchesInscriptionsBy",
+            path = "matches/inscriptions/enrolled/{fbId}",
+            httpMethod = HttpMethod.GET
+    )
+    public List<Match> getMatchesInscriptionsBy(@Named("fbId") String fbId) throws PlayerNotFoundException {
+        return service.getMatchesInscriptionsBy(fbId);
     }
 
     @ApiMethod(
