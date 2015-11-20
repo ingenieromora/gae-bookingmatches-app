@@ -1,8 +1,11 @@
 package org.utn.edu.ar.model;
 
 import org.utn.edu.ar.model.domain.Recommendation;
+import org.utn.edu.ar.model.exceptions.match.MatchNotFoundException;
+import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
 import org.utn.edu.ar.model.persistence.IRecommendationStorage;
 import org.utn.edu.ar.model.persistence.memoryStorage.RecommendationStorage;
+import org.utn.edu.ar.model.request.RecommendationRequest;
 
 import java.util.List;
 
@@ -30,7 +33,8 @@ public class RecommendationService {
         return instance;
     }
 
-    public Recommendation create(Recommendation rec){
+    public Recommendation create(final RecommendationRequest rec)
+            throws MatchNotFoundException, PlayerNotFoundException {
         return storage.create(rec);
     }
 
