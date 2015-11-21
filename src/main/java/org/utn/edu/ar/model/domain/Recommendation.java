@@ -3,6 +3,7 @@ package org.utn.edu.ar.model.domain;
 /**
  * Created by tomas.duhourq on 9/29/15.
  */
+
 public class Recommendation {
 
     private int id;
