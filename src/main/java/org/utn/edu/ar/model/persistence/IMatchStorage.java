@@ -2,6 +2,7 @@ package org.utn.edu.ar.model.persistence;
 
 import org.utn.edu.ar.model.domain.Match;
 import org.utn.edu.ar.model.domain.Player;
+import org.utn.edu.ar.model.domain.Sport;
 import org.utn.edu.ar.model.exceptions.match.MatchNotFoundException;
 import org.utn.edu.ar.model.exceptions.match.PlayerAlreadyConfirmedException;
 import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
@@ -21,7 +22,7 @@ public interface IMatchStorage {
 
     public Match getMatchById(int id);
 
-    public Match createMatch(MatchRequest rq) throws SportNotFoundException, PlayerNotFoundException;
+    public Match createMatch(MatchRequest rq, Sport sport, Player createdBy) throws SportNotFoundException, PlayerNotFoundException;
 
     public boolean exists(int id);
 

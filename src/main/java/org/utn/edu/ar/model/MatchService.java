@@ -2,6 +2,7 @@ package org.utn.edu.ar.model;
 
 import org.utn.edu.ar.model.domain.Match;
 import org.utn.edu.ar.model.domain.Player;
+import org.utn.edu.ar.model.domain.Sport;
 import org.utn.edu.ar.model.exceptions.match.MatchNotFoundException;
 import org.utn.edu.ar.model.exceptions.match.PlayerAlreadyConfirmedException;
 import org.utn.edu.ar.model.exceptions.player.PlayerAlreadyExistsException;
@@ -64,8 +65,10 @@ public class MatchService {
 
     public Match createMatch(MatchRequest rq) throws SportNotFoundException, PlayerNotFoundException {
         if( !validParams(rq) ) throw new IllegalArgumentException("The match received less number of arguments than expected");
-        //TODO ACA al storage.createMatch se le tiene que el request, el deporte y el jugador creador
-        return storage.createMatch(rq);
+        Sport sport = SportService.getInstance().getSportById(rq.getSportId());
+        Player createdBy = PlayerService.getInstance().getByFacebookId(rq.getCreatedBy());
+
+        return storage.createMatch(rq, sport, createdBy);
     }
 
     private boolean validParams(MatchRequest rq) {

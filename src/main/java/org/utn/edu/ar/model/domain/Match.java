@@ -23,63 +23,14 @@ public class Match {
     private List<Player> starters;
     private List<Player> alternates;
 
-    public Match(int id, int sportId, int playersNeeded, Date date, String createdBy, Coordinates location)
-            throws SportNotFoundException, PlayerNotFoundException {
-        this.id = id;
-        //TODO el Deporte tienen que ser pasados por parametro
-        this.sport = SportService.getInstance().getSportById(sportId);
-        this.playersNeeded = playersNeeded;
-        this.date = date;
-        //TODO el Jugador creador tienen que ser pasados por parametro
-        this.createdBy = PlayerService.getInstance().getByFacebookId(createdBy);
-        this.location = location;
-        this.starters = new ArrayList<Player>();
-        this.alternates = new ArrayList<Player>();
-    }
-
-    public Match(MatchRequest rq) throws SportNotFoundException, PlayerNotFoundException {
-        //TODO el Deporte tienen que ser pasados por parametro
-        this.sport = SportService.getInstance().getSportById(rq.getSportId());
+    public Match(MatchRequest rq, Sport inputSport, Player inputCreatedBy) throws SportNotFoundException, PlayerNotFoundException {
+        this.sport = inputSport;
         this.playersNeeded = rq.getPlayersNeeded();
         this.date = rq.getDate();
-        //TODO el Jugador creador tienen que ser pasados por parametro
-        this.createdBy = PlayerService.getInstance().getByFacebookId(rq.getCreatedBy());
+        this.createdBy = inputCreatedBy;
         this.location = rq.getLocation();
         this.starters = new ArrayList<Player>();
         this.alternates = new ArrayList<Player>();
-    }
-
-    public void addPlayer(Player player) throws PlayerAlreadyConfirmedException {
-        //TODO removerlo de aca, no aplica para un storage que NO sea en memoria
-        if(starters.contains(player) || alternates.contains(player)) {
-            throw new PlayerAlreadyConfirmedException(player);
-        }
-        if(starters.size() < playersNeeded && !starters.contains(player))
-            starters.add(player);
-        else {
-            if(!alternates.contains(player) )
-                alternates.add(player);
-        }
-    }
-
-
-    public void removePlayer(String fbId) throws PlayerNotFoundException {
-        //TODO removerlo de aca, no aplica para un storage que NO sea en memoria
-        for(Player p : starters){
-            if(p.getFbId().equals(fbId)){
-                starters.remove(p);
-                return;
-            }
-        }
-
-        for(Player p : alternates){
-            if(p.getFbId().equals(fbId)){
-                alternates.remove(p);
-                return;
-            }
-        }
-
-        throw new PlayerNotFoundException(fbId);
     }
 
     public Boolean hasPlayer(Player player){
