@@ -10,6 +10,7 @@ import com.google.common.collect.Ordering;
 import org.utn.edu.ar.model.PlayerService;
 import org.utn.edu.ar.model.domain.Match;
 import org.utn.edu.ar.model.domain.Player;
+import org.utn.edu.ar.model.domain.Sport;
 import org.utn.edu.ar.model.exceptions.match.MatchNotFoundException;
 import org.utn.edu.ar.model.exceptions.match.PlayerAlreadyConfirmedException;
 import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
@@ -66,10 +67,9 @@ public class MatchesStorage implements IMatchStorage {
     }
 
     @Override
-    public Match createMatch(MatchRequest rq) throws SportNotFoundException, PlayerNotFoundException {
-        Match match = new Match(rq);
+    public Match createMatch(MatchRequest rq, Sport sport, Player playerCreatedBy) throws SportNotFoundException, PlayerNotFoundException {
+        Match match = new Match(rq, sport, playerCreatedBy);
         match.setId(nextId());
-        //TODO Esto no deberia setear al creador en vez de a los titulares?
         match.setStarters(
           Lists.newArrayList(
             PlayerService.getInstance().getByFacebookId(
@@ -115,14 +115,48 @@ public class MatchesStorage implements IMatchStorage {
             }
         });
         if(!optMatch.isPresent()) throw new MatchNotFoundException(matchId);
-        optMatch.get().removePlayer(fbId);
+        else {
+           removePlayer(optMatch.get(), fbId);
+        }
     }
 
     @Override
     public void addPlayer(Integer matchId, Player player) throws PlayerAlreadyConfirmedException {
         Match match = getMatchById(matchId);
 
-        match.addPlayer(player);
+        addPlayer(match, player);
+    }
+
+    private void addPlayer(Match inputMatch, Player player) throws PlayerAlreadyConfirmedException {
+
+        if(inputMatch.getStarters().contains(player) || inputMatch.getAlternates().contains(player)) {
+            throw new PlayerAlreadyConfirmedException(player);
+        }
+        if(inputMatch.getStarters().size() < inputMatch.getPlayersNeeded() && !inputMatch.getStarters().contains(player))
+            inputMatch.getStarters().add(player);
+        else {
+            if(!inputMatch.getAlternates().contains(player) )
+                inputMatch.getAlternates().add(player);
+        }
+    }
+
+
+    private void removePlayer(Match inputMatch, String fbId) throws PlayerNotFoundException {
+        for(Player p : inputMatch.getStarters()){
+            if(p.getFbId().equals(fbId)){
+                inputMatch.getStarters().remove(p);
+                return;
+            }
+        }
+
+        for(Player p : inputMatch.getAlternates()){
+            if(p.getFbId().equals(fbId)){
+                inputMatch.getAlternates().remove(p);
+                return;
+            }
+        }
+
+        throw new PlayerNotFoundException(fbId);
     }
 
     @Override

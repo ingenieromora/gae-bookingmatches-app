@@ -32,7 +32,7 @@ public class GaeMatchesStorage extends MatchesStorage implements IMatchStorage{
     private static final String ATTRIBUTE_LOCATION = "location";
     private static final String ATTRIBUTE_ALTERNATES= "alternates";
 
-    @Override
+/**    @Override
     public List<Match> getAllMatches() {
         DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
@@ -85,4 +85,5 @@ public class GaeMatchesStorage extends MatchesStorage implements IMatchStorage{
 
         return match;
     }
+**/
 }
