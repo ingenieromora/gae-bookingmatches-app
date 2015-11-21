@@ -67,7 +67,7 @@ public class RecommendationStorage implements IRecommendationStorage {
       return r;
     }
 
-    public void delete(final Integer id){
+    public void delete(final Integer id) {
         Iterables.removeIf(recommendations, new Predicate<Recommendation>() {
           @Override
           public boolean apply(final Recommendation recommendation) {

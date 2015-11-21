@@ -1,5 +1,7 @@
 package org.utn.edu.ar.http;
 
+import com.google.api.server.spi.Strings;
+
 import javax.servlet.*;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
@@ -11,31 +13,34 @@ import java.util.Enumeration;
  */
 public class AccessTokenFilter implements Filter {
 
-  private String ACCESS_TOKEN = "access-token";
+  private static final String ACCESS_TOKEN = "access-token";
 
   @Override
-  public void init(FilterConfig filterConfig) throws ServletException {}
+  public void init(final FilterConfig aFilterConfig) throws ServletException {
+  }
 
   @Override
-  public void doFilter(ServletRequest request, ServletResponse response, FilterChain filterChain)
+  public void doFilter(final ServletRequest request, final ServletResponse response, final FilterChain filterChain)
           throws IOException, ServletException {
 
     HttpServletRequest httpRequest = (HttpServletRequest) request;
 
     // If user is going to validate himself against FB Graph, continue.
-    if(!httpRequest.getPathInfo().contains("validate")) {
+    if(!httpRequest.getRequestURI().endsWith("validate")) {
 
       Enumeration headerNames = httpRequest.getHeaderNames();
       String potentialToken = fetchHeaderIfExists(ACCESS_TOKEN, headerNames, httpRequest);
 
-      if (potentialToken.equals("")) {
+      if (Strings.isEmptyOrWhitespace(potentialToken)) {
         // Prepare response for validation error.
         HttpServletResponse resp = (HttpServletResponse) response;
         resp.reset();
         resp.setStatus(HttpServletResponse.SC_BAD_REQUEST);
-        resp.getWriter().print("You need an access token to continue using this API. Please go to /players/validate.");
+        resp.getWriter().print("You need an access token to continue using this API.\nPlease" +
+                " validate yourself going to /players/validate.");
         return;
       }
+
     }
 
     filterChain.doFilter(request, response);
@@ -52,7 +57,10 @@ public class AccessTokenFilter implements Filter {
    * @param httpRequest
    * @return token if it's available, "" otherwise.
    */
-  private String fetchHeaderIfExists(String headerName, Enumeration headerNames, HttpServletRequest httpRequest) {
+  private String fetchHeaderIfExists(
+          final String headerName,
+          final Enumeration headerNames,
+          final HttpServletRequest httpRequest) {
     while (headerNames.hasMoreElements()) {
       String key = (String) headerNames.nextElement();
       if(key.equals(headerName))

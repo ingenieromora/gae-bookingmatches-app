@@ -7,6 +7,7 @@ import org.mockito.Mock;
 import org.utn.edu.ar.model.MatchService;
 import org.utn.edu.ar.model.PlayerService;
 import org.utn.edu.ar.model.SportService;
+import org.utn.edu.ar.model.common.BeforeAfterProvider;
 import org.utn.edu.ar.model.domain.Match;
 import org.utn.edu.ar.model.domain.Player;
 import org.utn.edu.ar.model.domain.Sport;
@@ -21,6 +22,7 @@ import org.utn.edu.ar.model.persistence.memoryStorage.PlayersStorage;
 import org.utn.edu.ar.model.request.MatchRequest;
 import org.utn.edu.ar.util.Coordinates;
 
+import javax.inject.Inject;
 import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
@@ -28,98 +30,68 @@ import java.util.List;
 /**
  * Created by juan pablo.
  */
-public class MatchesServiceTest {
-//
-//    private MatchService service;
-//
+public class MatchesServiceTest extends BeforeAfterProvider {
+
 //    private MatchRequest rq = new MatchRequest(new Date(), new Coordinates(4.0, 4.0), 1, 7, "1");
 //
-//    @Before
-//    public void setup() throws SportNotFoundException, SportNameAlreadyExistException {
-//        Sport created = SportService.getInstance().createSport("sototo");
-//        created = SportService.getInstance().createSport("football");
-//        Match m1 = new Match(1, 1, 7, new Date(), null, new Coordinates(1.0, 1.0));
-//        Match m2 = new Match(2, 1, 7, null, null, new Coordinates(2.0, 2.0));
-//        Match m3 = new Match(3, 2, 7, new Date(), null, new Coordinates(3.0, 3.0));
-//
-//        List<Match> matches = new ArrayList<>();
-//        matches.add(m1);
-//        matches.add(m2);
-//        matches.add(m3);
-//
-//        List<Player> playerList = new ArrayList<Player>();
-//        Player tom = new Player(1, "tom");
-//        Player nico = new Player(2, "nico");
-//        Player leo = new Player(3, "leo");
-//
-//        playerList.add(tom);
-//        playerList.add(nico);
-//        playerList.add(leo);
-//
-//        PlayerService playerService = PlayerService.getInstance().(new PlayersStorage(playerList));
-//
-//        service = new MatchService(new MatchesStorage(matches), playerService);
+//    @Test
+//    public void getAllTest() {
+//        Assert.assertEquals(1, matchService.getAllMatches().size());
 //    }
 //
 //    @Test
-//    public void testGetAllMatchs() {
-//        Assert.assertEquals(3, service.getAllMatches().size());
-//    }
-//
-//    @Test
-//    public void testGetMatchById() throws MatchNotFoundException, SportNotFoundException {
-//        Match m2 = new Match(2, 1, 7, null, null, new Coordinates(2.0, 2.0));
-//        Assert.assertEquals(m2.toString(), service.getMatchById(2).toString());
+//    public void testGetMatchById() throws MatchNotFoundException, SportNotFoundException, PlayerNotFoundException {
+//        Assert.assertEquals(TOM, matchService.getMatchById(1).getCreatedBy());
 //    }
 //
 //    @Test(expected = MatchNotFoundException.class)
 //    public void testGetMatchByIdNotFound() throws MatchNotFoundException {
-//        service.getMatchById(5);
+//        matchService.getMatchById(5);
 //    }
 //
 //    @Test
-//    public void testCreateMatch() throws SportNotFoundException {
-//        Match created = service.createMatch(rq);
-//        Assert.assertEquals(4, service.getAllMatches().size());
+//    public void testCreateMatch() throws SportNotFoundException, PlayerNotFoundException {
+//        Match created = matchService.createMatch(rq);
+//        Assert.assertEquals(2, matchService.getAllMatches().size());
 //    }
 //
 //    @Test(expected = IllegalArgumentException.class)
-//    public void testCreateMatchWithLessParameterThanExpected() throws SportNotFoundException {
+//    public void testCreateMatchWithLessParameterThanExpected() throws SportNotFoundException, PlayerNotFoundException {
 //        MatchRequest rq2 = new MatchRequest(null, new Coordinates(4.0, 4.0), 1, 7, "1");
-//        service.createMatch(rq2);
+//        matchService.createMatch(rq2);
 //    }
 //
 //    @Test
-//    public void testUpdateMatch() throws MatchNotFoundException, SportNotFoundException {
-//        service.updateMatch(2, 1, 5, new Date(), null, new Coordinates(2.0, 5.0));
-//        Assert.assertEquals(5, service.getMatchById(2).getPlayersNeeded());
-//        Assert.assertEquals(5.0, service.getMatchById(2).getLocation().getLongitude(), 0.0);
+//    public void testUpdateMatch() throws MatchNotFoundException, SportNotFoundException, PlayerNotFoundException {
+//        matchService.updateMatch(2, 1, 5, new Date(), null, new Coordinates(2.0, 5.0));
+//        Assert.assertEquals(5, matchService.getMatchById(2).getPlayersNeeded());
+//        Assert.assertEquals(5.0, matchService.getMatchById(2).getLocation().getLongitude(), 0.0);
 //    }
 //
 //    @Test(expected = MatchNotFoundException.class)
-//    public void testUpdateMatchNotFound() throws MatchNotFoundException, SportNotFoundException {
-//        service.updateMatch(5, 1, 5, new Date(), null, new Coordinates(2.0, 5.0));
+//    public void testUpdateMatchNotFound() throws MatchNotFoundException, SportNotFoundException, PlayerNotFoundException {
+//        matchService.updateMatch(5, 1, 5, new Date(), null, new Coordinates(2.0, 5.0));
 //    }
 //
 //    @Test
 //    public void testDeleteMatch() throws MatchNotFoundException {
-//        service.deleteMatch(3);
-//        Assert.assertEquals(2, service.getAllMatches().size());
+//        matchService.deleteMatch(1);
+//        Assert.assertEquals(0, matchService.getAllMatches().size());
 //    }
 //
 //
 //    @Test(expected = MatchNotFoundException.class)
 //    public void testDeleteMatchNotFound() throws MatchNotFoundException {
-//        service.deleteMatch(5);
+//        matchService.deleteMatch(5);
 //    }
 //
 //
 //    @Test
 //    public void testAddExistentPlayerToMatch() throws MatchNotFoundException, PlayerAlreadyConfirmedException, PlayerNotFoundException, PlayerAlreadyExistsException {
 //
-//        service.addPlayerToMatch(1, "tom");
+//        matchService.addPlayerToMatch(1, "tom");
 //
-//        Player outputPlayer = service.getMatchById(1).getStarters().get(0);
+//        Player outputPlayer = matchService.getMatchById(1).getStarters().get(0);
 //
 //        Player expectedPlayer = new Player(1, "tom");
 //
@@ -129,9 +101,9 @@ public class MatchesServiceTest {
 //    @Test
 //    public void testAddNonExistentPlayerToMatch() throws MatchNotFoundException, PlayerAlreadyConfirmedException, PlayerNotFoundException, PlayerAlreadyExistsException {
 //
-//        service.addPlayerToMatch(1, "manuginobili");
+//        matchService.addPlayerToMatch(1, "manuginobili");
 //
-//        Player outputPlayer = service.getMatchById(1).getStarters().get(0);
+//        Player outputPlayer = matchService.getMatchById(1).getStarters().get(0);
 //
 //        Player expectedPlayer = new Player(4, "manuginobili");
 //
@@ -141,20 +113,19 @@ public class MatchesServiceTest {
 //    @Test
 //    public void testRemovePlayerToMatch() throws MatchNotFoundException, PlayerAlreadyConfirmedException, PlayerNotFoundException, PlayerAlreadyExistsException {
 //
-//        service.addPlayerToMatch(1, "messi");
+//      matchService.addPlayerToMatch(1, "messi");
 //
-//        service.addPlayerToMatch(1, "romero");
+//      matchService.addPlayerToMatch(1, "romero");
 //
-//        service.removePlayer(1, "messi");
+//      matchService.removePlayer(1, "messi");
 //
-//        Player outputPlayer = service.getMatchById(1).getStarters().get(0);
+//      Player outputPlayer = matchService.getMatchById(1).getStarters().get(0);
 //
-//        Player expectedPlayer = new Player(5, "romero");
+//      Player expectedPlayer = new Player(5, "romero");
 //
 //        Assert.assertEquals(outputPlayer, expectedPlayer);
-//        int number_starters = service.getMatchById(1).getStarters().size();
+//        int number_starters = matchService.getMatchById(1).getStarters().size();
 //        Assert.assertEquals(1, number_starters);
 //    }
-
 }
 

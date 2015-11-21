@@ -31,6 +31,10 @@ public class PlayersController {
     /** The map holding Access Token -> FbId pairs, used as a cache to know if a player has authenticated or not.*/
     private static Map<String, String> authenticationCache = new HashMap<String, String>();
 
+    public static boolean existsOnCache(final String accessToken) {
+      return authenticationCache.containsKey(accessToken);
+    }
+
     @ApiMethod(
             name = "getAll",
             path = "players",
@@ -43,13 +47,26 @@ public class PlayersController {
             path = "players/{id}",
             httpMethod = HttpMethod.GET
     )
-    public Player getPlayer(@Named("id") Integer id) throws NotFoundException {
+    public Player getPlayerById(@Named("id") Integer id) throws NotFoundException {
         try {
             return service.getById(id);
         } catch (PlayerNotFoundException e) {
-            throw new NotFoundException("Player with "+id+" does not exist");
+            throw new NotFoundException("Player with id: "+id+" does not exist");
         }
     }
+// TODO: agree on contract to retrieve by FBid.
+//    @ApiMethod(
+//            name = "getByFbId",
+//            path = "players/{fbId}",
+//            httpMethod = HttpMethod.GET
+//    )
+//    public Player getPlayerByFbId(@Named("id") String fbId) throws NotFoundException {
+//      try {
+//        return service.getByFacebookId(fbId);
+//      } catch (PlayerNotFoundException e) {
+//        throw new NotFoundException("Player with fbId: "+fbId+" does not exist");
+//      }
+//    }
 
     @ApiMethod(
             name = "add",
