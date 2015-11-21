@@ -118,5 +118,5 @@ public class MatchService {
         return storage.hasPlayer(matchId, player);
     }
 
-
+    public void setStorage(final IMatchStorage aMatchStorage) { storage = aMatchStorage; }
 }

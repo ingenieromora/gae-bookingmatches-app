@@ -76,4 +76,6 @@ public class SportService {
         }
         storage.removeSport(sportId);
     }
+
+    public void setStorage(final SportStorage aSportStorage){ storage = aSportStorage; }
 }

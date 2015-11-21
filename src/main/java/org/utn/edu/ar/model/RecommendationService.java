@@ -57,4 +57,6 @@ public class RecommendationService {
     public List<Recommendation> getForReceiver(String playerId){
         return storage.getForReceiver(playerId);
     }
+
+    public void setStorage(final RecommendationStorage aRecommendationStorage){ storage = aRecommendationStorage; }
 }

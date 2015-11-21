@@ -85,7 +85,8 @@ Another thing to bear in mind is that Google Cloud Endpoints return lists as a J
 
 #### players
 * `GET players` returns all players
-* `GET players/{id}` returns the player matching the given id
+* `GET players?id={id}` returns the player matching the given id
+* `GET players?fbId={fbId}` returns the player matching the given fbId
 * `POST players` create a player with given Facebook user.
 ```
 {

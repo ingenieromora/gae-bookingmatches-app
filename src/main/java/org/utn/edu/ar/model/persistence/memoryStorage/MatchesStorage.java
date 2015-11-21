@@ -1,8 +1,10 @@
 package org.utn.edu.ar.model.persistence.memoryStorage;
 
 import com.google.appengine.repackaged.com.google.common.base.Function;
+import com.google.appengine.repackaged.com.google.common.base.Optional;
 import com.google.appengine.repackaged.com.google.common.base.Predicate;
 import com.google.appengine.repackaged.com.google.common.collect.FluentIterable;
+import com.google.appengine.repackaged.com.google.common.collect.Iterables;
 import com.google.appengine.repackaged.com.google.common.collect.Lists;
 import com.google.common.collect.Ordering;
 import org.utn.edu.ar.model.PlayerService;
@@ -104,19 +106,16 @@ public class MatchesStorage implements IMatchStorage {
     }
 
     @Override
-    public void removePlayer(Integer matchId, String fbId)
+    public void removePlayer(final Integer matchId, final String fbId)
             throws MatchNotFoundException, PlayerNotFoundException {
-        Match match = null;
-        for (Match m : matches){
-            if(m.getId() == matchId){
-                match = m;
-                break;
+        Optional<Match> optMatch = Iterables.tryFind(matches, new Predicate<Match>() {
+            @Override
+            public boolean apply(final Match match) {
+                return match.getId() == (matchId);
             }
-        }
-
-        if(match == null) throw new MatchNotFoundException(matchId);
-
-        match.removePlayer(fbId);
+        });
+        if(!optMatch.isPresent()) throw new MatchNotFoundException(matchId);
+        optMatch.get().removePlayer(fbId);
     }
 
     @Override

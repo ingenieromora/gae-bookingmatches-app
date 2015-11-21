@@ -4,6 +4,7 @@ import com.google.api.server.spi.config.Api;
 import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiMethod.HttpMethod;
 import com.google.api.server.spi.config.Named;
+import com.google.api.server.spi.config.Nullable;
 import com.google.api.server.spi.response.ConflictException;
 import com.google.api.server.spi.response.NotFoundException;
 import org.utn.edu.ar.Constants;
@@ -28,41 +29,25 @@ public class PlayersController {
 
     private PlayerService service = PlayerService.getInstance();
 
-    /** The map holding Access Token -> FbId pairs, used as a cache to know if a player has authenticated or not.*/
-    private static Map<String, String> authenticationCache = new HashMap<String, String>();
-
     @ApiMethod(
             name = "getAll",
-            path = "players",
+            path = "players/all",
             httpMethod = HttpMethod.GET
     )
     public List<Player> getAll() throws PlayerNotFoundException { return service.getAll(); }
 
     @ApiMethod(
             name = "getById",
-            path = "players/{id}",
+            path = "players",
             httpMethod = HttpMethod.GET
     )
-    public Player getPlayerById(@Named("id") Integer id) throws NotFoundException {
-        try {
-            return service.getById(id);
-        } catch (PlayerNotFoundException e) {
-            throw new NotFoundException("Player with id: "+id+" does not exist");
-        }
+    public Player getPlayerById(@Nullable @Named("id") Integer id,
+                                @Nullable @Named("fbId") String fbId) throws NotFoundException, PlayerNotFoundException {
+      Player out = null;
+      if(id != null) out = service.getById(id);
+      if(fbId != null) out = service.getByFacebookId(fbId);
+      return out;
     }
-// TODO: agree on contract to retrieve by FBid.
-//    @ApiMethod(
-//            name = "getByFbId",
-//            path = "players/{fbId}",
-//            httpMethod = HttpMethod.GET
-//    )
-//    public Player getPlayerByFbId(@Named("id") String fbId) throws NotFoundException {
-//      try {
-//        return service.getByFacebookId(fbId);
-//      } catch (PlayerNotFoundException e) {
-//        throw new NotFoundException("Player with fbId: "+fbId+" does not exist");
-//      }
-//    }
 
     @ApiMethod(
             name = "add",
@@ -110,21 +95,6 @@ public class PlayersController {
             httpMethod = HttpMethod.POST
     )
     public MessageResponse validatePlayerWithFB(final ValidateRequest rq) throws PlayerAlreadyExistsException{
-      String out;
-      // Search inside cache if we haven't stored that Pair already.
-      if(authenticationCache.containsKey(rq.getFbId()) &&
-         authenticationCache.get(rq.getAccessToken()).equals(rq.getFbId()))
-        out = "OK";
-      else {
-        out = Facebook.authenticate(rq);
-        if(out.equals("OK"))
-          authenticationCache.put(rq.getAccessToken(), rq.getFbId());
-      }
-
-      if(!service.exists(rq.getFbId())) service.create(rq.getFbId());
-
-      MessageResponse response = new MessageResponse();
-      response.setMessage(out);
-      return response;
+      return service.validate(rq);
     }
 }

@@ -32,7 +32,7 @@ public class AccessTokenFilter implements Filter {
       Enumeration headerNames = httpRequest.getHeaderNames();
       String potentialToken = fetchHeaderIfExists(ACCESS_TOKEN, headerNames, httpRequest);
 
-      if (Strings.isEmptyOrWhitespace(potentialToken)) {
+      if (Strings.isEmptyOrWhitespace(potentialToken) || PlayerService.getInstance().existsOnCache(potentialToken)) {
         // Prepare response for validation error.
         HttpServletResponse resp = (HttpServletResponse) response;
         resp.reset();

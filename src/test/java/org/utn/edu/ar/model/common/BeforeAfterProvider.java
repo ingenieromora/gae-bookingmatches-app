@@ -7,14 +7,15 @@ import org.utn.edu.ar.model.PlayerService;
 import org.utn.edu.ar.model.RecommendationService;
 import org.utn.edu.ar.model.SportService;
 import org.utn.edu.ar.model.domain.Match;
-import org.utn.edu.ar.model.domain.Player;
-import org.utn.edu.ar.model.domain.Recommendation;
-import org.utn.edu.ar.model.domain.Sport;
 import org.utn.edu.ar.model.exceptions.match.MatchNotFoundException;
 import org.utn.edu.ar.model.exceptions.player.PlayerAlreadyExistsException;
 import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
 import org.utn.edu.ar.model.exceptions.sport.SportNameAlreadyExistException;
 import org.utn.edu.ar.model.exceptions.sport.SportNotFoundException;
+import org.utn.edu.ar.model.persistence.memoryStorage.MatchesStorage;
+import org.utn.edu.ar.model.persistence.memoryStorage.PlayersStorage;
+import org.utn.edu.ar.model.persistence.memoryStorage.RecommendationStorage;
+import org.utn.edu.ar.model.persistence.memoryStorage.SportStorage;
 import org.utn.edu.ar.model.request.MatchRequest;
 import org.utn.edu.ar.model.request.RecommendationRequest;
 import org.utn.edu.ar.util.Coordinates;
@@ -29,8 +30,10 @@ public class BeforeAfterProvider {
   protected static final String TOM = "Tom";
   protected static final String LEO = "Leo";
   protected static final String NICO = "Nico";
+  protected static final String JUAN = "Juan";
   protected static final String FOOTBALL = "Football";
   protected static final String RUGBY = "Rugby";
+  protected static Match M1 = null;
 
   protected PlayerService playerService = PlayerService.getInstance();
   protected SportService sportService = SportService.getInstance();
@@ -45,10 +48,16 @@ public class BeforeAfterProvider {
           PlayerNotFoundException,
           MatchNotFoundException {
 
+    playerService.setStorage(new PlayersStorage());
+    sportService.setStorage(new SportStorage());
+    matchService.setStorage(new MatchesStorage());
+    recommendationService.setStorage(new RecommendationStorage());
+
     // Create some players
     playerService.create(TOM);
     playerService.create(LEO);
     playerService.create(NICO);
+    playerService.create(JUAN);
 
     // Create some sports
     sportService.createSport(FOOTBALL);
@@ -56,7 +65,7 @@ public class BeforeAfterProvider {
 
     // Create a Match
     Integer sportId = 1;
-    Integer playersNeeded = 10;
+    Integer playersNeeded = 2;
     String creator = TOM;
     MatchRequest req = new MatchRequest(
             new Date(),
@@ -65,7 +74,8 @@ public class BeforeAfterProvider {
             playersNeeded,
             creator
     );
-    Match m1 = matchService.createMatch(req);
+
+    M1 = matchService.createMatch(req);
 
     // Create a few recommendations
     RecommendationRequest r1 = new RecommendationRequest(1, TOM, LEO);
