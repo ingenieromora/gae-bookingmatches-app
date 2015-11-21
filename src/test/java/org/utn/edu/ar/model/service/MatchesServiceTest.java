@@ -35,29 +35,29 @@ public class MatchesServiceTest extends BeforeAfterProvider {
   @Test
   public void addPlayerToMatchTest()
           throws PlayerNotFoundException, PlayerAlreadyConfirmedException, MatchNotFoundException, PlayerAlreadyExistsException {
-    matchService.addPlayerToMatch(1, LEO);
-    Assert.assertEquals(2, matchService.getMatchById(1).getStarters().size());
+    matchService.addPlayerToMatch(ONE, LEO);
+    Assert.assertEquals(2, matchService.getMatchById(ONE).getStarters().size());
   }
 
   @Test
   public void exceedLimitTest() throws PlayerAlreadyExistsException, PlayerNotFoundException, PlayerAlreadyConfirmedException, MatchNotFoundException {
-    matchService.addPlayerToMatch(1, NICO);
-    matchService.addPlayerToMatch(1, LEO);
-    Assert.assertEquals(1, matchService.getMatchById(1).getAlternates().size());
+    matchService.addPlayerToMatch(ONE, NICO);
+    matchService.addPlayerToMatch(ONE, LEO);
+    Assert.assertEquals(1, matchService.getMatchById(ONE).getAlternates().size());
   }
 
   @Test
   public void hasPlayerTest() throws PlayerAlreadyExistsException, PlayerNotFoundException, MatchNotFoundException, PlayerAlreadyConfirmedException {
-    matchService.addPlayerToMatch(1, LEO);
-    Assert.assertTrue(matchService.hasPlayer(1, LEO));
-    Assert.assertFalse(matchService.hasPlayer(1, JUAN));
+    matchService.addPlayerToMatch(ONE, LEO);
+    Assert.assertTrue(matchService.hasPlayer(ONE, LEO));
+    Assert.assertFalse(matchService.hasPlayer(ONE, JUAN));
   }
 
   @Test
   public void removePlayerFromMatch() throws PlayerAlreadyExistsException, PlayerNotFoundException, PlayerAlreadyConfirmedException, MatchNotFoundException {
-    matchService.addPlayerToMatch(1, LEO);
-    matchService.removePlayer(1, LEO);
-    Assert.assertEquals(1, matchService.getMatchById(1).getStarters().size());
+    matchService.addPlayerToMatch(ONE, LEO);
+    matchService.removePlayer(ONE, LEO);
+    Assert.assertEquals(1, matchService.getMatchById(ONE).getStarters().size());
   }
 }
 

@@ -1,7 +1,6 @@
 package org.utn.edu.ar.model.persistence.memoryStorage;
 
 import com.google.appengine.repackaged.com.google.api.client.util.Lists;
-import com.google.appengine.repackaged.com.google.common.base.Flag;
 import com.google.appengine.repackaged.com.google.common.base.Function;
 import com.google.appengine.repackaged.com.google.common.base.Optional;
 import com.google.appengine.repackaged.com.google.common.base.Predicate;
@@ -30,7 +29,7 @@ public class PlayersStorage implements IPlayerStorage {
 
   public List<Player> getAll(){ return players; }
 
-  public Player getById(final Integer id) throws PlayerNotFoundException {
+  public Player getById(final Long id) throws PlayerNotFoundException {
     try {
       return Iterables.find(players, new Predicate<Player>() {
         @Override
@@ -52,7 +51,7 @@ public class PlayersStorage implements IPlayerStorage {
     return toAdd;
   }
 
-  public void update(Integer id, String fbId) throws PlayerNotFoundException {
+  public void update(Long id, String fbId) throws PlayerNotFoundException {
       for(Player p: players){
           if(p.getId() == id){
               p.setFbId(fbId);
@@ -62,7 +61,7 @@ public class PlayersStorage implements IPlayerStorage {
       throw new PlayerNotFoundException(id);
   }
 
-  public void remove(Integer id) throws PlayerNotFoundException {
+  public void remove(Long id) throws PlayerNotFoundException {
       for(Player p : players){
           if(p.getId() == id){
               players.remove(p);
@@ -90,18 +89,18 @@ public class PlayersStorage implements IPlayerStorage {
     return out;
   }
 
-  public Integer nextId() {
+  public Long nextId() {
     try {
       return Utils.successor.apply(
-        Ordering.<Integer>natural().max(
+        Ordering.<Long>natural().max(
           FluentIterable.from(players).transform(
-            new Function<Player, Integer>() {
+            new Function<Player, Long>() {
               @Override
-              public Integer apply(final Player player) {
+              public Long apply(final Player player) {
                 return player.getId();
               }
             })));
-    } catch (NoSuchElementException e) { return 1; }
+    } catch (NoSuchElementException e) { return 1l; }
   }
 
   private boolean existsGeneric(final Predicate<Player> predicate) {
@@ -117,7 +116,7 @@ public class PlayersStorage implements IPlayerStorage {
       });
   }
 
-  public boolean exists(final Integer id){
+  public boolean exists(final Long id){
       return existsGeneric(new Predicate<Player>() {
         @Override
         public boolean apply(final Player player) {

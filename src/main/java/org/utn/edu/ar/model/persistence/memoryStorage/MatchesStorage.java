@@ -20,7 +20,6 @@ import org.utn.edu.ar.model.request.MatchRequest;
 import org.utn.edu.ar.util.Coordinates;
 import org.utn.edu.ar.util.Utils;
 
-import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 import java.util.NoSuchElementException;
@@ -37,7 +36,7 @@ public class MatchesStorage implements IMatchStorage {
     }
 
     @Override
-    public Match getMatchById(int id) {
+    public Match getMatchById(Long id) {
         Match match = null;
         for (Match m : matches) {
             if (m.getId() == id) match = m;
@@ -79,7 +78,7 @@ public class MatchesStorage implements IMatchStorage {
     }
 
     @Override
-    public boolean exists(final int id) {
+    public boolean exists(final Long id) {
         return FluentIterable.from(matches).anyMatch(new Predicate<Match>() {
             @Override
             public boolean apply(final Match match) {
@@ -89,7 +88,7 @@ public class MatchesStorage implements IMatchStorage {
     }
 
     @Override
-    public void updateMatch(int id, Integer sportId, Integer playersNeeded, Date date, String createdBy, Coordinates location)
+    public void updateMatch(Long id, Long sportId, Integer playersNeeded, Date date, String createdBy, Coordinates location)
             throws SportNotFoundException, PlayerNotFoundException {
         Match match = getMatchById(id);
         if ( sportId != null ) match.setSport(sportId);
@@ -100,13 +99,13 @@ public class MatchesStorage implements IMatchStorage {
     }
 
     @Override
-    public void deleteMatch(int id) {
+    public void deleteMatch(Long id) {
         Match match = getMatchById(id);
         if (match != null) matches.remove(match);
     }
 
     @Override
-    public void removePlayer(final Integer matchId, final String fbId)
+    public void removePlayer(final Long matchId, final String fbId)
             throws MatchNotFoundException, PlayerNotFoundException {
         Optional<Match> optMatch = Iterables.tryFind(matches, new Predicate<Match>() {
             @Override
@@ -121,7 +120,7 @@ public class MatchesStorage implements IMatchStorage {
     }
 
     @Override
-    public void addPlayer(Integer matchId, Player player) throws PlayerAlreadyConfirmedException {
+    public void addPlayer(Long matchId, Player player) throws PlayerAlreadyConfirmedException {
         Match match = getMatchById(matchId);
 
         addPlayer(match, player);
@@ -160,23 +159,23 @@ public class MatchesStorage implements IMatchStorage {
     }
 
     @Override
-    public Boolean hasPlayer(Integer matchId, Player player){
+    public Boolean hasPlayer(Long matchId, Player player){
         Match match = getMatchById(matchId);
 
         return match.hasPlayer(player);
     }
 
-    private Integer nextId(){
+    private Long nextId(){
         try {
             return Utils.successor.apply(
-                    Ordering.<Integer>natural().max(
+                    Ordering.<Long>natural().max(
                             FluentIterable.from(matches).transform(
-                                    new Function<Match, Integer>() {
+                                    new Function<Match, Long>() {
                                         @Override
-                                        public Integer apply(final Match player) {
+                                        public Long apply(final Match player) {
                                             return player.getId();
                                         }
                                     })));
-        } catch (NoSuchElementException e) { return 1; }
+        } catch (NoSuchElementException e) { return 1l; }
     }
 }

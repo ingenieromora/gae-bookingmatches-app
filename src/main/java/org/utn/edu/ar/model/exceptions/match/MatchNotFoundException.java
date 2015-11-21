@@ -5,7 +5,7 @@ package org.utn.edu.ar.model.exceptions.match;
  */
 public class MatchNotFoundException extends Exception {
 
-    public MatchNotFoundException(Integer id) {
+    public MatchNotFoundException(Long id) {
         super("Match with id " + id + " does not exist");
     }
 

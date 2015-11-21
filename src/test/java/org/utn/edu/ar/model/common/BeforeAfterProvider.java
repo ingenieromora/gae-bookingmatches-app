@@ -25,7 +25,10 @@ import java.util.Date;
 /**
  * Created by tom on 11/19/15.
  */
-public class BeforeAfterProvider {
+public abstract class BeforeAfterProvider {
+
+  protected static final Long ONE = 1l;
+  protected static final Long TWO = 2l;
 
   protected static final String TOM = "Tom";
   protected static final String LEO = "Leo";
@@ -64,7 +67,7 @@ public class BeforeAfterProvider {
     sportService.createSport(RUGBY);
 
     // Create a Match
-    Integer sportId = 1;
+    Long sportId = 1l;
     Integer playersNeeded = 2;
     String creator = TOM;
     MatchRequest req = new MatchRequest(
@@ -78,8 +81,8 @@ public class BeforeAfterProvider {
     M1 = matchService.createMatch(req);
 
     // Create a few recommendations
-    RecommendationRequest r1 = new RecommendationRequest(1, TOM, LEO);
-    RecommendationRequest r2 = new RecommendationRequest(1, LEO, NICO);
+    RecommendationRequest r1 = new RecommendationRequest(1l, TOM, LEO);
+    RecommendationRequest r2 = new RecommendationRequest(1l, LEO, NICO);
     recommendationService.create(r1);
     recommendationService.create(r2);
   }
@@ -91,16 +94,16 @@ public class BeforeAfterProvider {
           SportNotFoundException {
 
     // This is kind of like a CASCADE delete.
-    recommendationService.delete(1);
-    recommendationService.delete(2);
+    recommendationService.delete(1l);
+    recommendationService.delete(2l);
 
-    matchService.deleteMatch(1);
+    matchService.deleteMatch(1l);
 
-    playerService.remove(1);
-    playerService.remove(2);
-    playerService.remove(3);
+    playerService.remove(1l);
+    playerService.remove(2l);
+    playerService.remove(3l);
 
-    sportService.removeSport(1);
-    sportService.removeSport(2);
+    sportService.removeSport(1l);
+    sportService.removeSport(2l);
   }
 }

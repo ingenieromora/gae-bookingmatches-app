@@ -37,7 +37,7 @@ public class RecommendationController {
             path = "recommendations/{id}",
             httpMethod = HttpMethod.DELETE
     )
-    public void delete(@Named("id") Integer id) {
+    public void delete(@Named("id") Long id) {
         service.delete(id);
     }
 
@@ -58,7 +58,7 @@ public class RecommendationController {
             path = "recommendations/{id}",
             httpMethod = HttpMethod.GET
     )
-    public Recommendation getById(@Named("id") Integer id){
+    public Recommendation getById(@Named("id") Long id){
         return service.getById(id);
     }
 }

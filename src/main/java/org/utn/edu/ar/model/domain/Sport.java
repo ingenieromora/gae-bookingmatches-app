@@ -6,17 +6,17 @@ import com.googlecode.objectify.annotation.Id;
 @Entity
 public class Sport {
 
-    @Id private int id;
+    @Id private Long id;
     private String name;
 
-    public Sport(int id, String name) {
+    public Sport(long id, String name) {
         this.id = id;
         this.name = name;
     }
 
     public Sport(){}
 
-    public Sport(int id) {
+    public Sport(Long id) {
         this.id = id;
     }
 
@@ -28,11 +28,11 @@ public class Sport {
         this.name = name;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -51,8 +51,10 @@ public class Sport {
         return true;
     }
 
-    @Override
-    public int hashCode() {
-        return id;
-    }
+  @Override
+  public int hashCode() {
+    int result = (int) (id ^ (id >>> 32));
+    result = 31 * result + (name != null ? name.hashCode() : 0);
+    return result;
+  }
 }

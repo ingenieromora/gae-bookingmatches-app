@@ -8,6 +8,7 @@ import com.google.appengine.repackaged.com.google.common.collect.Lists;
 import org.utn.edu.ar.model.PlayerService;
 import org.utn.edu.ar.model.domain.Match;
 import org.utn.edu.ar.model.domain.Player;
+import org.utn.edu.ar.model.domain.Sport;
 import org.utn.edu.ar.model.exceptions.match.MatchNotFoundException;
 import org.utn.edu.ar.model.exceptions.match.PlayerAlreadyConfirmedException;
 import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
@@ -19,6 +20,7 @@ import org.utn.edu.ar.util.Coordinates;
 
 
 import java.util.List;
+import static com.googlecode.objectify.ObjectifyService.ofy;
 
 /**
  * Created by leandro.mora on 07/11/15.
@@ -31,6 +33,13 @@ public class GaeMatchesStorage extends MatchesStorage implements IMatchStorage{
     private static final String ATTRIBUTE_DATE = "date";
     private static final String ATTRIBUTE_LOCATION = "location";
     private static final String ATTRIBUTE_ALTERNATES= "alternates";
+
+    public Match create(final MatchRequest rq, final Sport sport, final Player creator)
+            throws SportNotFoundException, PlayerNotFoundException {
+        Match match = new Match(rq, sport, creator);
+        ofy().save().entity(match).now();
+        return ofy().load().entity(match).now();
+    }
 
 /**    @Override
     public List<Match> getAllMatches() {

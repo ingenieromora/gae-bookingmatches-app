@@ -10,7 +10,6 @@ import org.utn.edu.ar.Constants;
 import org.utn.edu.ar.model.domain.Sport;
 import org.utn.edu.ar.model.exceptions.sport.SportNameAlreadyExistException;
 import org.utn.edu.ar.model.exceptions.sport.SportNotFoundException;
-import org.utn.edu.ar.model.persistence.memoryStorage.SportStorage;
 import org.utn.edu.ar.model.SportService;
 import org.utn.edu.ar.model.request.NameRequest;
 
@@ -41,7 +40,7 @@ public class SportController {
             path ="sports/{id}",
             httpMethod = HttpMethod.GET
     )
-    public Sport getSport(@Named("id") Integer id) throws NotFoundException {
+    public Sport getSport(@Named("id") Long id) throws NotFoundException {
         try {
             return service.getSportById(id);
         } catch (SportNotFoundException e) {
@@ -67,7 +66,7 @@ public class SportController {
             path = "sports/{id}",
             httpMethod = HttpMethod.PUT
     )
-    public void updateSport(@Named("id") Integer id, NameRequest rq) throws ConflictException {
+    public void updateSport(@Named("id") Long id, NameRequest rq) throws ConflictException {
         try {
             service.updateSport(id, rq.getName());
         } catch (SportNotFoundException | SportNameAlreadyExistException e) {
@@ -80,7 +79,7 @@ public class SportController {
             path = "sports/{id}",
             httpMethod = HttpMethod.DELETE
     )
-    public void removeSport(@Named("id") Integer id) throws NotFoundException {
+    public void removeSport(@Named("id") Long id) throws NotFoundException {
         try {
             service.removeSport(id);
         } catch (Exception e) {

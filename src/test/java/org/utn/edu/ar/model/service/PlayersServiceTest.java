@@ -21,28 +21,28 @@ import static junit.framework.Assert.assertEquals;
  */
 public class PlayersServiceTest {
 
-    PlayerService service;
-
-    //TODO Complete tests
-
-    @Before
-    public void setup(){
-        List<Player> playerList = new ArrayList<Player>();
-        Player tom = new Player(1, "tom");
-        Player nico = new Player(2, "nico");
-        Player leo = new Player(3, "leo");
-
-        playerList.add(tom);
-        playerList.add(nico);
-        playerList.add(leo);
-
-        service = new PlayerService(new PlayersStorage(playerList));
-    }
-
-    @Test
-    public void getFacebookById() throws PlayerNotFoundException {
-
-        assertEquals(new Player(2, "nico"), service.getByFacebookId("nico"));
-
-    }
+//    PlayerService service;
+//
+//    //TODO Complete tests
+//
+//    @Before
+//    public void setup(){
+//        List<Player> playerList = new ArrayList<Player>();
+//        Player tom = new Player(1, "tom");
+//        Player nico = new Player(2, "nico");
+//        Player leo = new Player(3, "leo");
+//
+//        playerList.add(tom);
+//        playerList.add(nico);
+//        playerList.add(leo);
+//
+//        service = new PlayerService(new PlayersStorage(playerList));
+//    }
+//
+//    @Test
+//    public void getFacebookById() throws PlayerNotFoundException {
+//
+//        assertEquals(new Player(2, "nico"), service.getByFacebookId("nico"));
+//
+//    }
 }

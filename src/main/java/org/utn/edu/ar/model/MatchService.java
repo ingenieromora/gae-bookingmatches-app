@@ -49,7 +49,7 @@ public class MatchService {
         return storage.getAllMatches();
     }
 
-    public Match getMatchById(int id) throws MatchNotFoundException {
+    public Match getMatchById(Long id) throws MatchNotFoundException {
         Match match = storage.getMatchById(id);
         if (match == null) throw new MatchNotFoundException(id);
         return match;
@@ -77,12 +77,12 @@ public class MatchService {
                 && (rq.getSportId() != null));
     }
 
-    public boolean exists(int id) {
+    public boolean exists(Long id) {
         return storage.exists(id);
     }
 
 
-    public void updateMatch(int id, Integer sportId, Integer playersNeeded, Date date, String createdBy, Coordinates location)
+    public void updateMatch(Long id, Long sportId, Integer playersNeeded, Date date, String createdBy, Coordinates location)
             throws MatchNotFoundException, SportNotFoundException, PlayerNotFoundException {
 
         if (!exists(id)) {
@@ -91,17 +91,17 @@ public class MatchService {
         storage.updateMatch(id, sportId, playersNeeded, date, createdBy, location);
     }
 
-    public void deleteMatch(int id) throws MatchNotFoundException {
+    public void deleteMatch(Long id) throws MatchNotFoundException {
         if (!exists(id)) throw new MatchNotFoundException(id);
         storage.deleteMatch(id);
     }
 
-    public void removePlayer(Integer matchId, String fbId)
+    public void removePlayer(Long matchId, String fbId)
             throws MatchNotFoundException, PlayerNotFoundException {
         storage.removePlayer(matchId, fbId);
     }
 
-    public void addPlayerToMatch(Integer matchId, String playerFbId) throws MatchNotFoundException, PlayerAlreadyExistsException, PlayerNotFoundException, PlayerAlreadyConfirmedException {
+    public void addPlayerToMatch(Long matchId, String playerFbId) throws MatchNotFoundException, PlayerAlreadyExistsException, PlayerNotFoundException, PlayerAlreadyConfirmedException {
         if (!exists(matchId)) throw new MatchNotFoundException(matchId);
 
         Player createdPlayer = getPlayer(playerFbId);
@@ -116,7 +116,7 @@ public class MatchService {
         return playerService.getByFacebookId(playerFbId);
     }
 
-    public Boolean hasPlayer(Integer matchId, String fbId) throws PlayerAlreadyExistsException, PlayerNotFoundException{
+    public Boolean hasPlayer(Long matchId, String fbId) throws PlayerAlreadyExistsException, PlayerNotFoundException{
         Player player = getPlayer(fbId);
         return storage.hasPlayer(matchId, player);
     }

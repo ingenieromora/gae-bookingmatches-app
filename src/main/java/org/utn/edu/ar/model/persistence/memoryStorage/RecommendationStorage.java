@@ -67,7 +67,7 @@ public class RecommendationStorage implements IRecommendationStorage {
       return r;
     }
 
-    public void delete(final Integer id) {
+    public void delete(final Long id) {
         Iterables.removeIf(recommendations, new Predicate<Recommendation>() {
           @Override
           public boolean apply(final Recommendation recommendation) {
@@ -76,7 +76,7 @@ public class RecommendationStorage implements IRecommendationStorage {
         });
     }
 
-    public Recommendation getById(final Integer id){
+    public Recommendation getById(final Long id){
         return Iterables.find(recommendations, new Predicate<Recommendation>() {
           @Override
           public boolean apply(final Recommendation recommendation) {
@@ -86,18 +86,18 @@ public class RecommendationStorage implements IRecommendationStorage {
     }
 
 
-    public int nextId(){
+    public Long nextId(){
         try {
           return Utils.successor.apply(
-            Ordering.<Integer>natural().max(
+            Ordering.<Long>natural().max(
               FluentIterable.from(recommendations).transform(
-                new Function<Recommendation, Integer>() {
+                new Function<Recommendation, Long>() {
                   @Override
-                  public Integer apply(final Recommendation player) {
+                  public Long apply(final Recommendation player) {
                       return player.getId();
                   }
               })));
-        } catch (NoSuchElementException e) { return 1; }
+        } catch (NoSuchElementException e) { return 1l; }
     }
 
     public List<Recommendation> getRecommendations() {

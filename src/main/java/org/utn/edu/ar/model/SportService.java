@@ -6,7 +6,6 @@ import org.utn.edu.ar.model.exceptions.sport.SportNotFoundException;
 import org.utn.edu.ar.model.persistence.ISportStorage;
 import org.utn.edu.ar.model.persistence.memoryStorage.SportStorage;
 
-import java.util.ArrayList;
 import java.util.List;
 
 public class SportService {
@@ -41,7 +40,7 @@ public class SportService {
         return outputList;
     }
 
-    public Sport getSportById(Integer id) throws SportNotFoundException {
+    public Sport getSportById(Long id) throws SportNotFoundException {
         Sport storedSport = storage.getSportById(id);
         if(storedSport == null){
             throw new SportNotFoundException(id);
@@ -60,7 +59,7 @@ public class SportService {
         return storage.createSport(sportName);
     }
 
-    public void updateSport(Integer sportId, String sportName)
+    public void updateSport(Long sportId, String sportName)
             throws SportNotFoundException, SportNameAlreadyExistException {
         if(!storage.exists(sportId)){
             throw new SportNotFoundException(sportId);
@@ -70,7 +69,7 @@ public class SportService {
         storage.updateSport(sportId, sportName);
     }
 
-    public void removeSport(Integer sportId) throws SportNotFoundException {
+    public void removeSport(Long sportId) throws SportNotFoundException {
         if(!storage.exists(sportId)){
             throw new SportNotFoundException(sportId);
         }

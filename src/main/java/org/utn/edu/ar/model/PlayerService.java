@@ -40,7 +40,7 @@ public class PlayerService {
 
   public List<Player> getAll(){ return storage.getAll(); }
 
-  public Player getById(Integer id) throws PlayerNotFoundException {
+  public Player getById(Long id) throws PlayerNotFoundException {
       return storage.getById(id);
   }
 
@@ -52,11 +52,11 @@ public class PlayerService {
       return storage.create(fbId);
   }
 
-  public void update(Integer id, String fbId) throws PlayerNotFoundException {
+  public void update(Long id, String fbId) throws PlayerNotFoundException {
       storage.update(id, fbId);
   }
 
-  public void remove(Integer id) throws PlayerNotFoundException {
+  public void remove(Long id) throws PlayerNotFoundException {
       storage.remove(id);
   }
 

@@ -42,11 +42,11 @@ public class RecommendationService {
        return storage.getAll();
     }
 
-    public Recommendation getById(Integer id){
+    public Recommendation getById(Long id){
         return storage.getById(id);
     }
 
-    public void delete(Integer id){
+    public void delete(Long id){
         storage.delete(id);
     }
 

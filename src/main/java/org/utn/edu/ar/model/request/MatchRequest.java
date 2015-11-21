@@ -8,13 +8,13 @@ import java.util.Date;
 public class MatchRequest {
     private Date date;
     private Coordinates location;
-    private Integer sportId;
+    private Long sportId;
     private Integer playersNeeded;
     private String createdBy;
 
     public MatchRequest(){}
 
-    public MatchRequest(Date date, Coordinates location, Integer sportId, Integer playersNeeded, String createdBy) {
+    public MatchRequest(Date date, Coordinates location, Long sportId, Integer playersNeeded, String createdBy) {
 
         this.date = date;
         this.location = location;
@@ -39,11 +39,11 @@ public class MatchRequest {
         this.location = location;
     }
 
-    public Integer getSportId() {
+    public Long getSportId() {
         return sportId;
     }
 
-    public void setSportId(Integer sportId) {
+    public void setSportId(Long sportId) {
         this.sportId = sportId;
     }
 

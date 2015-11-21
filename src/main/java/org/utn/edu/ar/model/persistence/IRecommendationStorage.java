@@ -15,9 +15,9 @@ public interface IRecommendationStorage {
 
     public Recommendation create(RecommendationRequest rec) throws PlayerNotFoundException, MatchNotFoundException;
 
-    public void delete(Integer id);
+    public void delete(Long id);
 
-    public Recommendation getById(Integer id);
+    public Recommendation getById(Long id);
 
     public List<Recommendation> getAll();
 

@@ -5,6 +5,7 @@ import com.google.api.server.spi.config.ApiMethod;
 import com.google.api.server.spi.config.ApiMethod.HttpMethod;
 import com.google.api.server.spi.config.Named;
 import com.google.api.server.spi.response.NotFoundException;
+import com.googlecode.objectify.ObjectifyService;
 import org.utn.edu.ar.Constants;
 import org.utn.edu.ar.model.MatchService;
 import org.utn.edu.ar.model.domain.Match;
@@ -15,7 +16,6 @@ import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
 import org.utn.edu.ar.model.exceptions.sport.SportNotFoundException;
 import org.utn.edu.ar.model.request.FacebookIdRequest;
 import org.utn.edu.ar.model.request.MatchRequest;
-import org.utn.edu.ar.model.request.NameRequest;
 import org.utn.edu.ar.model.response.MessageResponse;
 
 import java.util.List;
@@ -28,6 +28,11 @@ import java.util.List;
 public class MatchController {
 
     private MatchService service = MatchService.getInstance();
+
+    static {
+        ObjectifyService.begin();
+        ObjectifyService.register(Match.class);
+    }
 
     @ApiMethod(
             name = "add",
@@ -44,7 +49,7 @@ public class MatchController {
             path = "matches/{id}/inscriptions",
             httpMethod = HttpMethod.POST
     )
-    public void addPlayerToMatch(@Named("id") Integer matchId, FacebookIdRequest fbId) throws NotFoundException {
+    public void addPlayerToMatch(@Named("id") Long matchId, FacebookIdRequest fbId) throws NotFoundException {
         try {
             service.addPlayerToMatch(matchId, fbId.getFbId());
         } catch (MatchNotFoundException e) {
@@ -64,7 +69,7 @@ public class MatchController {
             path = "matches/{id}/inscriptions/{fbId}",
             httpMethod = HttpMethod.DELETE
     )
-    public void removePlayer(@Named("id") Integer matchId, @Named("fbId") String fbId) throws NotFoundException {
+    public void removePlayer(@Named("id") Long matchId, @Named("fbId") String fbId) throws NotFoundException {
         try {
             service.removePlayer(matchId, fbId);
         }
@@ -80,7 +85,7 @@ public class MatchController {
             path = "matches/{id}/inscriptions/{fbId}",
             httpMethod = HttpMethod.GET
     )
-    public MessageResponse hasPlayer(@Named("id") Integer matchId, @Named("fbId") String fbId) throws PlayerAlreadyExistsException, PlayerNotFoundException{
+    public MessageResponse hasPlayer(@Named("id") Long matchId, @Named("fbId") String fbId) throws PlayerAlreadyExistsException, PlayerNotFoundException{
         String response;
         if(service.hasPlayer(matchId, fbId)){
             response = "YES";
@@ -105,7 +110,7 @@ public class MatchController {
             path = "matches/{id}",
             httpMethod = HttpMethod.GET
     )
-    public Match getMatchById(@Named("id") Integer id) throws NotFoundException {
+    public Match getMatchById(@Named("id") Long id) throws NotFoundException {
         try {
             return service.getMatchById(id);
         } catch (MatchNotFoundException e) {
@@ -136,7 +141,7 @@ public class MatchController {
             path = "matches/{id}",
             httpMethod = HttpMethod.PUT
     )
-    public void updateMatches(@Named("id") Integer id, MatchRequest request) throws NotFoundException, SportNotFoundException {
+    public void updateMatches(@Named("id") Long id, MatchRequest request) throws NotFoundException, SportNotFoundException {
         try {
             service.updateMatch(id, request.getSportId(), request.getPlayersNeeded(),
                     request.getDate(),request.getCreatedBy(), request.getLocation());
@@ -152,7 +157,7 @@ public class MatchController {
             path = "matches/{id}",
             httpMethod = HttpMethod.DELETE
     )
-    public void deleteMatch(@Named("id") Integer id) throws NotFoundException {
+    public void deleteMatch(@Named("id") Long id) throws NotFoundException {
         try {
             service.deleteMatch(id);
         } catch (MatchNotFoundException e) {

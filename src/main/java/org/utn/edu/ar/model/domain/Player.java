@@ -6,19 +6,23 @@ import com.googlecode.objectify.annotation.Id;
 @Entity
 public class Player {
 
-    @Id private int id;
+    @Id private Long id;
     private String fbId;
 
-    public Player(int id, String fbId) {
+    public Player(final String aFbId){
+        fbId = aFbId;
+    }
+
+    public Player(Long id, String fbId) {
         this.id = id;
         this.fbId = fbId;
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -44,7 +48,7 @@ public class Player {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (fbId != null ? fbId.hashCode() : 0);
         return result;
     }

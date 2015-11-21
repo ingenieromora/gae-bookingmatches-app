@@ -5,7 +5,7 @@ package org.utn.edu.ar.model.exceptions.sport;
  */
 public class SportNotFoundException extends Exception {
 
-    public SportNotFoundException(Integer id){
+    public SportNotFoundException(Long id){
         super("Sport with id '"+id+"' does not exist");
     }
 

@@ -9,7 +9,7 @@ import com.googlecode.objectify.annotation.Id;
 @Entity
 public class Recommendation {
 
-    @Id private int id;
+    @Id private Long id;
     private Match match;
     private Player emitter;
     private Player receiver;
@@ -22,11 +22,11 @@ public class Recommendation {
         match = aMatch;
     }
 
-    public int getId() {
+    public Long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -70,7 +70,7 @@ public class Recommendation {
 
     @Override
     public int hashCode() {
-        int result = id;
+        int result = (int) (id ^ (id >>> 32));
         result = 31 * result + (match != null ? match.hashCode() : 0);
         result = 31 * result + (emitter != null ? emitter.hashCode() : 0);
         result = 31 * result + (receiver != null ? receiver.hashCode() : 0);

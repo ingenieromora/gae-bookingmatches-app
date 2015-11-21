@@ -5,7 +5,7 @@ package org.utn.edu.ar.model.exceptions.sport;
  */
 public class SportAlreadyExistException extends Exception {
 
-    public SportAlreadyExistException(Integer sportId){
+    public SportAlreadyExistException(Long sportId){
         super("Sport with id "+sportId+ " already exists");
     }
 

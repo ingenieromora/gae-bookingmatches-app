@@ -6,23 +6,23 @@ package org.utn.edu.ar.model.request;
  */
 public class RecommendationRequest {
 
-  private Integer matchId;
+  private Long matchId;
   private String emitterId;
   private String receiverId;
 
   public RecommendationRequest(){}
 
-  public RecommendationRequest(Integer matchId, String emitterId, String receiverId) {
+  public RecommendationRequest(Long matchId, String emitterId, String receiverId) {
     this.matchId = matchId;
     this.emitterId = emitterId;
     this.receiverId = receiverId;
   }
 
-  public Integer getMatchId() {
+  public Long getMatchId() {
     return matchId;
   }
 
-  public void setMatchId(Integer matchId) {
+  public void setMatchId(Long matchId) {
     this.matchId = matchId;
   }
 

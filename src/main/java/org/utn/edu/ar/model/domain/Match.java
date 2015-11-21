@@ -15,7 +15,7 @@ import java.util.List;
 @Entity
 public class Match {
 
-    @Id private int id;
+    @Id private Long id;
     private Sport sport;
     private int playersNeeded;
     private Player createdBy;
@@ -38,11 +38,11 @@ public class Match {
         return starters.contains(player) || alternates.contains(player);
     }
 
-    public int getId() {
+    public long getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Long id) {
         this.id = id;
     }
 
@@ -98,7 +98,7 @@ public class Match {
         return sport;
     }
 
-    public void setSport(int sportId) throws SportNotFoundException {
+    public void setSport(Long sportId) throws SportNotFoundException {
         this.sport = SportService.getInstance().getSportById(sportId);
     }
 

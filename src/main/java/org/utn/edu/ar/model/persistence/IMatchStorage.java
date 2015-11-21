@@ -20,22 +20,22 @@ public interface IMatchStorage {
 
     public List<Match> getAllMatches();
 
-    public Match getMatchById(int id);
+    public Match getMatchById(Long id);
 
     public Match createMatch(MatchRequest rq, Sport sport, Player createdBy) throws SportNotFoundException, PlayerNotFoundException;
 
-    public boolean exists(int id);
+    public boolean exists(Long id);
 
-    public void updateMatch(int id, Integer sportId, Integer playersNeeded, Date date, String createdBy, Coordinates location) throws SportNotFoundException, PlayerNotFoundException;
+    public void updateMatch(Long id, Long sportId, Integer playersNeeded, Date date, String createdBy, Coordinates location) throws SportNotFoundException, PlayerNotFoundException;
 
-    public void deleteMatch(int id);
+    public void deleteMatch(Long id);
 
-    public void removePlayer(Integer matchId, String fbId)
+    public void removePlayer(Long matchId, String fbId)
             throws MatchNotFoundException, PlayerNotFoundException;
 
-    public void addPlayer(Integer matchId, Player playerFbId) throws PlayerAlreadyConfirmedException;
+    public void addPlayer(Long matchId, Player playerFbId) throws PlayerAlreadyConfirmedException;
 
-    public Boolean hasPlayer(Integer matchId, Player playerFbId);
+    public Boolean hasPlayer(Long matchId, Player playerFbId);
 
     public List<Match> getMatchByCreatedBy(String createdBy) throws PlayerNotFoundException;
 

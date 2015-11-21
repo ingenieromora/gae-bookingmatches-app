@@ -7,11 +7,13 @@ import com.google.common.base.Function;
  */
 public class Utils {
 
-  public static Function<Integer, Integer> successor =
-    new Function<Integer, Integer>() {
+  public static Function<Long, Long> successor =
+    new Function<Long, Long>() {
       @Override
-      public Integer apply(Integer integer) {
-        return integer + 1;
+      public Long apply(Long num) {
+        return num + 1;
       }
     };
+
+
 }

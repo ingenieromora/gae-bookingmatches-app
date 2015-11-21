@@ -17,8 +17,8 @@ public class RecommendationServiceTest extends BeforeAfterProvider {
 
   @Test
   public void getByIdTest() {
-    Recommendation r = recommendationService.getById(1);
-    Assert.assertEquals(1, r.getId());
+    Recommendation r = recommendationService.getById(1l);
+    Assert.assertEquals(ONE, r.getId());
     Assert.assertEquals(TOM, r.getEmitter().getFbId());
     Assert.assertEquals(LEO, r.getReceiver().getFbId());
   }
@@ -37,8 +37,8 @@ public class RecommendationServiceTest extends BeforeAfterProvider {
 
   @Test
   public void deleteTest() {
-    recommendationService.delete(1);
+    recommendationService.delete(ONE);
     Assert.assertEquals(1, recommendationService.getAll().size());
-    Assert.assertEquals(2, recommendationService.getForEmitter(LEO).get(0).getId());
+    Assert.assertEquals(TWO, recommendationService.getForEmitter(LEO).get(0).getId());
   }
 }

@@ -8,14 +8,14 @@ public interface ISportStorage {
 
     public List<Sport> getAllSports();
 
-    public Sport getSportById(Integer id);
+    public Sport getSportById(Long id);
 
-    public boolean exists(Integer sportId);
+    public boolean exists(Long sportId);
     public boolean exists(String sportName);
 
     public Sport createSport(String sportName);
 
-    public void updateSport(Integer sportId, String sportName);
+    public void updateSport(Long sportId, String sportName);
 
-    public void removeSport(Integer sportId);
+    public void removeSport(Long sportId);
 }
