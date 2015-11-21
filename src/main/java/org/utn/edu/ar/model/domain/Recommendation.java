@@ -6,40 +6,16 @@ package org.utn.edu.ar.model.domain;
 public class Recommendation {
 
     private int id;
-    private String matchId;
-    private String emitterId;
-    private String receiverId;
+    private Match match;
+    private Player emitter;
+    private Player receiver;
 
     public Recommendation(){}
 
-    public Recommendation(String emitterId, String receiverId, String matchId) {
-        this.emitterId = emitterId;
-        this.receiverId = receiverId;
-        this.matchId = matchId;
-    }
-
-    public String getEmitterId() {
-        return emitterId;
-    }
-
-    public void setEmitterId(String emitterId) {
-        this.emitterId = emitterId;
-    }
-
-    public String getReceiverId() {
-        return receiverId;
-    }
-
-    public void setReceiverId(String receiverId) {
-        this.receiverId = receiverId;
-    }
-
-    public String getMatchId() {
-        return matchId;
-    }
-
-    public void setMatchId(String matchId) {
-        this.matchId = matchId;
+    public Recommendation(Player anEmitter, Player aReceiver, Match aMatch) {
+        emitter = anEmitter;
+        receiver = aReceiver;
+        match = aMatch;
     }
 
     public int getId() {
@@ -50,6 +26,30 @@ public class Recommendation {
         this.id = id;
     }
 
+    public Match getMatch() {
+        return match;
+    }
+
+    public void setMatch(Match match) {
+        this.match = match;
+    }
+
+    public Player getEmitter() {
+        return emitter;
+    }
+
+    public void setEmitter(Player emitter) {
+        this.emitter = emitter;
+    }
+
+    public Player getReceiver() {
+        return receiver;
+    }
+
+    public void setReceiver(Player receiver) {
+        this.receiver = receiver;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
@@ -57,18 +57,19 @@ public class Recommendation {
 
         Recommendation that = (Recommendation) o;
 
-        if (emitterId != that.emitterId) return false;
-        if (receiverId != that.receiverId) return false;
-        return matchId == that.matchId;
+        if (id != that.id) return false;
+        if (match != null ? !match.equals(that.match) : that.match != null) return false;
+        if (emitter != null ? !emitter.equals(that.emitter) : that.emitter != null) return false;
+        return !(receiver != null ? !receiver.equals(that.receiver) : that.receiver != null);
 
     }
 
     @Override
     public int hashCode() {
         int result = id;
-        result = 31 * result + matchId.hashCode();
-        result = 31 * result + emitterId.hashCode();
-        result = 31 * result + receiverId.hashCode();
+        result = 31 * result + (match != null ? match.hashCode() : 0);
+        result = 31 * result + (emitter != null ? emitter.hashCode() : 0);
+        result = 31 * result + (receiver != null ? receiver.hashCode() : 0);
         return result;
     }
 }

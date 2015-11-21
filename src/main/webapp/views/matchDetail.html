@@ -5,7 +5,7 @@
     <div class="row">
         <div class="col-md-4">
             <h3>Deporte</h3>
-            <h4>{{match.sport}}<code>TODO: objeto Sport</code></h4>
+            <h4>{{match.sport.name}}</h4>
             
             <h3>Lugar</h3>
             <map center="{{initialCenter}}" 
@@ -26,19 +26,19 @@
         </div>
         <div class="col-md-4">
             <h3>Creado por</h3>
-            <h4>{{match.createdBy}}<code>TODO: objeto User</code></h4>
+            <h4>{{match.creator.name}}</h4>
             
             <h3>Jugadores titulares</h3>
             <ul>
                 <li ng-repeat="starter in match.starters">
-                    {{starter.fbId}}
+                    {{starter.name}}
                 </li>
             </ul>
             
             <h3>Jugadores suplentes</h3>
             <ul>
                 <li ng-repeat="alternate in match.alternates">
-                    {{alternate.fbId}}
+                    {{alternate.name}}
                 </li>
             </ul>
         </div>
@@ -61,7 +61,7 @@
 
     <div class="row">
         <button class="btn btn-success" ng-click="subscribe()" ng-show="actions.canSubscribe">Inscribirse</button>
-        <button class="btn btn-danger" ng-click="unsubscribe()" ng-show="actions.canUnsubscribe">Desinscribirse</button>
+        <button class="btn btn-danger" ng-click="unsubscribe()" ng-show="!actions.canSubscribe">Desinscribirse</button>
         <button class="btn btn-danger" ng-click="delete()" ng-show="actions.canDelete">Eliminar</button>
     </div>
 </div>

@@ -58,6 +58,10 @@ public class MatchService {
         return storage.getMatchByCreatedBy(createdBy);
     }
 
+    public List<Match> getMatchesInscriptionsBy(String fbId) throws PlayerNotFoundException {
+        return storage.getMatchesInscriptionsBy(fbId);
+    }
+
     public Match createMatch(MatchRequest rq) throws SportNotFoundException, PlayerNotFoundException {
         if( !validParams(rq) ) throw new IllegalArgumentException("The match received less number of arguments than expected");
         //TODO ACA al storage.createMatch se le tiene que el request, el deporte y el jugador creador
@@ -107,6 +111,11 @@ public class MatchService {
         if( !playerService.exists(playerFbId) ) { playerService.create(playerFbId); }
 
         return playerService.getByFacebookId(playerFbId);
+    }
+
+    public Boolean hasPlayer(Integer matchId, String fbId) throws PlayerAlreadyExistsException, PlayerNotFoundException{
+        Player player = getPlayer(fbId);
+        return storage.hasPlayer(matchId, player);
     }
 
 

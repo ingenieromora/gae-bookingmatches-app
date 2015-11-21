@@ -13,8 +13,8 @@ angular.module('bookingMatches')
         getCreatedBy: function(fbId) {
             return $http.get(CONFIG.API_URL + 'matches/v1/matches/createdBy/' + fbId)
         },
-        save: function(name){
-            return $http.post(CONFIG.API_URL + 'matches/v1/matches', name);
+        save: function(match){
+            return $http.post(CONFIG.API_URL + 'matches/v1/matches', match);
         },
         subscribe: function(id, fbId){
             return $http.post(CONFIG.API_URL + 'matches/v1/matches/' + id + '/inscriptions', {fbId: fbId});

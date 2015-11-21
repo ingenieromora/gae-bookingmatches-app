@@ -8,9 +8,10 @@ import com.google.api.server.spi.config.Nullable;
 import org.utn.edu.ar.Constants;
 import org.utn.edu.ar.model.RecommendationService;
 import org.utn.edu.ar.model.domain.Recommendation;
-import org.utn.edu.ar.model.persistence.memoryStorage.RecommendationStorage;
+import org.utn.edu.ar.model.exceptions.match.MatchNotFoundException;
+import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
+import org.utn.edu.ar.model.request.RecommendationRequest;
 
-import java.util.ArrayList;
 import java.util.List;
 
 @Api(
@@ -26,7 +27,8 @@ public class RecommendationController {
             path = "recommendations",
             httpMethod = HttpMethod.POST
     )
-    public Recommendation create(Recommendation rec) {
+    public Recommendation create(RecommendationRequest rec)
+            throws MatchNotFoundException, PlayerNotFoundException {
             return service.create(rec);
     }
 

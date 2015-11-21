@@ -13,11 +13,7 @@ angular.module('bookingMatches')
     $scope.matches = [];
 
     InscriptionService.getAllFor(localStorage.getUser().fbId).success(function(data){
-        data.items.map(function(inscription) {
-            MatchService.get(inscription.matchId).then(function(match) {
-                $scope.matches.push(match.data);
-            });
-        })
+        $scope.matches = angular.copy(data.items);
     });
 
     $scope.tableParams = new ngTableParams({},

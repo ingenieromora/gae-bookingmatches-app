@@ -53,6 +53,17 @@ public class MatchesStorage implements IMatchStorage {
     }
 
     @Override
+    public List<Match> getMatchesInscriptionsBy(final String fbId) throws PlayerNotFoundException {
+        final Player player = PlayerService.getInstance().getByFacebookId(fbId);
+        return Lists.newArrayList(FluentIterable.from(matches).filter(new Predicate<Match>() {
+            @Override
+            public boolean apply(final Match match) {
+                return match.hasPlayer(player);
+            }
+        }));
+    }
+
+    @Override
     public Match createMatch(MatchRequest rq) throws SportNotFoundException, PlayerNotFoundException {
         Match match = new Match(rq);
         match.setId(nextId());
@@ -113,7 +124,13 @@ public class MatchesStorage implements IMatchStorage {
         Match match = getMatchById(matchId);
 
         match.addPlayer(player);
+    }
 
+    @Override
+    public Boolean hasPlayer(Integer matchId, Player player){
+        Match match = getMatchById(matchId);
+
+        return match.hasPlayer(player);
     }
 
     private Integer nextId(){
