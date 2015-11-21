@@ -6,13 +6,14 @@ import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
 import org.utn.edu.ar.model.persistence.IPlayerStorage;
 import org.utn.edu.ar.model.persistence.memoryStorage.PlayersStorage;
 
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by tom on 9/29/15.
  */
 public class PlayerService {
-
     private static PlayerService instance = null;
 
     private IPlayerStorage storage;

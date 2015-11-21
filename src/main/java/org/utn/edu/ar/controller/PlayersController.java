@@ -31,10 +31,6 @@ public class PlayersController {
     /** The map holding Access Token -> FbId pairs, used as a cache to know if a player has authenticated or not.*/
     private static Map<String, String> authenticationCache = new HashMap<String, String>();
 
-    public static boolean existsOnCache(final String accessToken) {
-      return authenticationCache.containsKey(accessToken);
-    }
-
     @ApiMethod(
             name = "getAll",
             path = "players",
