@@ -13,6 +13,7 @@ import org.utn.edu.ar.model.exceptions.match.PlayerAlreadyConfirmedException;
 import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
 import org.utn.edu.ar.model.exceptions.sport.SportNotFoundException;
 import org.utn.edu.ar.model.persistence.IMatchStorage;
+import org.utn.edu.ar.model.persistence.memoryStorage.MatchesStorage;
 import org.utn.edu.ar.model.request.MatchRequest;
 import org.utn.edu.ar.util.Coordinates;
 
@@ -22,7 +23,7 @@ import java.util.List;
 /**
  * Created by leandro.mora on 07/11/15.
  */
-public class MatchesStorage implements IMatchStorage {
+public class GaeMatchesStorage extends MatchesStorage implements IMatchStorage{
     private static final String ENTITY_NAME_MATCH = "MATCH";
     private static final String ATTRIBUTE_STARTERS = "starters";
     private static final String ATTRIBUTE_CREATED_BY = "created_by";
@@ -50,11 +51,6 @@ public class MatchesStorage implements IMatchStorage {
 //        }
 
         return matchesList;
-    }
-
-    @Override
-    public Match getMatchById(int id) {
-        return null;
     }
 
     @Override
@@ -88,35 +84,5 @@ public class MatchesStorage implements IMatchStorage {
         datastore.put(entityMatch);
 
         return match;
-    }
-
-    @Override
-    public boolean exists(int id) {
-        return false;
-    }
-
-    @Override
-    public void updateMatch(int id, Integer sportId, Integer playersNeeded, Date date, String createdBy, Coordinates location) {
-
-    }
-
-    @Override
-    public void deleteMatch(int id) {
-
-    }
-
-    @Override
-    public void removePlayer(Integer matchId, String fbId) throws MatchNotFoundException, PlayerNotFoundException {
-
-    }
-
-    @Override
-    public void addPlayer(Integer matchId, Player playerFbId) throws PlayerAlreadyConfirmedException {
-
-    }
-
-    @Override
-    public List<Match> getMatchByCreatedBy(String createdBy) throws PlayerNotFoundException {
-        return null;
     }
 }
