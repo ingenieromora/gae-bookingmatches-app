@@ -67,6 +67,7 @@ public class MatchesStorage implements IMatchStorage {
     public Match createMatch(MatchRequest rq) throws SportNotFoundException, PlayerNotFoundException {
         Match match = new Match(rq);
         match.setId(nextId());
+        //TODO Esto no deberia setear al creador en vez de a los titulares?
         match.setStarters(
           Lists.newArrayList(
             PlayerService.getInstance().getByFacebookId(

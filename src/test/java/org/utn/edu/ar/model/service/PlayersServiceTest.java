@@ -23,7 +23,7 @@ public class PlayersServiceTest {
 
     PlayerService service;
 
-    //TODO Complete test
+    //TODO Complete tests
 
     @Before
     public void setup(){

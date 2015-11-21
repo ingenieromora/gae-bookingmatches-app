@@ -8,7 +8,7 @@ import org.utn.edu.ar.model.exceptions.player.PlayerAlreadyExistsException;
 import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
 import org.utn.edu.ar.model.exceptions.sport.SportNotFoundException;
 import org.utn.edu.ar.model.persistence.IMatchStorage;
-import org.utn.edu.ar.model.persistence.memoryStorage.MatchesStorage;
+import org.utn.edu.ar.model.persistence.gaeDatastore.GaeMatchesStorage;
 import org.utn.edu.ar.model.request.MatchRequest;
 import org.utn.edu.ar.util.Coordinates;
 
@@ -16,7 +16,7 @@ import java.util.Date;
 import java.util.List;
 
 /**
- * Created by juan pablo, leandro.mora
+ * Created leandro.mora
  */
 public class MatchService {
 
@@ -36,7 +36,7 @@ public class MatchService {
             synchronized (MatchService.class) {
                 if (instance == null) {
                     instance = new MatchService(
-                            new MatchesStorage(),
+                            new GaeMatchesStorage(),
                             PlayerService.getInstance());
                 }
             }
@@ -64,6 +64,7 @@ public class MatchService {
 
     public Match createMatch(MatchRequest rq) throws SportNotFoundException, PlayerNotFoundException {
         if( !validParams(rq) ) throw new IllegalArgumentException("The match received less number of arguments than expected");
+        //TODO ACA al storage.createMatch se le tiene que el request, el deporte y el jugador creador
         return storage.createMatch(rq);
     }
 

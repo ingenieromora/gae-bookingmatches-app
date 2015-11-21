@@ -26,9 +26,11 @@ public class Match {
     public Match(int id, int sportId, int playersNeeded, Date date, String createdBy, Coordinates location)
             throws SportNotFoundException, PlayerNotFoundException {
         this.id = id;
+        //TODO el Deporte tienen que ser pasados por parametro
         this.sport = SportService.getInstance().getSportById(sportId);
         this.playersNeeded = playersNeeded;
         this.date = date;
+        //TODO el Jugador creador tienen que ser pasados por parametro
         this.createdBy = PlayerService.getInstance().getByFacebookId(createdBy);
         this.location = location;
         this.starters = new ArrayList<Player>();
@@ -36,9 +38,11 @@ public class Match {
     }
 
     public Match(MatchRequest rq) throws SportNotFoundException, PlayerNotFoundException {
+        //TODO el Deporte tienen que ser pasados por parametro
         this.sport = SportService.getInstance().getSportById(rq.getSportId());
         this.playersNeeded = rq.getPlayersNeeded();
         this.date = rq.getDate();
+        //TODO el Jugador creador tienen que ser pasados por parametro
         this.createdBy = PlayerService.getInstance().getByFacebookId(rq.getCreatedBy());
         this.location = rq.getLocation();
         this.starters = new ArrayList<Player>();
@@ -46,6 +50,7 @@ public class Match {
     }
 
     public void addPlayer(Player player) throws PlayerAlreadyConfirmedException {
+        //TODO removerlo de aca, no aplica para un storage que NO sea en memoria
         if(starters.contains(player) || alternates.contains(player)) {
             throw new PlayerAlreadyConfirmedException(player);
         }
@@ -57,7 +62,9 @@ public class Match {
         }
     }
 
+
     public void removePlayer(String fbId) throws PlayerNotFoundException {
+        //TODO removerlo de aca, no aplica para un storage que NO sea en memoria
         for(Player p : starters){
             if(p.getFbId().equals(fbId)){
                 starters.remove(p);
