@@ -1,8 +1,12 @@
 package org.utn.edu.ar.model.domain;
 
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+
+@Entity
 public class Sport {
 
-    private int id;
+    @Id private int id;
     private String name;
 
     public Sport(int id, String name) {

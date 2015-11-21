@@ -2,8 +2,6 @@ package org.utn.edu.ar.model.persistence.gaeDatastore;
 
 import com.google.appengine.api.datastore.DatastoreService;
 import com.google.appengine.api.datastore.DatastoreServiceFactory;
-import com.google.appengine.api.datastore.Query;
-import org.utn.edu.ar.model.domain.Recommendation;
 import org.utn.edu.ar.model.persistence.IRecommendationStorage;
 import org.utn.edu.ar.model.persistence.memoryStorage.RecommendationStorage;
 
@@ -20,24 +18,4 @@ public class GaeRecommendationStorage extends RecommendationStorage implements I
 
   private final DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
 
-  public List<Recommendation> getAll() {
-//    DatastoreService datastore = DatastoreServiceFactory.getDatastoreService();
-//
-//    Query q = new Query(ENTITY_NAME_RECOMMENDATION);
-//
-//    PreparedQuery pq = datastore.prepare(q);
-//
-//    List<Match> matchesList = new ArrayList<Match>();
-////        for (Entity result : pq.asIterable()) {
-////            String createdBy = (String) result.getProperty(ATTRIBUTE_CREATED_BY);
-////            Coordinates location = (Coordinates) result.getProperty(ATTRIBUTE_LOCATION);
-////            Date date = (Date) result.getProperty(ATTRIBUTE_DATE);
-////            Key key = result.getKey();
-////            Match match = new Match(key.getId(), );
-////            matchesList.add(match);
-////        }
-//
-//    return matchesList;
-//  }
-  }
 }

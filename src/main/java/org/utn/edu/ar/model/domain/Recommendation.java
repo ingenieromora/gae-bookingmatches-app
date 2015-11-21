@@ -1,12 +1,15 @@
 package org.utn.edu.ar.model.domain;
 
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
+
 /**
  * Created by tomas.duhourq on 9/29/15.
  */
-
+@Entity
 public class Recommendation {
 
-    private int id;
+    @Id private int id;
     private Match match;
     private Player emitter;
     private Player receiver;

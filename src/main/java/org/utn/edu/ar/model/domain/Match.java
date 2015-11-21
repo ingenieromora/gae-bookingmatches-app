@@ -1,8 +1,8 @@
 package org.utn.edu.ar.model.domain;
 
-import org.utn.edu.ar.model.PlayerService;
+import com.googlecode.objectify.annotation.Entity;
+import com.googlecode.objectify.annotation.Id;
 import org.utn.edu.ar.model.SportService;
-import org.utn.edu.ar.model.exceptions.match.PlayerAlreadyConfirmedException;
 import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
 import org.utn.edu.ar.model.exceptions.sport.SportNotFoundException;
 import org.utn.edu.ar.model.request.MatchRequest;
@@ -12,9 +12,10 @@ import java.util.ArrayList;
 import java.util.Date;
 import java.util.List;
 
+@Entity
 public class Match {
 
-    private int id;
+    @Id private int id;
     private Sport sport;
     private int playersNeeded;
     private Player createdBy;
