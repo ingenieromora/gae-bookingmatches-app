@@ -60,7 +60,9 @@ public class PlayerService {
       storage.remove(id);
   }
 
-  public boolean exists(String fbId) { return storage.exists(fbId); }
+  public boolean exists(String fbId) {
+      return storage.exists(fbId);
+  }
 
   public boolean existsOnCache(String accessToken) { return authenticationCache.containsKey(accessToken); }
 

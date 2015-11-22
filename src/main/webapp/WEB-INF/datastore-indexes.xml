@@ -3,4 +3,7 @@
     <datastore-index kind="Match">
         <property name="createdBy.fbId" direction="asc"/>
     </datastore-index>
+    <datastore-index kind="Sport">
+        <property name="name" direction="asc"/>
+    </datastore-index>
 </datastore-indexes>

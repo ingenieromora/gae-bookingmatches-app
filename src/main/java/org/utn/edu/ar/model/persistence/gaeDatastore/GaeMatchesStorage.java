@@ -52,4 +52,19 @@ public class GaeMatchesStorage extends MatchesStorage implements IMatchStorage{
     public Match getMatchById(Long id) {
         return ofy().load().type(Match.class).id(id).now();
     }
+
+    @Override
+    public boolean exists(final Long id) {
+        return (getMatchById(id) != null);
+    }
+
+    @Override
+    public void deleteMatch(Long id) {
+        ofy().delete().type(Match.class).id(id);
+    }
+
+    @Override
+    public List<Match> getAllMatches() {
+        return ofy().load().type(Match.class).list();
+    }
 }

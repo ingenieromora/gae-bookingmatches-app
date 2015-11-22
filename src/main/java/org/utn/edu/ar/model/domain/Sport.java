@@ -14,6 +14,10 @@ public class Sport {
         this.name = name;
     }
 
+    public Sport(String name) {
+        this.name = name;
+    }
+
     public Sport(){}
 
     public Sport(Long id) {

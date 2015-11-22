@@ -5,6 +5,7 @@ import org.utn.edu.ar.model.exceptions.sport.SportNameAlreadyExistException;
 import org.utn.edu.ar.model.exceptions.sport.SportNotFoundException;
 import org.utn.edu.ar.model.persistence.ISportStorage;
 import org.utn.edu.ar.model.persistence.memoryStorage.SportStorage;
+import org.utn.edu.ar.model.persistence.gaeDatastore.GaeSportStorage;
 
 import java.util.List;
 
@@ -19,9 +20,9 @@ public class SportService {
 
     public static SportService getInstance() {
         if (instance == null) {
-            synchronized (MatchService.class) {
+            synchronized (SportService.class) {
                 if (instance == null) {
-                    instance = new SportService(new SportStorage());
+                    instance = new SportService(new GaeSportStorage());
                 }
             }
         }
