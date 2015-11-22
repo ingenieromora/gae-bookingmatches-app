@@ -13,7 +13,7 @@
         <servlet-class>com.google.api.server.spi.SystemServiceServlet</servlet-class>
         <init-param>
             <param-name>services</param-name>
-            <param-value>org.utn.edu.ar.controller.FacebookController, org.utn.edu.ar.controller.PlayersController, org.utn.edu.ar.controller.MatchController, org.utn.edu.ar.controller.RecommendationController, org.utn.edu.ar.controller.SportController</param-value>
+            <param-value>org.utn.edu.ar.model.persistence.gaeDatastore.GaeMatchesStorage, org.utn.edu.ar.controller.FacebookController, org.utn.edu.ar.controller.PlayersController, org.utn.edu.ar.controller.MatchController, org.utn.edu.ar.controller.RecommendationController, org.utn.edu.ar.controller.SportController</param-value>
         </init-param>
     </servlet>
     <servlet-mapping>

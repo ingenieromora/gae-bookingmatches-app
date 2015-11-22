@@ -29,11 +29,6 @@ public class MatchController {
 
     private MatchService service = MatchService.getInstance();
 
-    static {
-        ObjectifyService.begin();
-        ObjectifyService.register(Match.class);
-    }
-
     @ApiMethod(
             name = "add",
             path = "matches",

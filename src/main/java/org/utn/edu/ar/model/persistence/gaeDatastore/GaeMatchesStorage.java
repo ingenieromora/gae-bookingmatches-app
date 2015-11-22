@@ -5,6 +5,7 @@ import java.util.Date;
 
 import com.google.appengine.api.datastore.*;
 import com.google.appengine.repackaged.com.google.common.collect.Lists;
+import com.googlecode.objectify.ObjectifyService;
 import org.utn.edu.ar.model.PlayerService;
 import org.utn.edu.ar.model.domain.Match;
 import org.utn.edu.ar.model.domain.Player;
@@ -26,6 +27,12 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
  * Created by leandro.mora on 07/11/15.
  */
 public class GaeMatchesStorage extends MatchesStorage implements IMatchStorage{
+
+    static {
+        ObjectifyService.begin();
+        ObjectifyService.register(Match.class);
+    }
+
     private static final String ENTITY_NAME_MATCH = "MATCH";
     private static final String ATTRIBUTE_STARTERS = "starters";
     private static final String ATTRIBUTE_CREATED_BY = "created_by";
@@ -34,7 +41,8 @@ public class GaeMatchesStorage extends MatchesStorage implements IMatchStorage{
     private static final String ATTRIBUTE_LOCATION = "location";
     private static final String ATTRIBUTE_ALTERNATES= "alternates";
 
-    public Match create(final MatchRequest rq, final Sport sport, final Player creator)
+    @Override
+    public Match createMatch(final MatchRequest rq, final Sport sport, final Player creator)
             throws SportNotFoundException, PlayerNotFoundException {
         Match match = new Match(rq, sport, creator);
         ofy().save().entity(match).now();
