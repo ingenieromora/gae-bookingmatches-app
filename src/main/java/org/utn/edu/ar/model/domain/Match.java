@@ -2,6 +2,7 @@ package org.utn.edu.ar.model.domain;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 import org.utn.edu.ar.model.SportService;
 import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
 import org.utn.edu.ar.model.exceptions.sport.SportNotFoundException;
@@ -18,6 +19,7 @@ public class Match {
     @Id private Long id;
     private Sport sport;
     private int playersNeeded;
+    @Index
     private Player createdBy;
     private Date date;
     private Coordinates location;

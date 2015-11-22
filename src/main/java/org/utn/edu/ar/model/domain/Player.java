@@ -2,11 +2,13 @@ package org.utn.edu.ar.model.domain;
 
 import com.googlecode.objectify.annotation.Entity;
 import com.googlecode.objectify.annotation.Id;
+import com.googlecode.objectify.annotation.Index;
 
 @Entity
 public class Player {
 
     @Id private Long id;
+    @Index
     private String fbId;
 
     public Player(final String aFbId){

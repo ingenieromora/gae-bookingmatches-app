@@ -6,6 +6,7 @@ import java.util.Date;
 import com.google.appengine.api.datastore.*;
 import com.google.appengine.repackaged.com.google.common.collect.Lists;
 import com.googlecode.objectify.ObjectifyService;
+import com.googlecode.objectify.cmd.*;
 import com.googlecode.objectify.util.Closeable;
 import org.utn.edu.ar.controller.MatchController;
 import org.utn.edu.ar.model.PlayerService;
@@ -30,14 +31,21 @@ import static com.googlecode.objectify.ObjectifyService.ofy;
  */
 public class GaeMatchesStorage extends MatchesStorage implements IMatchStorage{
     static {
-        Closeable begin = ObjectifyService.begin();
+        ObjectifyService.begin();
         ObjectifyService.register(Match.class);
     }
+
     @Override
     public Match createMatch(final MatchRequest rq, final Sport sport, final Player creator)
             throws SportNotFoundException, PlayerNotFoundException {
         Match match = new Match(rq, sport, creator);
         ofy().save().entity(match).now();
         return ofy().load().entity(match).now();
+    }
+
+    @Override
+    public List<Match> getMatchByCreatedBy(final String fbId) throws PlayerNotFoundException {
+        // TODO - NO DEVUELVE NADA - REVISAR INDICE!!! 2) QUizas conviene crear entidad "MatchFromPlayers" y hacer el get de alli a partir de la key principal
+        return ofy().load().type(Match.class).filter("createdBy", fbId).list();
     }
 }
