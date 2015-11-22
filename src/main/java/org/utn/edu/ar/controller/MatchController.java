@@ -6,6 +6,7 @@ import com.google.api.server.spi.config.ApiMethod.HttpMethod;
 import com.google.api.server.spi.config.Named;
 import com.google.api.server.spi.response.NotFoundException;
 import com.googlecode.objectify.ObjectifyService;
+import com.googlecode.objectify.util.Closeable;
 import org.utn.edu.ar.Constants;
 import org.utn.edu.ar.model.MatchService;
 import org.utn.edu.ar.model.domain.Match;
