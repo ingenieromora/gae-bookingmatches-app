@@ -45,7 +45,11 @@ public class GaeMatchesStorage extends MatchesStorage implements IMatchStorage{
 
     @Override
     public List<Match> getMatchByCreatedBy(final String fbId) throws PlayerNotFoundException {
-        // TODO - NO DEVUELVE NADA - REVISAR INDICE!!! 2) QUizas conviene crear entidad "MatchFromPlayers" y hacer el get de alli a partir de la key principal
-        return ofy().load().type(Match.class).filter("createdBy", fbId).list();
+        return ofy().load().type(Match.class).filter("createdBy.fbId", fbId).list();
+    }
+
+    @Override
+    public Match getMatchById(Long id) {
+        return ofy().load().type(Match.class).id(id).now();
     }
 }

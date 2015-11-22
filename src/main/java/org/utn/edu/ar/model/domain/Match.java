@@ -19,12 +19,13 @@ public class Match {
     @Id private Long id;
     private Sport sport;
     private int playersNeeded;
-    @Index
-    private Player createdBy;
+    @Index private Player createdBy;
     private Date date;
     private Coordinates location;
     private List<Player> starters;
     private List<Player> alternates;
+
+    public Match(){}
 
     public Match(MatchRequest rq, Sport inputSport, Player inputCreatedBy) throws SportNotFoundException, PlayerNotFoundException {
         this.sport = inputSport;

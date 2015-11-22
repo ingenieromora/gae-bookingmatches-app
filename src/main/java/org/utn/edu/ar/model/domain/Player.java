@@ -11,6 +11,8 @@ public class Player {
     @Index
     private String fbId;
 
+    public Player(){}
+
     public Player(final String aFbId){
         fbId = aFbId;
     }
