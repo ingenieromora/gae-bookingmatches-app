@@ -50,11 +50,7 @@ public class MatchController {
             service.addPlayerToMatch(matchId, fbId.getFbId());
         } catch (MatchNotFoundException e) {
             throw new NotFoundException("Match "+matchId+" does not exist.");
-        } catch (PlayerAlreadyConfirmedException e) {
-            e.printStackTrace();
-        } catch (PlayerNotFoundException e) {
-            e.printStackTrace();
-        } catch (PlayerAlreadyExistsException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

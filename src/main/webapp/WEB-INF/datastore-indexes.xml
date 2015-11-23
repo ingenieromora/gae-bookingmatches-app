@@ -6,4 +6,7 @@
     <datastore-index kind="Sport">
         <property name="name" direction="asc"/>
     </datastore-index>
+    <datastore-index kind="Player">
+        <property name="fbId" direction="asc"/>
+    </datastore-index>
 </datastore-indexes>

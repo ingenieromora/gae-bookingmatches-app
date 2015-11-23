@@ -126,7 +126,7 @@ public class MatchesStorage implements IMatchStorage {
         addPlayer(match, player);
     }
 
-    private void addPlayer(Match inputMatch, Player player) throws PlayerAlreadyConfirmedException {
+    protected void addPlayer(Match inputMatch, Player player) throws PlayerAlreadyConfirmedException {
 
         if(inputMatch.getStarters().contains(player) || inputMatch.getAlternates().contains(player)) {
             throw new PlayerAlreadyConfirmedException(player);

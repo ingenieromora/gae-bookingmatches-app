@@ -39,6 +39,10 @@ public class GaeMatchesStorage extends MatchesStorage implements IMatchStorage{
     public Match createMatch(final MatchRequest rq, final Sport sport, final Player creator)
             throws SportNotFoundException, PlayerNotFoundException {
         Match match = new Match(rq, sport, creator);
+        return saveMatch(match);
+    }
+
+    private Match saveMatch(Match match) {
         ofy().save().entity(match).now();
         return ofy().load().entity(match).now();
     }
@@ -66,5 +70,14 @@ public class GaeMatchesStorage extends MatchesStorage implements IMatchStorage{
     @Override
     public List<Match> getAllMatches() {
         return ofy().load().type(Match.class).list();
+    }
+
+    @Override
+    public void addPlayer(Long matchId, Player player) throws PlayerAlreadyConfirmedException {
+        Match match = getMatchById(matchId);
+
+        addPlayer(match, player);
+
+        saveMatch(match);
     }
 }

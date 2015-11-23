@@ -38,13 +38,13 @@ public class GaeSportStorage extends SportStorage implements ISportStorage{
         return ofy().load().type(Sport.class).id(id).now();
     }
 
-    public List<Sport> getSportByName(String name) {
-        return ofy().load().type(Sport.class).filter("name", name).list();
+    public Sport getSportByName(String name) {
+        return ofy().load().type(Sport.class).filter("name", name).first().now();
     }
 
     @Override
     public boolean exists(String sportName) {
-        return (!getSportByName(sportName).isEmpty());
+        return (getSportByName(sportName) != null);
     }
 
     @Override

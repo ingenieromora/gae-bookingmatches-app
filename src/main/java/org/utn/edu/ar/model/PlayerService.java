@@ -5,6 +5,7 @@ import org.utn.edu.ar.model.exceptions.player.PlayerAlreadyExistsException;
 import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
 import org.utn.edu.ar.model.persistence.IPlayerStorage;
 import org.utn.edu.ar.model.persistence.memoryStorage.PlayersStorage;
+import org.utn.edu.ar.model.persistence.gaeDatastore.GaePlayersStorage;
 import org.utn.edu.ar.model.request.Facebook;
 import org.utn.edu.ar.model.request.ValidateRequest;
 import org.utn.edu.ar.model.response.MessageResponse;
@@ -31,7 +32,7 @@ public class PlayerService {
       if (instance == null) {
           synchronized (PlayerService.class) {
               if (instance == null) {
-                  instance = new PlayerService(new PlayersStorage());
+                  instance = new PlayerService(new GaePlayersStorage());
               }
           }
       }
