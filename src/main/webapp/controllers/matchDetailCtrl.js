@@ -96,6 +96,10 @@ angular.module('bookingMatches')
             .success(function(data) {
                 Notification.success({message: 'La inscripción se realizó exitosamente'});
                 FBService.sendNotification('El jugador '+$scope.user.name+' se ha inscripto a un partido que creaste', $scope.match.createdBy.fbId);
+
+                if ($scope.match.starters == $scope.match.playersNeeded)
+                    FBService.sendNotification('Se han completado las inscripciones para el partido '+$scope.match.id, $scope.match.createdBy.fbId);
+
                 $scope.refreshMatchData();
             })
             .error(function(error) {
