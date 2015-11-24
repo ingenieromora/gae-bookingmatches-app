@@ -14,7 +14,7 @@ angular.module('bookingMatches')
 
     RecommendationService.getAllFor(localStorage.getUser().fbId).success(function(data){
         data.items.map(function(recommendation) {
-            MatchService.get(recommendation.matchId).then(function(match) {
+            MatchService.get(recommendation.match.id).then(function(match) {
                 $scope.matches.push(match.data);
             });
         })

@@ -5,6 +5,7 @@ import org.utn.edu.ar.model.exceptions.match.MatchNotFoundException;
 import org.utn.edu.ar.model.exceptions.player.PlayerNotFoundException;
 import org.utn.edu.ar.model.persistence.IRecommendationStorage;
 import org.utn.edu.ar.model.persistence.memoryStorage.RecommendationStorage;
+import org.utn.edu.ar.model.persistence.gaeDatastore.GaeRecommendationStorage;
 import org.utn.edu.ar.model.request.RecommendationRequest;
 
 import java.util.List;
@@ -26,7 +27,7 @@ public class RecommendationService {
         if (instance == null) {
             synchronized (RecommendationService.class) {
                 if (instance == null) {
-                    instance = new RecommendationService(new RecommendationStorage());
+                    instance = new RecommendationService(new GaeRecommendationStorage());
                 }
             }
         }
