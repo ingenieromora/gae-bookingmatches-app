@@ -140,7 +140,7 @@ public class MatchesStorage implements IMatchStorage {
     }
 
 
-    private void removePlayer(Match inputMatch, String fbId) throws PlayerNotFoundException {
+    protected void removePlayer(Match inputMatch, String fbId) throws PlayerNotFoundException {
         for(Player p : inputMatch.getStarters()){
             if(p.getFbId().equals(fbId)){
                 inputMatch.getStarters().remove(p);

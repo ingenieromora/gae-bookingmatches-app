@@ -80,4 +80,13 @@ public class GaeMatchesStorage extends MatchesStorage implements IMatchStorage{
 
         saveMatch(match);
     }
+
+    @Override
+    public void removePlayer(final Long matchId, final String fbId) throws MatchNotFoundException, PlayerNotFoundException {
+        Match match = getMatchById(matchId);
+
+        removePlayer(match, fbId);
+
+        saveMatch(match);
+    }
 }

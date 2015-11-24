@@ -22,8 +22,8 @@ public class Match {
     @Index private Player createdBy;
     private Date date;
     private Coordinates location;
-    private List<Player> starters;
-    private List<Player> alternates;
+    private List<Player> starters = new ArrayList<Player>();
+    private List<Player> alternates = new ArrayList<Player>();
 
     public Match(){}
 
