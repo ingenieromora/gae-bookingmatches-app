@@ -38,7 +38,13 @@ public class Match {
     }
 
     public Boolean hasPlayer(Player player){
-        return starters.contains(player) || alternates.contains(player);
+        for(Player starter : starters){
+            if(starter.getId() == player.getId()) return true;
+        }
+        for(Player alternate : alternates){
+            if(alternate.getId() == player.getId()) return true;
+        }
+        return false;
     }
 
     public long getId() {

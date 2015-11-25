@@ -22,6 +22,12 @@ import org.utn.edu.ar.model.persistence.memoryStorage.MatchesStorage;
 import org.utn.edu.ar.model.request.MatchRequest;
 import org.utn.edu.ar.util.Coordinates;
 
+import com.google.appengine.repackaged.com.google.common.base.Function;
+import com.google.appengine.repackaged.com.google.common.base.Optional;
+import com.google.appengine.repackaged.com.google.common.base.Predicate;
+import com.google.appengine.repackaged.com.google.common.collect.FluentIterable;
+import com.google.appengine.repackaged.com.google.common.collect.Iterables;
+import com.google.appengine.repackaged.com.google.common.collect.Lists;
 
 import java.util.List;
 import static com.googlecode.objectify.ObjectifyService.ofy;
@@ -88,5 +94,18 @@ public class GaeMatchesStorage extends MatchesStorage implements IMatchStorage{
         removePlayer(match, fbId);
 
         saveMatch(match);
+    }
+
+    @Override
+    public List<Match> getMatchesInscriptionsBy(final String fbId) throws PlayerNotFoundException {
+        final Player player = PlayerService.getInstance().getByFacebookId(fbId);
+        List<Match> matches = getAllMatches();
+
+        List<Match> filtered = new ArrayList<Match>();
+        for(Match match : matches) {
+            if(match.hasPlayer(player)) filtered.add(match);
+        }
+
+        return filtered;
     }
 }
