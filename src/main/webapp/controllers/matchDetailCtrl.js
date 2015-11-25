@@ -88,7 +88,7 @@ angular.module('bookingMatches')
         var person = $scope.userNamesMap.filter(function(elem){
             return elem.fbId == id;
         });
-        return (person) ? person[0] : {fbId: id};
+        return (person.length) ? person[0] : {fbId: id};
     }
     
     $scope.subscribe = function() {
