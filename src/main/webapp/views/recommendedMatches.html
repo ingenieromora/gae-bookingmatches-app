@@ -14,7 +14,7 @@
         </thead>
         <tr ng-repeat="recommendation in recommendations">
             <td>
-                <a ng-href="/#/matches/{{match.id}}" class="btn btn-info">Ver Detalle</a>
+                <a ng-href="/#/matches/{{recommendation.match.id}}" class="btn btn-info">Ver Detalle</a>
                 <button class="btn btn-success" ng-click="acceptRecommendation(recommendation)">Aceptar</button>
                 <button class="btn btn-danger" ng-click="declineRecommendation(recommendation)">Rechazar</button>
             </td>

@@ -56,13 +56,21 @@ public class GaeRecommendationStorage extends RecommendationStorage implements I
         PlayerService playerService = PlayerService.getInstance();
         MatchService matchService = MatchService.getInstance();
 
-        Recommendation r = new Recommendation();
-        r.setMatch(matchService.getMatchById(req.getMatchId()));
-        r.setEmitter(playerService.getByFacebookId(req.getEmitterId()));
-        r.setReceiver(playerService.getByFacebookId(req.getReceiverId()));
+        Recommendation recommendation = ofy().load().type(Recommendation.class)
+                .filter("emitter.fbId", req.getEmitterId())
+                .filter("receiver.fbId", req.getReceiverId()).first().now();
 
-        ofy().save().entity(r).now();
-        return ofy().load().entity(r).now();
+        if(recommendation == null){
+            Recommendation r = new Recommendation();
+            r.setMatch(matchService.getMatchById(req.getMatchId()));
+            r.setEmitter(playerService.getByFacebookId(req.getEmitterId()));
+            r.setReceiver(playerService.getByFacebookId(req.getReceiverId()));
+
+            ofy().save().entity(r).now();
+            recommendation = ofy().load().entity(r).now();
+        }
+
+        return recommendation;
     }
 
     public void delete(final Long id) {

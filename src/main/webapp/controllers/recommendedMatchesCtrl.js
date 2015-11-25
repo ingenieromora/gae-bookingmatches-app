@@ -20,6 +20,8 @@ angular.module('bookingMatches')
             $scope.recommendations.map(function(recommendation) {
                 MatchService.get(recommendation.match.id).then(function(match) {
                     recommendation.match = match.data;
+                    if(!recommendation.match.starters) recommendation.match.starters = [];
+                    if(!recommendation.match.alternates) recommendation.match.alternates = [];
                 });
             })
         });
