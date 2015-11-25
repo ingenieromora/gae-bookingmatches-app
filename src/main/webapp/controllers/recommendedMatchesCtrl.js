@@ -9,24 +9,58 @@ angular.module('bookingMatches')
     });
 }])
 
-.controller('RecommendedMatchesCtrl', function($scope, $routeParams, ngTableParams, MatchService, RecommendationService, localStorage) {
-    $scope.matches = [];
+.controller('RecommendedMatchesCtrl', function($scope, $routeParams, ngTableParams, MatchService, RecommendationService, localStorage, Notification, FBService) {
+    $scope.recommendations = [];
+    $scope.user = localStorage.getUser();
 
-    RecommendationService.getAllFor(localStorage.getUser().fbId).success(function(data){
-        data.items.map(function(recommendation) {
-            MatchService.get(recommendation.match.id).then(function(match) {
-                $scope.matches.push(match.data);
-            });
-        })
-    });
+    $scope.refreshRecommendations = function(){
+        RecommendationService.getAllFor(localStorage.getUser().fbId).success(function(data){
+            $scope.recommendations = data.items;
+
+            $scope.recommendations.map(function(recommendation) {
+                MatchService.get(recommendation.match.id).then(function(match) {
+                    recommendation.match = match.data;
+                });
+            })
+        });
+    }
+    $scope.refreshRecommendations();
 
 
     $scope.tableParams = new ngTableParams({},
     {
-        total: $scope.matches.length,
+        total: $scope.recommendations.length,
         getData: function($defer, params) {
-            $defer.resolve($scope.matches);
+            $defer.resolve($scope.recommendations);
         }
     });
+
+    $scope.acceptRecommendation = function(recommendation){
+        MatchService.subscribe(recommendation.match.id, $scope.user.fbId).then(function(data) {
+                Notification.success({message: 'La inscripción se realizó exitosamente'});
+                FBService.sendNotification('El jugador '+$scope.user.name+' se ha inscripto a un partido que creaste', recommendation.match.createdBy.fbId);
+
+                if (recommendation.match.starters.length == (recommendation.match.playersNeeded-1)){
+                    recommendation.match.starters.map(function(player) {
+                        FBService.sendNotification('Se han completado las inscripciones para el partido '+recommendation.match.id, player.fbId);
+                    });
+                }
+
+                $scope.deleteRecommendation(recommendation.id);
+            }, function(error) {
+                Notification.error({message: error.name});
+            });
+
+    }
+
+    $scope.declineRecommendation = function(recommendation){
+        $scope.deleteRecommendation(recommendation.id);
+    }
+
+    $scope.deleteRecommendation = function(id){
+        RecommendationService.delete(id).then(function(){
+            $scope.refreshRecommendations();
+        });
+    }
 
 });

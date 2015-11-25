@@ -5,22 +5,24 @@
 
     <table ng-table="tableParams" class="table table-bordered table-striped table-condensed" show-filter="false">
         <thead>
-            <th></th>
+            <th>Acciones</th>
             <th>Deporte</th>
             <th>Jugadores necesarios</th>
             <th>Fecha</th>
             <th>Titulares</th>
             <th>Suplentes</th>
         </thead>
-        <tr ng-repeat="match in matches">
+        <tr ng-repeat="recommendation in recommendations">
             <td>
-                <a ng-href="/#/matches/{{match.id}}" class="btn btn-info">Detalle</a>
+                <a ng-href="/#/matches/{{match.id}}" class="btn btn-info">Ver Detalle</a>
+                <button class="btn btn-success" ng-click="acceptRecommendation(recommendation)">Aceptar</button>
+                <button class="btn btn-danger" ng-click="declineRecommendation(recommendation)">Rechazar</button>
             </td>
-            <td>{{match.sport.name}}</td>
-            <td>{{match.playersNeeded}}</td>
-            <td>{{match.date | date: 'yyyy-MM-dd'}}</td>
-            <td>{{match.starters.length}}</td>
-            <td>{{match.alternates.length}}</td>
+            <td>{{recommendation.match.sport.name}}</td>
+            <td>{{recommendation.match.playersNeeded}}</td>
+            <td>{{recommendation.match.date | date: 'yyyy-MM-dd'}}</td>
+            <td>{{recommendation.match.starters.length}}</td>
+            <td>{{recommendation.match.alternates.length}}</td>
         </tr>
     </table>
 </div>
