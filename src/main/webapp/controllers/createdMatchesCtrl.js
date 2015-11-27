@@ -35,7 +35,7 @@ angular.module('bookingMatches')
     $scope.friendToGo = {};
 
     FBService.getFriends().then(function(response) {
-        $scope.friends = response.data;
+        $scope.friends = response.data.data;
     });
 
     $scope.redirect = function(){

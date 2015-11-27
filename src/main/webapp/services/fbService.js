@@ -17,7 +17,7 @@ angular.module('bookingMatches')
             return $facebook.api("/me");
         },
         getFriends: function(){
-            return $facebook.api("/me/friends");
+            return $http.get("https://graph.facebook.com/v2.4/me/friends?access_token="+localStorage.getUser().accessToken);
         },
         validate: function(data){
             return $http.post(CONFIG.API_URL + 'players/v1/players/validate', data);

@@ -62,7 +62,7 @@ angular.module('bookingMatches')
     $scope.userNamesMap = [];
     $scope.userNamesMap.push({fbId: $scope.user.fbId, name: $scope.user.name});
     FBService.getFriends().then(function(response){
-        $scope.friends = response.data;
+        $scope.friends = response.data.data;
 
         $scope.friends.map(function(elem) {
             $scope.userNamesMap.push({fbId: elem.id, name: elem.name});
